@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
+import java.awt.Cursor;
+
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
@@ -20,7 +22,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class FrmLogin extends JFrame {
-
+	
+	Cursor handCursor =  new Cursor(Cursor.HAND_CURSOR); //Create a hand cursor object
 	private JPanel contentPane;
 	private JTextField txtUsername;
 	private JPasswordField pwdPassword;
@@ -104,6 +107,8 @@ public class FrmLogin extends JFrame {
 		btnLogin.setFont(new Font("Calibri", Font.PLAIN, 16));
 		btnLogin.setBackground(new Color(246, 144, 59));
 		btnLogin.setBounds(443, 299, 121, 35);
+		btnLogin.setCursor(handCursor); //Change cursor when u hover over this Button
+		
 		contentPane.add(btnLogin);
 		
 		JLabel lblSignup = new JLabel("Sign up");
@@ -119,6 +124,7 @@ public class FrmLogin extends JFrame {
 		lblSignup.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSignup.setFont(new Font("Calibri", Font.PLAIN, 12));
 		lblSignup.setBounds(476, 346, 55, 16);
+		lblSignup.setCursor(handCursor); //Change cursor when u hover over this label
 		contentPane.add(lblSignup);
 	}
 }
