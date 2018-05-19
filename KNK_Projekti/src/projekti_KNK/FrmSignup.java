@@ -25,8 +25,12 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JRadioButton;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.swing.ButtonGroup;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
@@ -197,15 +201,25 @@ public class FrmSignup extends JFrame {
 				
 				try {
 					if(pwdPassword.getText().equals(pwdConfPassword.getText())) {
-						String sql="insert into tblusers (fullname,username,useremail,userbdate,usergender,userpassword) values "
-								+ "('"+txtFullName.getText()+"','"+txtUserName.getText()+"','"+txtEmail.getText()+"','"+userdate+"','"+gender+"','"+pwdPassword.getText()+"');";
-						pst=conn.prepareStatement(sql);
-						pst.execute();
-						pst.close();
-						
-						dispose();
-						loginFrame.setVisible(true);
-						loginFrame.setLocationRelativeTo(null);
+						if(passwordVal(pwdPassword.getText())) {
+							if(emailVal(txtEmail.getText())) {
+								String sql="insert into tblusers (fullname,username,useremail,userbdate,usergender,userpassword) values "
+										+ "('"+txtFullName.getText()+"','"+txtUserName.getText()+"','"+txtEmail.getText()+"','"+userdate+"','"+gender+"','"+pwdPassword.getText()+"');";
+								pst=conn.prepareStatement(sql);
+								pst.execute();
+								pst.close();
+								
+								dispose();
+								loginFrame.setVisible(true);
+								loginFrame.setLocationRelativeTo(null);
+							}
+							else {
+								JOptionPane.showMessageDialog(null,"Email is not valid");
+							}
+						}
+						else {
+							JOptionPane.showMessageDialog(null,"Password must contain one number,one upper case letter, and at least 8 characters long!");
+						}
 					}
 					else {
 						JOptionPane.showMessageDialog(null,"Password doesn't match");
@@ -213,7 +227,7 @@ public class FrmSignup extends JFrame {
 					
 				} 
 				catch (Exception e2){
-					JOptionPane.showMessageDialog(null, "Error: \n"+e2.getMessage());
+					JOptionPane.showMessageDialog(null, "Email or username already taken");
 				}
 				
 			}
@@ -224,5 +238,22 @@ public class FrmSignup extends JFrame {
 		btnSignUp.setBackground(new Color(246, 144, 59));
 		btnSignUp.setBounds(263, 356, 135, 37);
 		contentPane.add(btnSignUp);
+		
+	}
+	public static boolean passwordVal(String pasword) {
+		boolean correctPass = false;
+		String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$";
+		Pattern pattern = Pattern.compile(passwordPattern);
+		Matcher matcher = pattern.matcher(pasword);
+		correctPass = matcher.matches();
+		return correctPass ;
+	}
+	public static boolean emailVal(String email) {
+		boolean correctEmail = false;
+		String passwordPattern = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$";
+		Pattern pattern = Pattern.compile(passwordPattern, Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(email);
+		correctEmail = matcher.matches();
+		return correctEmail;	
 	}
 }
