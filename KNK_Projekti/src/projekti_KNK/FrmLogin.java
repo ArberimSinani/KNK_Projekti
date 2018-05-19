@@ -124,7 +124,7 @@ public class FrmLogin extends JFrame {
 		lblSignup.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSignup.setFont(new Font("Calibri", Font.PLAIN, 12));
 		lblSignup.setBounds(476, 346, 55, 16);
-		lblSignup.setCursor(handCursor); //Change cursor when u hover over this label
+		lblSignup.setCursor(handCursor); 
 		contentPane.add(lblSignup);
 	}
 }
