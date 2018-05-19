@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -18,16 +19,26 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class FrmLogin extends JFrame {
-	
+	 //objekti per lidhje
+	Connection conn=null;
+	//objekti per vendosje te rezultatit
+	ResultSet res=null;
+	//objekti per query
+	PreparedStatement pst=null;
 	Cursor handCursor =  new Cursor(Cursor.HAND_CURSOR); //Create a hand cursor object
 	private JPanel contentPane;
 	private JTextField txtUsername;
 	private JPasswordField pwdPassword;
-
+	// main frame object
+	FrmMain mainFrame = new FrmMain();
+	
 	/**
 	 * Launch the application.
 	 */
@@ -52,6 +63,7 @@ public class FrmLogin extends JFrame {
 	 * Create the frame.
 	 */
 	public FrmLogin() {
+		conn=SQLConn.connectDB();
 		//this.setExtendedState(this.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 684, 456);
@@ -103,6 +115,38 @@ public class FrmLogin extends JFrame {
 		contentPane.add(pwdPassword);
 		
 		JButton btnLogin = new JButton("Login");
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+						String sql="select * from tblusers where username = '"+txtUsername.getText()+"' and userPassword = '"+pwdPassword.getText()+"';";
+						pst=conn.prepareStatement(sql);
+						res = pst.executeQuery();
+						if(res.next()) {
+							String sql1="select * from tblusers where username = '"+txtUsername.getText()+"' and userPassword = '"+pwdPassword.getText()+"' and userAdmin = 1;";
+							pst=conn.prepareStatement(sql1);
+							pst.execute();
+							res = pst.executeQuery();
+							if(res.next()) {
+								dispose();
+								mainFrame.setVisible(true);
+								mainFrame.setLocationRelativeTo(null);
+							}
+							else {
+								JOptionPane.showMessageDialog(null, "You don't have administrator access!");
+							}
+						
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "Username or password incorrect!");
+						}
+						
+					pst.close();
+				} 
+				catch (Exception e2){
+					JOptionPane.showMessageDialog(null, "Error: "+e2.getMessage());
+				}
+			}
+		});
 		btnLogin.setForeground(Color.WHITE);
 		btnLogin.setFont(new Font("Calibri", Font.PLAIN, 16));
 		btnLogin.setBackground(new Color(246, 144, 59));

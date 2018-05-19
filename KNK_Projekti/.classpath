@@ -4,5 +4,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/Users/Lenovo/Desktop/knk-projekti/jcalendar-1.4.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Lenovo/Desktop/knk-projekti/mysql-connector-java-5.1.46.jar"/>
+	<classpathentry kind="lib" path="E:/FIEK/Semestri 4/Komunikimi Njeri-Kompjuter/Ushtrime/java_8_9_10/rs2xml.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

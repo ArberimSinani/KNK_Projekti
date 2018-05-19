@@ -22,6 +22,9 @@ import java.sql.Driver;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
@@ -33,6 +36,12 @@ import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 
 public class FrmSignup extends JFrame {
+	     //objekti per lidhje
+		Connection conn=null;
+		//objekti per vendosje te rezultatit
+		ResultSet res=null;
+		//objekti per query
+		PreparedStatement pst=null;
 
 	private JPanel contentPane;
 	private JTextField txtFullName;
@@ -41,7 +50,8 @@ public class FrmSignup extends JFrame {
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JPasswordField pwdPassword;
 	private JPasswordField pwdConfPassword;
-
+	//Login object
+	FrmLogin loginFrame = new FrmLogin();
 	/**
 	 * Launch the application.
 	 */
@@ -63,6 +73,7 @@ public class FrmSignup extends JFrame {
 	 * Create the frame.
 	 */
 	public FrmSignup() {
+		conn=SQLConn.connectDB();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 684, 456);
 		contentPane = new JPanel();
@@ -171,6 +182,42 @@ public class FrmSignup extends JFrame {
 		contentPane.add(pwdConfPassword);
 		
 		JButton btnSignUp = new JButton("Sign up");
+		btnSignUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				char gender = 0;
+				if(rdbtnMale.isSelected()) {
+					gender = 'M';
+				}
+				else if(rdbtnFemale.isSelected()) {
+					gender = 'F';
+				}
+				Date date = dateChooser.getDate();
+				DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+				String userdate = format.format(date);
+				
+				try {
+					if(pwdPassword.getText().equals(pwdConfPassword.getText())) {
+						String sql="insert into tblusers (fullname,username,useremail,userbdate,usergender,userpassword) values "
+								+ "('"+txtFullName.getText()+"','"+txtUserName.getText()+"','"+txtEmail.getText()+"','"+userdate+"','"+gender+"','"+pwdPassword.getText()+"');";
+						pst=conn.prepareStatement(sql);
+						pst.execute();
+						pst.close();
+						
+						dispose();
+						loginFrame.setVisible(true);
+						loginFrame.setLocationRelativeTo(null);
+					}
+					else {
+						JOptionPane.showMessageDialog(null,"Password doesn't match");
+					}
+					
+				} 
+				catch (Exception e2){
+					JOptionPane.showMessageDialog(null, "Error: \n"+e2.getMessage());
+				}
+				
+			}
+		});
 		
 		btnSignUp.setForeground(Color.WHITE);
 		btnSignUp.setFont(new Font("Calibri", Font.PLAIN, 22));
