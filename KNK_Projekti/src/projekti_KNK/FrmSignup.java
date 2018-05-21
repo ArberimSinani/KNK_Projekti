@@ -2,6 +2,7 @@ package projekti_KNK;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -38,13 +39,13 @@ import java.awt.event.ActionListener;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class FrmSignup extends JFrame {
-	     //objekti per lidhje
+
 		Connection conn=null;
-		//objekti per vendosje te rezultatit
 		ResultSet res=null;
-		//objekti per query
 		PreparedStatement pst=null;
 
 	private JPanel contentPane;
@@ -54,6 +55,7 @@ public class FrmSignup extends JFrame {
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JPasswordField pwdPassword;
 	private JPasswordField pwdConfPassword;
+	Cursor handCursor =  new Cursor(Cursor.HAND_CURSOR); //Create a hand cursor object
 	//Login object
 	FrmLogin loginFrame = new FrmLogin();
 	/**
@@ -66,6 +68,8 @@ public class FrmSignup extends JFrame {
 					//UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					FrmSignup frame = new FrmSignup();
 					frame.setVisible(true);
+					frame.setLocationRelativeTo(null);
+					frame.setResizable(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -237,9 +241,27 @@ public class FrmSignup extends JFrame {
 		btnSignUp.setFont(new Font("Calibri", Font.PLAIN, 22));
 		btnSignUp.setBackground(new Color(246, 144, 59));
 		btnSignUp.setBounds(263, 356, 135, 37);
+		btnSignUp.setCursor(handCursor);
 		contentPane.add(btnSignUp);
 		
+		JLabel lblAlreadyAUser = new JLabel("Already a user? Log in");
+		lblAlreadyAUser.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				dispose();
+				loginFrame.setVisible(true);
+				loginFrame.setLocationRelativeTo(null);
+			}
+		});
+		lblAlreadyAUser.setForeground(Color.DARK_GRAY);
+		lblAlreadyAUser.setFont(new Font("Calibri", Font.PLAIN, 11));
+		lblAlreadyAUser.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAlreadyAUser.setCursor(handCursor);
+		lblAlreadyAUser.setBounds(263, 392, 135, 14);
+		contentPane.add(lblAlreadyAUser);
+		
 	}
+	//Password validation method
 	public static boolean passwordVal(String pasword) {
 		boolean correctPass = false;
 		String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$";
@@ -248,9 +270,10 @@ public class FrmSignup extends JFrame {
 		correctPass = matcher.matches();
 		return correctPass ;
 	}
+	//Email validation method
 	public static boolean emailVal(String email) {
 		boolean correctEmail = false;
-		String passwordPattern = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$";
+		String passwordPattern = "^[a-zA-Z0-9_.]+@[a-zA-Z.]+?\\.[a-zA-Z]{2,3}$";
 		Pattern pattern = Pattern.compile(passwordPattern, Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(email);
 		correctEmail = matcher.matches();
