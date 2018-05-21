@@ -28,20 +28,22 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.ListSelectionModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 public class FrmMain extends JFrame {
 
 	private JPanel contentPane;
-	private JTable tblStandings;
 	//objekti per lidhje
 		Connection conn=null;
 		//objekti per vendosje te rezultatit
 		ResultSet res=null;
 		//objekti per query
 		PreparedStatement pst=null;
+		private JTable tblStandings;
 	/**
 	 * Launch the application.
 	 */
@@ -59,6 +61,7 @@ public class FrmMain extends JFrame {
 			}
 		});
 	}
+	//Metoda qe e ben update tabelen me te dhena nga databaza
 	public void updateTable()
 	{
 		try 
@@ -69,32 +72,7 @@ public class FrmMain extends JFrame {
 			//objekti qe mundeson ekzekutimin e querit dhe vendosjen e rez ne objektin res.
 			res=pst.executeQuery();
 			//duhet te behet import rs2xml libraria.
-			tblStandings.setModel(new DefaultTableModel(
-				new Object[][] {
-					{"Bashkimi", new Integer(28), new Integer(23), new Integer(5), new Integer(2552), new Integer(2011), new Integer(56)},
-					{"Prishtina", new Integer(28), new Integer(27), new Integer(1), new Integer(2778), new Integer(1939), new Integer(51)},
-					{"Rahoveci", new Integer(28), new Integer(16), new Integer(12), new Integer(2378), new Integer(2289), new Integer(44)},
-					{"Golden Eagle Ylli", new Integer(28), new Integer(15), new Integer(13), new Integer(2553), new Integer(2402), new Integer(43)},
-					{"Trepca", new Integer(28), new Integer(12), new Integer(16), new Integer(2176), new Integer(2342), new Integer(40)},
-					{"Peja", new Integer(28), new Integer(8), new Integer(20), new Integer(2118), new Integer(2536), new Integer(36)},
-					{"Borea", new Integer(28), new Integer(7), new Integer(21), new Integer(2226), new Integer(2711), new Integer(35)},
-					{"Kerasan Prishtina", new Integer(28), new Integer(4), new Integer(24), new Integer(2115), new Integer(2666), new Integer(32)},
-				},
-				new String[] {
-					"Team", "Games played", "Wins", "Losses", "Scored", "Taken", "Points"
-				}
-			) {
-				Class[] columnTypes = new Class[] {
-					String.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class
-				};
-				public Class getColumnClass(int columnIndex) {
-					return columnTypes[columnIndex];
-				}
-			});
-			tblStandings.getColumnModel().getColumn(0).setPreferredWidth(90);
-			tblStandings.getColumnModel().getColumn(0).setMinWidth(90);
-			tblStandings.getColumnModel().getColumn(1).setPreferredWidth(80);
-			
+			tblStandings.setModel(DbUtils.resultSetToTableModel(res));
 			pst.close();
 		} 
 		catch (Exception e) 
@@ -107,6 +85,8 @@ public class FrmMain extends JFrame {
 	 * Create the frame.
 	 */
 	public FrmMain() {
+		setTitle("Kucat Score");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FrmMain.class.getResource("/images/icon.png")));
 		conn=SQLConn.connectDB();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1100, 600);
@@ -150,16 +130,12 @@ public class FrmMain extends JFrame {
 		standingsPanel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(106, 52, 869, 155);
+		scrollPane.setBounds(131, 78, 817, 154);
 		standingsPanel.add(scrollPane);
 		
 		tblStandings = new JTable();
-		tblStandings.setBackground(Color.WHITE);
-		tblStandings.setForeground(Color.BLACK);
-		tblStandings.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tblStandings.setFont(new Font("Calibri", Font.PLAIN, 15));
 		scrollPane.setViewportView(tblStandings);
-		tblStandings.setColumnSelectionAllowed(true);
-		tblStandings.setFont(new Font("Calibri", Font.PLAIN, 16));
 		tabbedPane.setBackgroundAt(2, Color.ORANGE);
 		
 		JPanel teamsPanel = new JPanel();
