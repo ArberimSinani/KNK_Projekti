@@ -56,6 +56,7 @@ public class FrmSignup extends JFrame {
 	private JPasswordField pwdPassword;
 	private JPasswordField pwdConfPassword;
 	Cursor handCursor =  new Cursor(Cursor.HAND_CURSOR); //Create a hand cursor object
+	
 	//Login object
 	FrmLogin loginFrame = new FrmLogin();
 	/**
