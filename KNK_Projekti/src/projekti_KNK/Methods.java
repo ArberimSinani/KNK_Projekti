@@ -11,7 +11,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 
 public class Methods {
-	public static void setupTabTraversalKeys(JTabbedPane tabbedPane)
+	public void setupTabTraversalKeys(JTabbedPane tabbedPane)
 	  {
 	    KeyStroke ctrlTab = KeyStroke.getKeyStroke("ctrl TAB");
 	    KeyStroke ctrlShiftTab = KeyStroke.getKeyStroke("ctrl shift TAB");

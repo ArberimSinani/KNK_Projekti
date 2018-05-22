@@ -1,14 +1,11 @@
 package projekti_KNK;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-import net.proteanit.sql.DbUtils;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -19,12 +16,10 @@ import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.HashSet;
 import java.awt.event.InputEvent;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.KeyboardFocusManager;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
@@ -32,23 +27,31 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.ListSelectionModel;
+
+import net.proteanit.sql.DbUtils;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class FrmMain extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	//objekti per lidhje
+//********Objektet e nevojshme per lidhje me databaze *****
 		Connection conn=null;
-		//objekti per vendosje te rezultatit
 		ResultSet res=null;
-		//objekti per query
 		PreparedStatement pst=null;
+//*********************************************************		
+		
 		private JTable tblStandings;
 		private JTextField txtTeam;
 		private JTextField txtGamesplayed;
@@ -57,6 +60,7 @@ public class FrmMain extends JFrame {
 		private JTextField txtScored;
 		private JTextField txtTaken;
 		private JTextField txtPoints;
+		//Objekti i klases methods :
 		Methods objMethods = new Methods();
 	/**
 	 * Launch the application.
@@ -83,30 +87,17 @@ public class FrmMain extends JFrame {
 			String sql="select team as 'Team', games as 'Games played',wins as 'Wins', losses as 'Losses',"
 						+"scored as 'Scored',taken as 'Taken',points as 'Points' from tblStandings order by points desc;";
 			pst=conn.prepareStatement(sql);
-			//objekti qe mundeson ekzekutimin e querit dhe vendosjen e rez ne objektin res.
+			//objekti qe mundeson ekzekutimin e querit dhe vendosjen e rezultatit ne objektin res.
 			res=pst.executeQuery();
 			//duhet te behet import rs2xml libraria.
-			tblStandings.setModel(new DefaultTableModel(
-				new Object[][] {
-					{"Prishtina", new Integer(28), new Integer(27), new Integer(1), new Integer(2778), new Integer(1939), new Integer(55)},
-					{"Bashkimi", new Integer(28), new Integer(23), new Integer(5), new Integer(2552), new Integer(2011), new Integer(51)},
-					{"Rahoveci", new Integer(28), new Integer(16), new Integer(12), new Integer(2378), new Integer(2289), new Integer(44)},
-					{"Golden Eagle Ylli", new Integer(28), new Integer(15), new Integer(13), new Integer(2553), new Integer(2402), new Integer(43)},
-					{"Trepca", new Integer(28), new Integer(12), new Integer(16), new Integer(2176), new Integer(2342), new Integer(40)},
-					{"Peja", new Integer(28), new Integer(8), new Integer(20), new Integer(2118), new Integer(2536), new Integer(36)},
-					{"Borea", new Integer(28), new Integer(7), new Integer(21), new Integer(2226), new Integer(2711), new Integer(35)},
-					{"Kerasan Prishtina", new Integer(28), new Integer(4), new Integer(24), new Integer(2115), new Integer(2666), new Integer(32)},
-				},
-				new String[] {
-					"Team", "Games played", "Wins", "Losses", "Scored", "Taken", "Points"
-				}
-			));
+			tblStandings.setModel(DbUtils.resultSetToTableModel(res));
 			tblStandings.getColumnModel().getColumn(0).setPreferredWidth(111);
+			
 			pst.close();
 		} 
 		catch (Exception e) 
 		{
-			JOptionPane.showMessageDialog(null, "Gabim gjate update te table."+e.getMessage());
+			JOptionPane.showMessageDialog(null, "Something went wrong while updating table."+e.getMessage());
 		}
 	}
 
@@ -163,6 +154,13 @@ public class FrmMain extends JFrame {
 		standingsPanel.add(scrollPane);
 		
 		tblStandings = new JTable();
+		//Refresh table when mouse pointer enters the table space.
+		tblStandings.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				updateTable();
+			}
+		});
 		tblStandings.setBackground(new Color(236,235,235));
 		tblStandings.setFont(new Font("Calibri", Font.PLAIN, 18));
 		scrollPane.setViewportView(tblStandings);
@@ -279,8 +277,7 @@ public class FrmMain extends JFrame {
 		JPanel teamsPanel = new JPanel();
 		tabbedPane.addTab("Teams", null, teamsPanel, null);
 		tabbedPane.setBackgroundAt(3, new Color(246, 144, 59));
-		updateTable();
 		objMethods.setupTabTraversalKeys(tabbedPane);
-		 
+		updateTable();
 	}
 }

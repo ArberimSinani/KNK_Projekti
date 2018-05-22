@@ -1,6 +1,5 @@
 package projekti_KNK;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.EventQueue;
@@ -16,13 +15,10 @@ import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.JTextField;
-import java.sql.Driver;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,13 +26,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JRadioButton;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import javax.swing.ButtonGroup;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -44,6 +37,10 @@ import java.awt.event.MouseEvent;
 
 public class FrmSignup extends JFrame {
 
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 		Connection conn=null;
 		ResultSet res=null;
 		PreparedStatement pst=null;
@@ -192,6 +189,7 @@ public class FrmSignup extends JFrame {
 		
 		JButton btnSignUp = new JButton("Sign up");
 		btnSignUp.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent arg0) {
 				char gender = 0;
 				if(rdbtnMale.isSelected()) {
@@ -203,6 +201,7 @@ public class FrmSignup extends JFrame {
 				Date date = dateChooser.getDate();
 				DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 				String userdate = format.format(date);
+				
 				
 				try {
 					if(pwdPassword.getText().equals(pwdConfPassword.getText())) {

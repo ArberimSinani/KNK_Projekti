@@ -1,6 +1,5 @@
 package projekti_KNK;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -15,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
@@ -23,10 +23,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
 
 public class FrmLogin extends JFrame {
-	 //objekti per lidhje
+	 /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	//objekti per lidhje
 	Connection conn=null;
 	//objekti per vendosje te rezultatit
 	ResultSet res=null;
@@ -118,10 +125,12 @@ public class FrmLogin extends JFrame {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
+						@SuppressWarnings("deprecation")
 						String sql="select * from tblusers where username = '"+txtUsername.getText()+"' and userPassword = '"+pwdPassword.getText()+"';";
 						pst=conn.prepareStatement(sql);
 						res = pst.executeQuery();
 						if(res.next()) {
+							@SuppressWarnings("deprecation")
 							String sql1="select * from tblusers where username = '"+txtUsername.getText()+"' and userPassword = '"+pwdPassword.getText()+"' and userAdmin = 1;";
 							pst=conn.prepareStatement(sql1);
 							pst.execute();
@@ -147,6 +156,10 @@ public class FrmLogin extends JFrame {
 				}
 			}
 		});
+		String key = "ENTER";
+		KeyStroke keyStroke = KeyStroke.getKeyStroke(key);
+		btnLogin.getInputMap().put(keyStroke, key);
+		btnLogin.getActionMap().put(key, btnLogin.getAction());
 		btnLogin.setForeground(Color.WHITE);
 		btnLogin.setFont(new Font("Calibri", Font.PLAIN, 16));
 		btnLogin.setBackground(new Color(246, 144, 59));
