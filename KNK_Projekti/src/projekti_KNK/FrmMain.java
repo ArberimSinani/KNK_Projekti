@@ -19,7 +19,9 @@ import java.sql.ResultSet;
 import java.awt.event.InputEvent;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Insets;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
@@ -35,6 +37,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -70,6 +73,7 @@ public class FrmMain extends JFrame {
 			public void run() {
 				try {
 					//UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					UIManager.put("TabbedPane.selected", new Color(254,144,59));
 					FrmMain frame = new FrmMain();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
@@ -136,17 +140,20 @@ public class FrmMain extends JFrame {
 		
 		JPanel homePanel = new JPanel();
 		tabbedPane.addTab("Home", null, homePanel, null);
-		tabbedPane.setBackgroundAt(0, new Color(246, 144, 59));
+		tabbedPane.setForegroundAt(0, Color.WHITE);
+		tabbedPane.setBackgroundAt(0, Color.BLACK);
 		homePanel.setBackground(Color.WHITE);
 		homePanel.setLayout(null);
 		
 		JPanel resultsPanel = new JPanel();
 		tabbedPane.addTab("Results", null, resultsPanel, null);
-		tabbedPane.setBackgroundAt(1, new Color(246, 144, 59));
+		tabbedPane.setForegroundAt(1, Color.WHITE);
+		tabbedPane.setBackgroundAt(1, Color.BLACK);
 		
 		JPanel standingsPanel = new JPanel();
 		standingsPanel.setBackground(Color.WHITE);
 		tabbedPane.addTab("Standings", null, standingsPanel, null);
+		tabbedPane.setForegroundAt(2, Color.WHITE);
 		standingsPanel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -272,12 +279,16 @@ public class FrmMain extends JFrame {
 		btnDelete.setBounds(878, 401, 111, 33);
 		btnDelete.setBackground(new Color(246, 144, 59));
 		standingsPanel.add(btnDelete);
-		tabbedPane.setBackgroundAt(2, new Color(246, 144, 59));
+		tabbedPane.setBackgroundAt(2, Color.BLACK);
+		
 		
 		JPanel teamsPanel = new JPanel();
 		tabbedPane.addTab("Teams", null, teamsPanel, null);
-		tabbedPane.setBackgroundAt(3, new Color(246, 144, 59));
-		objMethods.setupTabTraversalKeys(tabbedPane);
+		tabbedPane.setForegroundAt(3, Color.WHITE);
+		tabbedPane.setBackgroundAt(3, Color.BLACK);
+	
+		
+		objMethods.setupTabTraversalKeys(tabbedPane);//Thirrja per metoden qe mundeson nderrimin e tabave me TAB dhe shift+TAB
 		updateTable();
 	}
 }
