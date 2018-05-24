@@ -45,6 +45,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPopupMenu;
 import java.awt.Component;
+import javax.swing.border.LineBorder;
 
 public class FrmMain extends JFrame {
 
@@ -82,6 +83,7 @@ public class FrmMain extends JFrame {
 					//UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					UIManager.put("TabbedPane.selected", new Color(51, 102, 102));
 					FrmMain frame = new FrmMain();
+					//frame.setUndecorated(true);
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
 					frame.setResizable(false);
@@ -102,8 +104,23 @@ public class FrmMain extends JFrame {
 			//objekti qe mundeson ekzekutimin e querit dhe vendosjen e rezultatit ne objektin res.
 			res=pst.executeQuery();
 			//duhet te behet import rs2xml libraria.
-			tblStandings.setModel(DbUtils.resultSetToTableModel(res));
-			tblStandings.getColumnModel().getColumn(0).setPreferredWidth(111);
+			tblStandings.setModel(new DefaultTableModel(
+				new Object[][] {
+					{"Prishtina", new Integer(28), new Integer(27), new Integer(1), new Integer(2778), new Integer(1939), new Integer(55)},
+					{"Bashkimi", new Integer(28), new Integer(23), new Integer(5), new Integer(2552), new Integer(2011), new Integer(51)},
+					{"Rahoveci", new Integer(28), new Integer(16), new Integer(12), new Integer(2378), new Integer(2289), new Integer(44)},
+					{"Golden Eagle Ylli", new Integer(28), new Integer(15), new Integer(13), new Integer(2553), new Integer(2402), new Integer(43)},
+					{"Trepca", new Integer(28), new Integer(12), new Integer(16), new Integer(2176), new Integer(2342), new Integer(40)},
+					{"Peja", new Integer(28), new Integer(8), new Integer(20), new Integer(2118), new Integer(2536), new Integer(36)},
+					{"Borea", new Integer(28), new Integer(7), new Integer(21), new Integer(2226), new Integer(2711), new Integer(35)},
+					{"Kerasan Prishtina", new Integer(28), new Integer(4), new Integer(24), new Integer(2115), new Integer(2666), new Integer(32)},
+				},
+				new String[] {
+					"Team", "GP", "W", "L", "Scored", "Taken", "Points"
+				}
+			));
+			tblStandings.getColumnModel().getColumn(0).setPreferredWidth(125);
+			tblStandings.getColumnModel().getColumn(0).setMinWidth(125);
 			
 			pst.close();
 		} 
@@ -154,7 +171,32 @@ public class FrmMain extends JFrame {
 		homePanel.setLayout(null);
 		
 		JPanel resultsPanel = new JPanel();
+		resultsPanel.setBackground(new Color(51, 102, 102));
 		tabbedPane.addTab("Results", null, resultsPanel, null);
+		resultsPanel.setLayout(null);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setLayout(null);
+		panel_1.setBackground(Color.BLACK);
+		panel_1.setBounds(218, 0, 861, 49);
+		resultsPanel.add(panel_1);
+		
+		JLabel lblResults = new JLabel("Results");
+		lblResults.setHorizontalAlignment(SwingConstants.CENTER);
+		lblResults.setForeground(Color.WHITE);
+		lblResults.setFont(new Font("Calibri", Font.PLAIN, 23));
+		lblResults.setBounds(294, 11, 223, 28);
+		panel_1.add(lblResults);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setLayout(null);
+		panel_2.setBackground(Color.BLACK);
+		panel_2.setBounds(0, 0, 220, 512);
+		resultsPanel.add(panel_2);
+		
+		JLabel label_2 = new JLabel("");
+		label_2.setBounds(64, 12, 84, 58);
+		panel_2.add(label_2);
 		tabbedPane.setForegroundAt(1, Color.WHITE);
 		tabbedPane.setBackgroundAt(1, Color.BLACK);
 		
@@ -175,7 +217,10 @@ public class FrmMain extends JFrame {
 		standingsPanel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(228, 84, 851, 155);
+		scrollPane.setBounds(310, 87, 676, 153);
+		scrollPane.setBorder(null); 
+		scrollPane.setBackground(Color.BLACK);
+		
 		standingsPanel.add(scrollPane);
 		
 		tblStandings = new JTable();
@@ -221,7 +266,14 @@ public class FrmMain extends JFrame {
 			}
 		});
 		tblStandings.setBackground(new Color(204, 204, 255));
-		tblStandings.setFont(new Font("Calibri", Font.PLAIN, 18));
+		tblStandings.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		tblStandings.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 16));
+		tblStandings.getTableHeader().setBackground(Color.BLACK);
+		tblStandings.getTableHeader().setForeground(Color.WHITE);
+		tblStandings.getTableHeader().setBorder(null); 
+		tblStandings.setBorder(new LineBorder(new Color(0, 0, 0), 1, true)); 
+		
+		
 		scrollPane.setViewportView(tblStandings);
 		
 		JPopupMenu popupMenu = new JPopupMenu();

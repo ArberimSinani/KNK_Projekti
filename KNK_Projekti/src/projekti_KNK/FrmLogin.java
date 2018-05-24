@@ -56,11 +56,13 @@ public class FrmLogin extends JFrame {
 			public void run() {
 				try {
 					FrmLogin frame = new FrmLogin();
+					frame.setUndecorated(true);//Removes title bar
 					frame.setVisible(true);
 					//Set the frame in the middle of the window
 					frame.setLocationRelativeTo(null);
 					//
 					frame.setResizable(false);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -84,22 +86,11 @@ public class FrmLogin extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.BLACK);
-		panel.setBounds(0, 0, 339, 431);
-		contentPane.add(panel);
-		panel.setLayout(null);
-		
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(FrmLogin.class.getResource("/images/basketball-user.png")));
-		label.setBounds(59, 61, 243, 260);
-		panel.add(label);
-		
 		JLabel lblLogin = new JLabel("Login");
 		lblLogin.setFont(new Font("Calibri", Font.BOLD, 29));
 		lblLogin.setForeground(new Color(0, 0, 0));
 		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLogin.setBounds(427, 65, 151, 47);
+		lblLogin.setBounds(418, 64, 151, 47);
 		contentPane.add(lblLogin);
 		
 		txtUsername = new JTextField();
@@ -192,5 +183,29 @@ public class FrmLogin extends JFrame {
 		lblSignup.setBounds(476, 346, 55, 16);
 		lblSignup.setCursor(handCursor); 
 		contentPane.add(lblSignup);
+		
+		JLabel lblExit = new JLabel("");
+		lblExit.setToolTipText("Close");
+		lblExit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				dispose();
+			}
+		});
+		lblExit.setIcon(new ImageIcon(FrmLogin.class.getResource("/images/close_essential_set_x_icon_128.png")));
+		lblExit.setBounds(648, 11, 20, 20);
+		lblExit.setCursor(handCursor);
+		contentPane.add(lblExit);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.BLACK);
+		panel.setBounds(0, 0, 339, 458);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(FrmLogin.class.getResource("/images/basketball-user.png")));
+		label.setBounds(59, 61, 243, 260);
+		panel.add(label);
 	}
 }

@@ -65,8 +65,8 @@ public class FrmSignup extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					//UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					FrmSignup frame = new FrmSignup();
+					frame.setUndecorated(true);
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
 					frame.setResizable(false);
@@ -92,7 +92,7 @@ public class FrmSignup extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 668, 105);
+		panel.setBounds(0, 0, 686, 105);
 		panel.setBackground(Color.BLACK);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -108,6 +108,20 @@ public class FrmSignup extends JFrame {
 		lblSignUp.setFont(new Font("Calibri", Font.PLAIN, 38));
 		lblSignUp.setBounds(206, 32, 260, 47);
 		panel.add(lblSignUp);
+		
+		JLabel lblExit = new JLabel("");
+		lblExit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				dispose();
+			}
+			
+		});
+		lblExit.setIcon(new ImageIcon(FrmSignup.class.getResource("/images/close_essential_set_x_icon_white.png")));
+		lblExit.setToolTipText("Close");
+		lblExit.setBounds(648, 11, 20, 20);
+		lblExit.setCursor(handCursor);
+		panel.add(lblExit);
 		
 		txtFullName = new JTextField();
 		txtFullName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
