@@ -10,6 +10,7 @@ import java.awt.Cursor;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -27,6 +28,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
+import java.awt.Toolkit;
 
 public class FrmLogin extends JFrame {
 	 /**
@@ -70,19 +72,21 @@ public class FrmLogin extends JFrame {
 	 * Create the frame.
 	 */
 	public FrmLogin() {
+		setTitle("Basketball ");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\DIGITRON\\Desktop\\Fakultet LINA\\KNK\\PROJEKTIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII I FUNDIT\\KNK_Projekti\\KNK_Projekti\\src\\images\\15983-200.png"));
 		conn=SQLConn.connectDB();
 		//this.setExtendedState(this.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 684, 456);
 		contentPane = new JPanel();
-		contentPane.setBackground(Color.WHITE);
+		contentPane.setBackground(new Color(51, 102, 102));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(246, 144, 59));
-		panel.setBounds(0, 0, 339, 417);
+		panel.setBackground(Color.BLACK);
+		panel.setBounds(0, 0, 339, 431);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -93,12 +97,14 @@ public class FrmLogin extends JFrame {
 		
 		JLabel lblLogin = new JLabel("Login");
 		lblLogin.setFont(new Font("Calibri", Font.BOLD, 29));
-		lblLogin.setForeground(Color.DARK_GRAY);
+		lblLogin.setForeground(new Color(0, 0, 0));
 		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLogin.setBounds(427, 65, 151, 47);
 		contentPane.add(lblLogin);
 		
 		txtUsername = new JTextField();
+		txtUsername.setBorder(BorderFactory.createLineBorder(Color.BLACK)); //border e textfield
+		txtUsername.setBackground(Color.LIGHT_GRAY);
 		txtUsername.setToolTipText("");
 		txtUsername.setFont(new Font("Calibri", Font.PLAIN, 14));
 		txtUsername.setBounds(386, 147, 237, 35);
@@ -107,21 +113,23 @@ public class FrmLogin extends JFrame {
 		
 		JLabel lblUsername = new JLabel("Username");
 		lblUsername.setFont(new Font("Calibri", Font.PLAIN, 14));
-		lblUsername.setForeground(Color.DARK_GRAY);
+		lblUsername.setForeground(Color.BLACK);
 		lblUsername.setBounds(386, 122, 237, 24);
 		contentPane.add(lblUsername);
 		
 		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setForeground(Color.DARK_GRAY);
+		lblPassword.setForeground(Color.BLACK);
 		lblPassword.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lblPassword.setBounds(386, 208, 237, 24);
 		contentPane.add(lblPassword);
 		
 		pwdPassword = new JPasswordField();
+		pwdPassword.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		pwdPassword.setBackground(Color.LIGHT_GRAY);
 		pwdPassword.setBounds(386, 233, 237, 35);
 		contentPane.add(pwdPassword);
 		
-		JButton btnLogin = new JButton("Login");
+		JButton btnLogin = new JButton("Log In");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -160,15 +168,16 @@ public class FrmLogin extends JFrame {
 		KeyStroke keyStroke = KeyStroke.getKeyStroke(key);
 		btnLogin.getInputMap().put(keyStroke, key);
 		btnLogin.getActionMap().put(key, btnLogin.getAction());
-		btnLogin.setForeground(Color.WHITE);
-		btnLogin.setFont(new Font("Calibri", Font.PLAIN, 16));
-		btnLogin.setBackground(new Color(246, 144, 59));
+		btnLogin.setForeground(Color.LIGHT_GRAY);
+		btnLogin.setFont(new Font("Calibri", Font.BOLD, 16));
+		btnLogin.setBackground(Color.BLACK);
 		btnLogin.setBounds(443, 299, 121, 35);
 		btnLogin.setCursor(handCursor); //Change cursor when u hover over this Button
 		
 		contentPane.add(btnLogin);
 		
 		JLabel lblSignup = new JLabel("Sign up");
+		lblSignup.setForeground(Color.BLACK);
 		lblSignup.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
