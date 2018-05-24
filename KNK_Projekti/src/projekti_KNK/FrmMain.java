@@ -27,6 +27,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -73,6 +74,13 @@ public class FrmMain extends JFrame {
 	
 		//Objekti i klases methods :
 		Methods objMethods = new Methods();
+		private JTextField txtHteam;
+		private JTextField txtAteam;
+		private JTextField txtHS;
+		private JTextField txtAS;
+		private JTextField txtTime;
+		private JTextField txtDate;
+		private JTable tblResults;
 	/**
 	 * Launch the application.
 	 */
@@ -93,6 +101,29 @@ public class FrmMain extends JFrame {
 			}
 		});
 	}
+	public void updateTblResults()
+	{
+		try 
+		{
+			String sql="select ht_name as 'HT', at_name as 'AT',at_score as 'HT Score', at_score as 'AT Score'," 
+									+"game_time as 'Time',game_date as 'Date' from tblResults;";
+			pst=conn.prepareStatement(sql);
+			//objekti qe mundeson ekzekutimin e querit dhe vendosjen e rezultatit ne objektin res.
+			res=pst.executeQuery();
+			//duhet te behet import rs2xml libraria.
+			tblResults.setModel(DbUtils.resultSetToTableModel(res));
+			tblResults.getColumnModel().getColumn(0).setPreferredWidth(125);
+			tblResults.getColumnModel().getColumn(0).setMinWidth(125);
+			
+			pst.close();
+		} 
+		catch (Exception e) 
+		{
+			JOptionPane.showMessageDialog(null, "Something went wrong while updating table."+e.getMessage());
+		}
+	}
+
+	
 	//Metoda qe e ben update tabelen me te dhena nga databaza
 	public void updateTable()
 	{
@@ -104,23 +135,16 @@ public class FrmMain extends JFrame {
 			//objekti qe mundeson ekzekutimin e querit dhe vendosjen e rezultatit ne objektin res.
 			res=pst.executeQuery();
 			//duhet te behet import rs2xml libraria.
-			tblStandings.setModel(new DefaultTableModel(
-				new Object[][] {
-					{"Prishtina", new Integer(28), new Integer(27), new Integer(1), new Integer(2778), new Integer(1939), new Integer(55)},
-					{"Bashkimi", new Integer(28), new Integer(23), new Integer(5), new Integer(2552), new Integer(2011), new Integer(51)},
-					{"Rahoveci", new Integer(28), new Integer(16), new Integer(12), new Integer(2378), new Integer(2289), new Integer(44)},
-					{"Golden Eagle Ylli", new Integer(28), new Integer(15), new Integer(13), new Integer(2553), new Integer(2402), new Integer(43)},
-					{"Trepca", new Integer(28), new Integer(12), new Integer(16), new Integer(2176), new Integer(2342), new Integer(40)},
-					{"Peja", new Integer(28), new Integer(8), new Integer(20), new Integer(2118), new Integer(2536), new Integer(36)},
-					{"Borea", new Integer(28), new Integer(7), new Integer(21), new Integer(2226), new Integer(2711), new Integer(35)},
-					{"Kerasan Prishtina", new Integer(28), new Integer(4), new Integer(24), new Integer(2115), new Integer(2666), new Integer(32)},
-				},
-				new String[] {
-					"Team", "GP", "W", "L", "Scored", "Taken", "Points"
-				}
-			));
-			tblStandings.getColumnModel().getColumn(0).setPreferredWidth(125);
-			tblStandings.getColumnModel().getColumn(0).setMinWidth(125);
+			tblStandings.setModel(DbUtils.resultSetToTableModel(res));
+			tblStandings.getColumnModel().getColumn(0).setPreferredWidth(155);
+			tblStandings.getColumnModel().getColumn(0).setMinWidth(155);
+			tblStandings.getColumnModel().getColumn(1).setPreferredWidth(35);
+			tblStandings.getColumnModel().getColumn(1).setMaxWidth(2147483612);
+			tblStandings.getColumnModel().getColumn(2).setPreferredWidth(35);
+			tblStandings.getColumnModel().getColumn(2).setMinWidth(34);
+			tblStandings.getColumnModel().getColumn(4).setPreferredWidth(35);
+			tblStandings.getColumnModel().getColumn(5).setPreferredWidth(35);
+			tblStandings.getColumnModel().getColumn(6).setPreferredWidth(35);
 			
 			pst.close();
 		} 
@@ -130,12 +154,15 @@ public class FrmMain extends JFrame {
 		}
 	}
 
+	
+	
+	
 	/**
 	 * Create the frame.
 	 */
 	public FrmMain() {
 		setTitle("Basketball");
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\DIGITRON\\Desktop\\Fakultet LINA\\KNK\\PROJEKTIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII I FUNDIT\\KNK_Projekti\\KNK_Projekti\\src\\images\\15983-200.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FrmMain.class.getResource("/images/15983-200.png")));
 		conn=SQLConn.connectDB();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1100, 600);
@@ -170,41 +197,11 @@ public class FrmMain extends JFrame {
 		homePanel.setBackground(new Color(51, 102, 102));
 		homePanel.setLayout(null);
 		
-		JPanel resultsPanel = new JPanel();
-		resultsPanel.setBackground(new Color(51, 102, 102));
-		tabbedPane.addTab("Results", null, resultsPanel, null);
-		resultsPanel.setLayout(null);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setLayout(null);
-		panel_1.setBackground(Color.BLACK);
-		panel_1.setBounds(218, 0, 861, 49);
-		resultsPanel.add(panel_1);
-		
-		JLabel lblResults = new JLabel("Results");
-		lblResults.setHorizontalAlignment(SwingConstants.CENTER);
-		lblResults.setForeground(Color.WHITE);
-		lblResults.setFont(new Font("Calibri", Font.PLAIN, 23));
-		lblResults.setBounds(294, 11, 223, 28);
-		panel_1.add(lblResults);
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setLayout(null);
-		panel_2.setBackground(Color.BLACK);
-		panel_2.setBounds(0, 0, 220, 512);
-		resultsPanel.add(panel_2);
-		
-		JLabel label_2 = new JLabel("");
-		label_2.setBounds(64, 12, 84, 58);
-		panel_2.add(label_2);
-		tabbedPane.setForegroundAt(1, Color.WHITE);
-		tabbedPane.setBackgroundAt(1, Color.BLACK);
-		
 		
 		JPanel teamsPanel = new JPanel();
 		tabbedPane.addTab("Teams", null, teamsPanel, null);
-		tabbedPane.setForegroundAt(2, Color.WHITE);
-		tabbedPane.setBackgroundAt(2, Color.BLACK);
+		tabbedPane.setForegroundAt(1, Color.WHITE);
+		tabbedPane.setBackgroundAt(1, Color.BLACK);
 	
 		
 		objMethods.setupTabTraversalKeys(tabbedPane);//Thirrja per metoden qe mundeson nderrimin e tabave me TAB dhe shift+TAB
@@ -212,18 +209,20 @@ public class FrmMain extends JFrame {
 		JPanel standingsPanel = new JPanel();
 		standingsPanel.setBackground(new Color(51, 102, 102));
 		tabbedPane.addTab("Standings", null, standingsPanel, null);
-		tabbedPane.setForegroundAt(3, Color.WHITE);
-		tabbedPane.setBackgroundAt(3, Color.BLACK);
+		tabbedPane.setForegroundAt(2, Color.WHITE);
+		tabbedPane.setBackgroundAt(2, Color.BLACK);
 		standingsPanel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(310, 87, 676, 153);
+		scrollPane.setBounds(307, 82, 676, 153);
 		scrollPane.setBorder(null); 
 		scrollPane.setBackground(Color.BLACK);
 		
 		standingsPanel.add(scrollPane);
 		
 		tblStandings = new JTable();
+		
+		
 		
 		//Refresh table when mouse pointer enters the table space.
 		tblStandings.addMouseListener(new MouseAdapter() {
@@ -308,7 +307,7 @@ public class FrmMain extends JFrame {
 		popupMenu.add(mntmDelete);
 		
 		JPanel titlePanel = new JPanel();
-		titlePanel.setBounds(218, 0, 861, 49);
+		titlePanel.setBounds(260, 0, 819, 49);
 		standingsPanel.add(titlePanel);
 		titlePanel.setLayout(null);
 		titlePanel.setBackground(new Color(0, 0, 0));
@@ -320,85 +319,153 @@ public class FrmMain extends JFrame {
 		lblStandingsTable.setBounds(294, 11, 223, 28);
 		titlePanel.add(lblStandingsTable);
 		
-		txtTeam = new JTextField();
-		txtTeam.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
-		txtTeam.setBounds(11, 82, 188, 33);
-		standingsPanel.add(txtTeam);
-		txtTeam.setColumns(10);
-		
-		txtGamesplayed = new JTextField();
-		txtGamesplayed.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
-		txtGamesplayed.setColumns(10);
-		txtGamesplayed.setBounds(10, 142, 188, 33);
-		standingsPanel.add(txtGamesplayed);
-		
-		txtWins = new JTextField();
-		txtWins.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
-		txtWins.setColumns(10);
-		txtWins.setBounds(10, 207, 188, 33);
-		standingsPanel.add(txtWins);
-		
-		txtLosses = new JTextField();
-		txtLosses.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
-		txtLosses.setColumns(10);
-		txtLosses.setBounds(11, 272, 188, 33);
-		standingsPanel.add(txtLosses);
-		
-		txtScored = new JTextField();
-		txtScored.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
-		txtScored.setColumns(10);
-		txtScored.setBounds(11, 334, 188, 33);
-		standingsPanel.add(txtScored);
-		
-		txtTaken = new JTextField();
-		txtTaken.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
-		txtTaken.setColumns(10);
-		txtTaken.setBounds(11, 396, 188, 33);
-		standingsPanel.add(txtTaken);
-		
-		txtPoints = new JTextField();
-		txtPoints.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
-		txtPoints.setColumns(10);
-		txtPoints.setBounds(11, 459, 188, 33);
-		standingsPanel.add(txtPoints);
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.BLACK);
+		panel.setBounds(0, 0, 263, 524);
+		standingsPanel.add(panel);
+		panel.setLayout(null);
 		
 		JLabel lblTeam = new JLabel("Team");
+		lblTeam.setBounds(33, 4, 189, 20);
+		panel.add(lblTeam);
 		lblTeam.setForeground(Color.LIGHT_GRAY);
-		lblTeam.setBounds(10, 61, 189, 20);
-		standingsPanel.add(lblTeam);
+		
+		txtTeam = new JTextField();
+		txtTeam.setBackground(Color.LIGHT_GRAY);
+		txtTeam.setBounds(34, 25, 188, 33);
+		panel.add(txtTeam);
+		txtTeam.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		txtTeam.setColumns(10);
 		
 		JLabel lblGamesPlayed = new JLabel("Games played");
+		lblGamesPlayed.setBounds(33, 64, 188, 20);
+		panel.add(lblGamesPlayed);
 		lblGamesPlayed.setForeground(Color.LIGHT_GRAY);
-		lblGamesPlayed.setBounds(10, 121, 188, 20);
-		standingsPanel.add(lblGamesPlayed);
+		
+		txtGamesplayed = new JTextField();
+		txtGamesplayed.setBackground(Color.LIGHT_GRAY);
+		txtGamesplayed.setBounds(33, 85, 188, 33);
+		panel.add(txtGamesplayed);
+		txtGamesplayed.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
+		txtGamesplayed.setColumns(10);
 		
 		JLabel lblWins = new JLabel("Wins");
+		lblWins.setBounds(35, 129, 188, 20);
+		panel.add(lblWins);
 		lblWins.setForeground(Color.LIGHT_GRAY);
-		lblWins.setBounds(12, 186, 188, 20);
-		standingsPanel.add(lblWins);
+		
+		txtWins = new JTextField();
+		txtWins.setBackground(Color.LIGHT_GRAY);
+		txtWins.setBounds(33, 150, 188, 33);
+		panel.add(txtWins);
+		txtWins.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
+		txtWins.setColumns(10);
 		
 		JLabel lblLosses = new JLabel("Losses");
+		lblLosses.setBounds(34, 194, 188, 20);
+		panel.add(lblLosses);
 		lblLosses.setForeground(Color.LIGHT_GRAY);
-		lblLosses.setBounds(11, 251, 188, 20);
-		standingsPanel.add(lblLosses);
+		
+		txtLosses = new JTextField();
+		txtLosses.setBackground(Color.LIGHT_GRAY);
+		txtLosses.setBounds(34, 215, 188, 33);
+		panel.add(txtLosses);
+		txtLosses.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
+		txtLosses.setColumns(10);
 		
 		JLabel lblScored = new JLabel("Scored");
+		lblScored.setBounds(34, 259, 188, 20);
+		panel.add(lblScored);
 		lblScored.setForeground(Color.LIGHT_GRAY);
-		lblScored.setBounds(11, 316, 188, 20);
-		standingsPanel.add(lblScored);
+		
+		txtScored = new JTextField();
+		txtScored.setBackground(Color.LIGHT_GRAY);
+		txtScored.setBounds(34, 277, 188, 33);
+		panel.add(txtScored);
+		txtScored.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
+		txtScored.setColumns(10);
 		
 		JLabel lblTaken = new JLabel("Taken");
+		lblTaken.setBounds(36, 321, 188, 20);
+		panel.add(lblTaken);
 		lblTaken.setForeground(Color.LIGHT_GRAY);
-		lblTaken.setBounds(13, 378, 188, 20);
-		standingsPanel.add(lblTaken);
+		
+		txtTaken = new JTextField();
+		txtTaken.setBackground(Color.LIGHT_GRAY);
+		txtTaken.setBounds(34, 339, 188, 33);
+		panel.add(txtTaken);
+		txtTaken.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
+		txtTaken.setColumns(10);
 		
 		JLabel lblPoints = new JLabel("Points");
+		lblPoints.setBounds(34, 383, 185, 20);
+		panel.add(lblPoints);
 		lblPoints.setForeground(Color.LIGHT_GRAY);
-		lblPoints.setBounds(11, 440, 185, 20);
-		standingsPanel.add(lblPoints);
+		
+		txtPoints = new JTextField();
+		txtPoints.setBackground(Color.LIGHT_GRAY);
+		txtPoints.setBounds(34, 402, 188, 33);
+		panel.add(txtPoints);
+		txtPoints.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
+		txtPoints.setColumns(10);
+		
+		//Butoni RESET ===================================================================================
+		JButton btnReset = new JButton("Reset");
+		btnReset.setBounds(33, 479, 95, 33);
+		panel.add(btnReset);
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtTeam.setText("");
+				txtGamesplayed.setText("");
+				txtWins.setText("");
+				txtLosses.setText("");
+				txtScored.setText("");
+				txtTaken.setText("");
+				txtPoints.setText("");
+			}
+		});
+		btnReset.setForeground(Color.WHITE);
+		btnReset.setFont(new Font("Calibri", Font.PLAIN, 17));
+		btnReset.setBackground(Color.BLACK);
+		
+		//BUTONI DELETE ======================================================================================================
+		JButton btnDelete = new JButton("Delete");
+		btnDelete.setBounds(130, 479, 92, 33);
+		panel.add(btnDelete);
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					String sql = "Delete from tblstandings where team='"+txtTeam.getText()+"'";
+					pst=conn.prepareStatement(sql);
+					pst.execute();
+					pst.close();
+					updateTable();
+					
+					txtTeam.setText("");
+					txtGamesplayed.setText("");
+					txtWins.setText("");
+					txtLosses.setText("");
+					txtScored.setText("");
+					txtTaken.setText("");
+					txtPoints.setText("");
+					
+				}
+				catch(Exception e2) {
+					JOptionPane.showMessageDialog(null,"Gabim gjate fshirjes "+e2.getMessage());
+				}
+				
+				
+			}
+		});
+		btnDelete.setForeground(Color.WHITE);
+		btnDelete.setFont(new Font("Calibri", Font.PLAIN, 17));
+		btnDelete.setBackground(Color.BLACK);
 		
 		//Butoni ADD ============================================================================================================
 		JButton btnAdd = new JButton("Add");
+		btnAdd.setBounds(33, 446, 95, 33);
+		panel.add(btnAdd);
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -429,12 +496,12 @@ public class FrmMain extends JFrame {
 		});
 		btnAdd.setForeground(Color.WHITE);
 		btnAdd.setFont(new Font("Calibri", Font.PLAIN, 17));
-		btnAdd.setBounds(339, 365, 111, 33);
 		btnAdd.setBackground(Color.BLACK);
-		standingsPanel.add(btnAdd);
 		
 		//Butoni Edit ===================================================================================
 		JButton btnEdit = new JButton("Edit");
+		btnEdit.setBounds(130, 446, 92, 33);
+		panel.add(btnEdit);
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -458,74 +525,131 @@ public class FrmMain extends JFrame {
 		});
 		btnEdit.setForeground(Color.WHITE);
 		btnEdit.setFont(new Font("Calibri", Font.PLAIN, 17));
-		btnEdit.setBounds(228, 365, 111, 33);
 		btnEdit.setBackground(Color.BLACK);
-		standingsPanel.add(btnEdit);
-		
-		//BUTONI DELETE ======================================================================================================
-		JButton btnDelete = new JButton("Delete");
-		btnDelete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					String sql = "Delete from tblstandings where team='"+txtTeam.getText()+"'";
-					pst=conn.prepareStatement(sql);
-					pst.execute();
-					pst.close();
-					updateTable();
-					
-					txtTeam.setText("");
-					txtGamesplayed.setText("");
-					txtWins.setText("");
-					txtLosses.setText("");
-					txtScored.setText("");
-					txtTaken.setText("");
-					txtPoints.setText("");
-					
-				}
-				catch(Exception e2) {
-					JOptionPane.showMessageDialog(null,"Gabim gjate fshirjes "+e2.getMessage());
-				}
-				
-				
-			}
-		});
-		btnDelete.setForeground(Color.WHITE);
-		btnDelete.setFont(new Font("Calibri", Font.PLAIN, 17));
-		btnDelete.setBounds(339, 334, 111, 33);
-		btnDelete.setBackground(Color.BLACK);
-		standingsPanel.add(btnDelete);
-		
-		//Butoni RESET ===================================================================================
-		JButton btnReset = new JButton("Reset");
-		btnReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				txtTeam.setText("");
-				txtGamesplayed.setText("");
-				txtWins.setText("");
-				txtLosses.setText("");
-				txtScored.setText("");
-				txtTaken.setText("");
-				txtPoints.setText("");
-			}
-		});
-		btnReset.setForeground(Color.WHITE);
-		btnReset.setFont(new Font("Calibri", Font.PLAIN, 17));
-		btnReset.setBackground(Color.BLACK);
-		btnReset.setBounds(228, 334, 111, 33);
-		standingsPanel.add(btnReset);
-		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.BLACK);
-		panel.setBounds(0, 0, 220, 512);
-		standingsPanel.add(panel);
-		panel.setLayout(null);
 		
 		JLabel label = new JLabel("");
-		label.setBounds(64, 12, 84, 58);
-		panel.add(label);
+		label.setBounds(868, 422, 84, 58);
+		standingsPanel.add(label);
 		label.setIcon(new ImageIcon(FrmMain.class.getResource("/images/basketball-logo-with-flames.png")));
+		
+		JPanel resultsPanel = new JPanel();
+		resultsPanel.setBackground(new Color(51, 102, 102));
+		tabbedPane.addTab("Results", null, resultsPanel, null);
+		tabbedPane.setForegroundAt(3, Color.WHITE);
+		tabbedPane.setBackgroundAt(3, Color.BLACK);
+		resultsPanel.setLayout(null);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(0, 0, 536, 522);
+		panel_1.setBackground(Color.BLACK);
+		resultsPanel.add(panel_1);
+		panel_1.setLayout(null);
+		
+		JLabel lblResults = new JLabel("Insert results");
+		lblResults.setBounds(119, 53, 292, 28);
+		lblResults.setHorizontalAlignment(SwingConstants.CENTER);
+		lblResults.setForeground(Color.WHITE);
+		lblResults.setFont(new Font("Calibri", Font.PLAIN, 23));
+		panel_1.add(lblResults);
+		
+		txtHteam = new JTextField();
+		txtHteam.setBounds(58, 133, 178, 28);
+		panel_1.add(txtHteam);
+		txtHteam.setColumns(10);
+		
+		txtAteam = new JTextField();
+		txtAteam.setBounds(288, 133, 183, 28);
+		txtAteam.setColumns(10);
+		panel_1.add(txtAteam);
+		
+		txtHS = new JTextField();
+		txtHS.setBounds(288, 225, 178, 28);
+		txtHS.setColumns(10);
+		panel_1.add(txtHS);
+		
+		txtAS = new JTextField();
+		txtAS.setBounds(58, 226, 178, 28);
+		txtAS.setColumns(10);
+		panel_1.add(txtAS);
+		
+		txtTime = new JTextField();
+		txtTime.setBounds(58, 313, 183, 28);
+		txtTime.setColumns(10);
+		panel_1.add(txtTime);
+		
+		txtDate = new JTextField();
+		txtDate.setBounds(288, 314, 178, 28);
+		txtDate.setColumns(10);
+		panel_1.add(txtDate);
+		
+		JButton btnAdd_1 = new JButton("ADD");
+		btnAdd_1.setBounds(72, 396, 89, 36);
+		btnAdd_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnAdd_1.setBackground(Color.BLACK);
+		btnAdd_1.setForeground(Color.LIGHT_GRAY);
+		panel_1.add(btnAdd_1);
+		
+		JButton btnNewButton = new JButton("Delete");
+		btnNewButton.setBounds(171, 396, 89, 36);
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton.setBackground(Color.BLACK);
+		btnNewButton.setForeground(Color.LIGHT_GRAY);
+		panel_1.add(btnNewButton);
+		
+		JButton btnEdit_1 = new JButton("Edit");
+		btnEdit_1.setBounds(270, 396, 89, 36);
+		btnEdit_1.setFont(new Font("Dialog", Font.PLAIN, 14));
+		btnEdit_1.setBackground(Color.BLACK);
+		btnEdit_1.setForeground(Color.LIGHT_GRAY);
+		panel_1.add(btnEdit_1);
+		
+		JButton btnReset_1 = new JButton("Reset");
+		btnReset_1.setBounds(369, 396, 89, 36);
+		btnReset_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnReset_1.setBackground(Color.BLACK);
+		btnReset_1.setForeground(Color.LIGHT_GRAY);
+		panel_1.add(btnReset_1);
+		
+		JLabel lblHomeTeam = new JLabel("Home Team");
+		lblHomeTeam.setBounds(58, 108, 104, 14);
+		lblHomeTeam.setForeground(Color.LIGHT_GRAY);
+		panel_1.add(lblHomeTeam);
+		
+		JLabel lblAwayTeam = new JLabel("Away Team");
+		lblAwayTeam.setBounds(289, 108, 104, 14);
+		lblAwayTeam.setForeground(Color.LIGHT_GRAY);
+		panel_1.add(lblAwayTeam);
+		
+		JLabel lblHomeTeamScores = new JLabel("Home Team Scores");
+		lblHomeTeamScores.setBounds(290, 200, 160, 14);
+		lblHomeTeamScores.setForeground(Color.LIGHT_GRAY);
+		panel_1.add(lblHomeTeamScores);
+		
+		JLabel lblAwayTeamScores = new JLabel("Away Team Scores");
+		lblAwayTeamScores.setBounds(58, 200, 178, 15);
+		lblAwayTeamScores.setForeground(Color.LIGHT_GRAY);
+		panel_1.add(lblAwayTeamScores);
+		
+		JLabel lblTime = new JLabel("Time");
+		lblTime.setBounds(58, 288, 104, 14);
+		lblTime.setForeground(Color.LIGHT_GRAY);
+		panel_1.add(lblTime);
+		
+		JLabel lblDate = new JLabel("Date");
+		lblDate.setBounds(290, 288, 104, 14);
+		lblDate.setForeground(Color.LIGHT_GRAY);
+		panel_1.add(lblDate);
+		
+		JScrollPane scrollPane2 = new JScrollPane();
+		scrollPane2.setBorder(null);
+		scrollPane2.setBackground(Color.BLACK);
+		scrollPane2.setBounds(535, 49, 676, 153);
+		resultsPanel.add(scrollPane2);
+		
+		tblResults = new JTable();
+		scrollPane2.setViewportView(tblResults);
 		updateTable();
+		updateTblResults();
 	}
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
