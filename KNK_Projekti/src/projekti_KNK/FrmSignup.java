@@ -58,6 +58,7 @@ public class FrmSignup extends JFrame {
 	
 	//Login object
 	FrmLogin loginFrame = new FrmLogin();
+	
 	/**
 	 * Launch the application.
 	 */
@@ -286,6 +287,7 @@ public class FrmSignup extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				dispose();
+				loginFrame.setUndecorated(true);
 				loginFrame.setVisible(true);
 				loginFrame.setLocationRelativeTo(null);
 			}
