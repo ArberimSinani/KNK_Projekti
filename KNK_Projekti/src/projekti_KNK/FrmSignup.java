@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.JTextField;
 
 import java.sql.Connection;
@@ -31,6 +33,8 @@ import javax.swing.ButtonGroup;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -67,6 +71,16 @@ public class FrmSignup extends JFrame {
 			public void run() {
 				try {
 					FrmSignup frame = new FrmSignup();
+					try {
+					    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+					        if ("Nimbus".equals(info.getName())) {
+					            UIManager.setLookAndFeel(info.getClassName());
+					            break;
+					        }
+					    }
+					} catch (Exception e) {
+					    // If Nimbus is not available, you can set the GUI to another look and feel.
+					}
 					frame.setUndecorated(true);
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
@@ -225,6 +239,12 @@ public class FrmSignup extends JFrame {
 		contentPane.add(pwdConfPassword);
 		
 		JButton btnSignUp = new JButton("Sign up");
+		//Signup with ENTER key:
+		btnSignUp.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent arg0) {
+				btnSignUp.getRootPane().setDefaultButton(btnSignUp);	
+			}
+		});
 		btnSignUp.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent arg0) {

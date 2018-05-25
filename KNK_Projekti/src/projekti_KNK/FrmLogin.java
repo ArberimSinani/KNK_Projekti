@@ -13,6 +13,9 @@ import javax.swing.JOptionPane;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -29,6 +32,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.Toolkit;
+import javax.swing.JCheckBox;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class FrmLogin extends JFrame {
 	 /**
@@ -55,12 +63,24 @@ public class FrmLogin extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					
+					
+					try {
+					    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+					        if ("Nimbus".equals(info.getName())) {
+					            UIManager.setLookAndFeel(info.getClassName());
+					            break;
+					        }
+					    }
+					} catch (Exception e) {
+					    // If Nimbus is not available, you can set the GUI to another look and feel.
+					}
 					FrmLogin frame = new FrmLogin();
 					frame.setUndecorated(true);//Removes title bar
 					frame.setVisible(true);
 					//Set the frame in the middle of the window
 					frame.setLocationRelativeTo(null);
-					//
+					
 					frame.setResizable(false);
 					
 				} catch (Exception e) {
@@ -115,12 +135,25 @@ public class FrmLogin extends JFrame {
 		contentPane.add(lblPassword);
 		
 		pwdPassword = new JPasswordField();
+		pwdPassword.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				pwdPassword.selectAll();
+			}
+		});
 		pwdPassword.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		pwdPassword.setBackground(Color.LIGHT_GRAY);
 		pwdPassword.setBounds(386, 233, 237, 35);
 		contentPane.add(pwdPassword);
 		
 		JButton btnLogin = new JButton("Log In");
+		
+	//Login with Enter key
+		btnLogin.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent arg0) {
+				btnLogin.getRootPane().setDefaultButton(btnLogin);	
+			}
+		});
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -155,14 +188,11 @@ public class FrmLogin extends JFrame {
 				}
 			}
 		});
-		String key = "ENTER";
-		KeyStroke keyStroke = KeyStroke.getKeyStroke(key);
-		btnLogin.getInputMap().put(keyStroke, key);
-		btnLogin.getActionMap().put(key, btnLogin.getAction());
 		btnLogin.setForeground(Color.LIGHT_GRAY);
 		btnLogin.setFont(new Font("Calibri", Font.BOLD, 16));
 		btnLogin.setBackground(Color.BLACK);
 		btnLogin.setBounds(443, 299, 121, 35);
+		//btnLogin.setOpaque(true);
 		btnLogin.setCursor(handCursor); //Change cursor when u hover over this Button
 		
 		contentPane.add(btnLogin);
@@ -208,5 +238,24 @@ public class FrmLogin extends JFrame {
 		label.setIcon(new ImageIcon(FrmLogin.class.getResource("/images/basketball-user.png")));
 		label.setBounds(59, 61, 243, 260);
 		panel.add(label);
+		
+		JCheckBox chckbxShowPassword = new JCheckBox("Show password");
+		chckbxShowPassword.setFont(new Font("Calibri", Font.PLAIN, 12));
+		chckbxShowPassword.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				if(chckbxShowPassword.isSelected()) {
+					pwdPassword.setEchoChar((char) 0);
+				}
+				else {
+					pwdPassword.setEchoChar('*');
+				}
+			}
+		});
+		chckbxShowPassword.setHorizontalAlignment(SwingConstants.CENTER);
+		chckbxShowPassword.setBackground(new Color(51, 102, 102));
+		chckbxShowPassword.setForeground(Color.BLACK);
+		chckbxShowPassword.setBounds(386, 269, 237, 23);
+		contentPane.add(chckbxShowPassword);
+		
 	}
 }
