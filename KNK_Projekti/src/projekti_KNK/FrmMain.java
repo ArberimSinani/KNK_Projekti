@@ -810,47 +810,241 @@ public class FrmMain extends JFrame {
 		tabbedPane.addTab("Teams", null, teamsPanel, null);
 		teamsPanel.setLayout(null);
 		
-		JPanel panel_5 = new JPanel();
-		panel_5.setBackground(new Color(204, 0, 0));
-		panel_5.setBounds(261, 0, 817, 512);
-		panel_5.setVisible(false);
-		teamsPanel.add(panel_5);
+		JPanel panelKPrishtina = new JPanel();
+		panelKPrishtina.setBounds(261, 0, 823, 512);
+		teamsPanel.add(panelKPrishtina);
+		panelKPrishtina.setLayout(null);
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(Color.BLACK);
-		panel_3.setBounds(0, 0, 261, 512);
-		teamsPanel.add(panel_3);
-		panel_3.setLayout(null);
+		JLabel lblKPrishtina = new JLabel("KPrishtina");
+		lblKPrishtina.setBounds(250, 113, 55, 16);
+		panelKPrishtina.add(lblKPrishtina);
 		
 		
+		JPanel panelGEYlli = new JPanel();
+		panelGEYlli.setBounds(261, 0, 823, 512);
+		teamsPanel.add(panelGEYlli);
+		panelGEYlli.setLayout(null);
 		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBackground(new Color(102, 204, 51));
-		panel_4.setBounds(261, 0, 817, 512);
-		panel_4.setVisible(false);
-		teamsPanel.add(panel_4);
+		JLabel lblGEYlli = new JLabel("GEYlli");
+		lblGEYlli.setBounds(250, 113, 55, 16);
+		panelGEYlli.add(lblGEYlli);
+		
+		
+		JPanel panelRahoveci = new JPanel();
+		panelRahoveci.setBounds(261, 0, 823, 512);
+		teamsPanel.add(panelRahoveci);
+		panelRahoveci.setLayout(null);
+		
+		JLabel lblRahoveci = new JLabel("Rahoveci");
+		lblRahoveci.setBounds(250, 113, 55, 16);
+		panelRahoveci.add(lblRahoveci);
+		
+		JPanel panelBorea = new JPanel();
+		panelBorea.setBounds(261, 0, 823, 512);
+		teamsPanel.add(panelBorea);
+		panelBorea.setLayout(null);
+		
+		JLabel lblBorea = new JLabel("Borea");
+		lblBorea.setBounds(250, 113, 55, 16);
+		panelBorea.add(lblBorea);
+		
+		JPanel panelBashkimi = new JPanel();
+		panelBashkimi.setBounds(261, 0, 823, 512);
+		teamsPanel.add(panelBashkimi);
+		panelBashkimi.setLayout(null);
+		
+		JLabel lblBashkimi = new JLabel("Bashkimi");
+		lblBashkimi.setBounds(250, 113, 55, 16);
+		panelBashkimi.add(lblBashkimi);
+		
+		JPanel panelPeja = new JPanel();
+		panelPeja.setBounds(261, 0, 823, 512);
+		teamsPanel.add(panelPeja);
+		panelPeja.setLayout(null);
+		
+		JLabel lblPeja = new JLabel("Peja");
+		lblPeja.setBounds(259, 33, 268, 66);
+		panelPeja.add(lblPeja);
+		
+		JPanel panelTrepca = new JPanel();
+		panelTrepca.setBounds(261, 0, 823, 512);
+		teamsPanel.add(panelTrepca);
+		panelTrepca.setLayout(null);
+		
+		JLabel lblTrepca = new JLabel("Trepca");
+		lblTrepca.setBounds(250, 113, 55, 16);
+		panelTrepca.add(lblTrepca);
+		
+		JPanel panelPrishtina = new JPanel();
+		panelPrishtina.setBounds(261, 0, 823, 512);
+		teamsPanel.add(panelPrishtina);
+		panelPrishtina.setLayout(null);
+		
+		JLabel lblPrishtina = new JLabel("Prishtina");
+		lblPrishtina.setBounds(256, 81, 191, 35);
+		panelPrishtina.add(lblPrishtina);
+		
+		panelPrishtina.setVisible(false);
+		panelTrepca.setVisible(false);
+		panelPeja.setVisible(false);
+		panelBashkimi.setVisible(false);
+		panelBorea.setVisible(false);
+		panelRahoveci.setVisible(false);
+		panelGEYlli.setVisible(false);
+		panelKPrishtina.setVisible(false);
+		
+		JPanel panelTeams = new JPanel();
+		panelTeams.setBackground(Color.BLACK);
+		panelTeams.setBounds(0, 0, 261, 512);
+		teamsPanel.add(panelTeams);
+		panelTeams.setLayout(null);
+		
+		JButton btnTeamPrishtina = new JButton("Sigal Prishtina");
+		btnTeamPrishtina.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panelPrishtina.setVisible(true);
+				panelTrepca.setVisible(false);
+				panelPeja.setVisible(false);
+				panelBashkimi.setVisible(false);
+				panelBorea.setVisible(false);
+				panelRahoveci.setVisible(false);
+				panelGEYlli.setVisible(false);
+				panelKPrishtina.setVisible(false);
+			}
+		});
+		btnTeamPrishtina.setIcon(new ImageIcon(FrmMain.class.getResource("/images/prishtina_logo.png")));
+		btnTeamPrishtina.setForeground(Color.WHITE);
+		btnTeamPrishtina.setBackground(Color.BLACK);
+		btnTeamPrishtina.setBounds(0, 0, 261, 44);
+		panelTeams.add(btnTeamPrishtina);
+		
+		JButton btnTeamTrepca = new JButton("Trepca");
+		btnTeamTrepca.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelPrishtina.setVisible(false);
+				panelTrepca.setVisible(true);
+				panelPeja.setVisible(false);
+				panelBashkimi.setVisible(false);
+				panelBorea.setVisible(false);
+				panelRahoveci.setVisible(false);
+				panelGEYlli.setVisible(false);
+				panelKPrishtina.setVisible(false);
+			}
+		});
+		btnTeamTrepca.setForeground(Color.WHITE);
+		btnTeamTrepca.setBackground(Color.BLACK);
+		btnTeamTrepca.setBounds(0, 44, 261, 44);
+		panelTeams.add(btnTeamTrepca);
+		
+		JButton btnTeamPeja = new JButton("Peja");
+		btnTeamPeja.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelPrishtina.setVisible(false);
+				panelTrepca.setVisible(false);
+				panelPeja.setVisible(true);
+				panelBashkimi.setVisible(false);
+				panelBorea.setVisible(false);
+				panelRahoveci.setVisible(false);
+				panelGEYlli.setVisible(false);
+				panelKPrishtina.setVisible(false);
+			}
+		});
+		btnTeamPeja.setForeground(Color.WHITE);
+		btnTeamPeja.setBackground(Color.BLACK);
+		btnTeamPeja.setBounds(0, 88, 261, 44);
+		panelTeams.add(btnTeamPeja);
+		
+		JButton btnTeamBashkimi = new JButton("Bashkimi");
+		btnTeamBashkimi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelPrishtina.setVisible(false);
+				panelTrepca.setVisible(false);
+				panelPeja.setVisible(false);
+				panelBashkimi.setVisible(true);
+				panelBorea.setVisible(false);
+				panelRahoveci.setVisible(false);
+				panelGEYlli.setVisible(false);
+				panelKPrishtina.setVisible(false);
+			}
+		});
+		btnTeamBashkimi.setForeground(Color.WHITE);
+		btnTeamBashkimi.setBackground(Color.BLACK);
+		btnTeamBashkimi.setBounds(0, 132, 261, 44);
+		panelTeams.add(btnTeamBashkimi);
+		
+		JButton btnTeamRahoveci = new JButton("Rahoveci");
+		btnTeamRahoveci.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelPrishtina.setVisible(false);
+				panelTrepca.setVisible(false);
+				panelPeja.setVisible(false);
+				panelBashkimi.setVisible(false);
+				panelBorea.setVisible(false);
+				panelRahoveci.setVisible(true);
+				panelGEYlli.setVisible(false);
+				panelKPrishtina.setVisible(false);
+			}
+		});
+		btnTeamRahoveci.setForeground(Color.WHITE);
+		btnTeamRahoveci.setBackground(Color.BLACK);
+		btnTeamRahoveci.setBounds(0, 176, 261, 44);
+		panelTeams.add(btnTeamRahoveci);
+		
+		JButton btnTeamGEYlli = new JButton("Golden Eagle Ylli");
+		btnTeamGEYlli.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelPrishtina.setVisible(false);
+				panelTrepca.setVisible(false);
+				panelPeja.setVisible(false);
+				panelBashkimi.setVisible(false);
+				panelBorea.setVisible(false);
+				panelRahoveci.setVisible(false);
+				panelGEYlli.setVisible(true);
+				panelKPrishtina.setVisible(false);
+			}
+		});
+		btnTeamGEYlli.setForeground(Color.WHITE);
+		btnTeamGEYlli.setBackground(Color.BLACK);
+		btnTeamGEYlli.setBounds(0, 264, 261, 44);
+		panelTeams.add(btnTeamGEYlli);
+		
+		JButton btnTeamKPrishtina = new JButton("Kerasan Prishtina");
+		btnTeamKPrishtina.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelPrishtina.setVisible(false);
+				panelTrepca.setVisible(false);
+				panelPeja.setVisible(false);
+				panelBashkimi.setVisible(false);
+				panelBorea.setVisible(false);
+				panelRahoveci.setVisible(false);
+				panelGEYlli.setVisible(false);
+				panelKPrishtina.setVisible(true);
+			}
+		});
+		btnTeamKPrishtina.setForeground(Color.WHITE);
+		btnTeamKPrishtina.setBackground(Color.BLACK);
+		btnTeamKPrishtina.setBounds(0, 308, 261, 44);
+		panelTeams.add(btnTeamKPrishtina);
+		
+		JButton btnTeamBorea = new JButton("Borea");
+		btnTeamBorea.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelPrishtina.setVisible(false);
+				panelTrepca.setVisible(false);
+				panelPeja.setVisible(false);
+				panelBashkimi.setVisible(false);
+				panelBorea.setVisible(true);
+				panelRahoveci.setVisible(false);
+				panelGEYlli.setVisible(false);
+				panelKPrishtina.setVisible(false);
+			}
+		});
+		btnTeamBorea.setForeground(Color.WHITE);
+		btnTeamBorea.setBackground(Color.BLACK);
+		btnTeamBorea.setBounds(0, 220, 261, 44);
+		panelTeams.add(btnTeamBorea);
 		tabbedPane.setForegroundAt(3, Color.WHITE);
 		tabbedPane.setBackgroundAt(3, Color.BLACK);
-		
-		JButton btnAdd = new JButton("ADD");
-		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				panel_4.setVisible(true);
-				panel_5.setVisible(false);
-			}
-		});
-		btnAdd.setBounds(96, 137, 90, 28);
-		panel_3.add(btnAdd);
-		
-		JButton btnAddRed = new JButton("ADD red");
-		btnAddRed.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panel_4.setVisible(false);
-				panel_5.setVisible(true);
-			}
-		});
-		btnAddRed.setBounds(96, 178, 90, 28);
-		panel_3.add(btnAddRed);
 		
 		updateTable();
 		updateTblResults();
