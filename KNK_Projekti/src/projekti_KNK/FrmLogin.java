@@ -26,6 +26,8 @@ import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -37,6 +39,10 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class FrmLogin extends JFrame {
 	 /**
@@ -106,7 +112,7 @@ public class FrmLogin extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblLogin = new JLabel("Login");
+		JLabel lblLogin = new JLabel("Log in");
 		lblLogin.setFont(new Font("Calibri", Font.BOLD, 29));
 		lblLogin.setForeground(new Color(0, 0, 0));
 		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
@@ -146,7 +152,7 @@ public class FrmLogin extends JFrame {
 		pwdPassword.setBounds(386, 233, 237, 35);
 		contentPane.add(pwdPassword);
 		
-		JButton btnLogin = new JButton("Log In");
+		JButton btnLogin = new JButton("Log in");
 		
 	//Login with Enter key
 		btnLogin.addKeyListener(new KeyAdapter() {
@@ -211,7 +217,7 @@ public class FrmLogin extends JFrame {
 		});
 		lblSignup.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSignup.setFont(new Font("Calibri", Font.PLAIN, 12));
-		lblSignup.setBounds(476, 346, 55, 16);
+		lblSignup.setBounds(443, 346, 121, 16);
 		lblSignup.setCursor(handCursor); 
 		contentPane.add(lblSignup);
 		
@@ -238,8 +244,9 @@ public class FrmLogin extends JFrame {
 		label.setIcon(new ImageIcon(FrmLogin.class.getResource("/images/basketball-user.png")));
 		label.setBounds(59, 61, 243, 260);
 		panel.add(label);
-		
 		JCheckBox chckbxShowPassword = new JCheckBox("Show password");
+		
+		
 		chckbxShowPassword.setFont(new Font("Calibri", Font.PLAIN, 12));
 		chckbxShowPassword.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
@@ -257,5 +264,40 @@ public class FrmLogin extends JFrame {
 		chckbxShowPassword.setBounds(386, 269, 237, 23);
 		contentPane.add(chckbxShowPassword);
 		
+		JComboBox cmbLang = new JComboBox();
+		cmbLang.setBounds(351, 11, 73, 20);
+		contentPane.add(cmbLang);
+		cmbLang.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				String lang = null ;
+				if(cmbLang.getSelectedIndex()==1) {
+					lang = "en";
+				}
+				else if(cmbLang.getSelectedIndex()==2) {
+					lang = "al";
+				}
+				changeLang(lang);
+				ResourceBundle r = ResourceBundle.getBundle("log");
+				lblLogin.setText(r.getString("login"));
+				btnLogin.setText(r.getString("login"));
+				lblUsername.setText(r.getString("username"));
+				lblPassword.setText(r.getString("password"));
+				lblSignup.setText(r.getString("signup"));
+				chckbxShowPassword.setText(r.getString("showpwd"));
+			}
+		});
+		cmbLang.setForeground(Color.WHITE);
+		cmbLang.setBackground(new Color(51, 102, 102));
+		cmbLang.setModel(new DefaultComboBoxModel(new String[] {"Lang", "EN", "AL"}));
+		
+		
+	}
+	public void changeLang(String lang) {
+		if(lang == "en") {
+			Locale.setDefault(new Locale("en"));
+		}
+		else if(lang == "al") {
+			Locale.setDefault(new Locale("al"));
+		}
 	}
 }

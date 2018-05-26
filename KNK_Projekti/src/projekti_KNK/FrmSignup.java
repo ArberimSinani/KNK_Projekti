@@ -319,6 +319,7 @@ public class FrmSignup extends JFrame {
 		lblAlreadyAUser.setBounds(263, 392, 135, 14);
 		contentPane.add(lblAlreadyAUser);
 		
+		
 	}
 	//Password validation method
 	public static boolean passwordVal(String pasword) {
