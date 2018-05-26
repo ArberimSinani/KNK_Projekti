@@ -59,6 +59,12 @@ public class FrmLogin extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtUsername;
 	private JPasswordField pwdPassword;
+	
+	
+	JComboBox cmbLang = new JComboBox();
+	
+	String lang = null ;
+	
 	// main frame object
 	FrmMain mainFrame = new FrmMain();
 	
@@ -208,8 +214,9 @@ public class FrmLogin extends JFrame {
 		lblSignup.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				lang = cmbLang.getSelectedItem().toString();
 				dispose();
-				FrmSignup signupFrame =  new FrmSignup(); 
+				FrmSignup signupFrame =  new FrmSignup(lang); 
 				signupFrame.setUndecorated(true);
 				signupFrame.setVisible(true);
 				signupFrame.setLocationRelativeTo(null);
@@ -264,18 +271,13 @@ public class FrmLogin extends JFrame {
 		chckbxShowPassword.setBounds(386, 269, 237, 23);
 		contentPane.add(chckbxShowPassword);
 		
-		JComboBox cmbLang = new JComboBox();
+		
 		cmbLang.setBounds(351, 11, 73, 20);
 		contentPane.add(cmbLang);
 		cmbLang.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
-				String lang = null ;
-				if(cmbLang.getSelectedIndex()==1) {
-					lang = "en";
-				}
-				else if(cmbLang.getSelectedIndex()==2) {
-					lang = "al";
-				}
+				
+				lang = cmbLang.getSelectedItem().toString();
 				changeLang(lang);
 				ResourceBundle r = ResourceBundle.getBundle("log");
 				lblLogin.setText(r.getString("login"));
@@ -285,19 +287,21 @@ public class FrmLogin extends JFrame {
 				lblSignup.setText(r.getString("signup"));
 				chckbxShowPassword.setText(r.getString("showpwd"));
 			}
+			
 		});
 		cmbLang.setForeground(Color.WHITE);
 		cmbLang.setBackground(new Color(51, 102, 102));
 		cmbLang.setModel(new DefaultComboBoxModel(new String[] {"Lang", "EN", "AL"}));
 		
-		
 	}
 	public void changeLang(String lang) {
-		if(lang == "en") {
+		
+		if(lang == "EN") {
 			Locale.setDefault(new Locale("en"));
 		}
-		else if(lang == "al") {
+		else if(lang == "AL") {
 			Locale.setDefault(new Locale("al"));
 		}
 	}
+	
 }

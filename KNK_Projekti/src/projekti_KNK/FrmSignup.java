@@ -24,6 +24,7 @@ import java.sql.PreparedStatement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -60,6 +61,20 @@ public class FrmSignup extends JFrame {
 	private JPasswordField pwdConfPassword;
 	Cursor handCursor =  new Cursor(Cursor.HAND_CURSOR); //Create a hand cursor object
 	
+	JLabel lblName = new JLabel("Full name");
+	JLabel lblUsername = new JLabel("User name");
+	JLabel lblEmail = new JLabel("Email");
+	JLabel lblDateOfBirth = new JLabel("Date of birth");
+	JLabel lblPassword = new JLabel("Password");
+	JLabel lblGender = new JLabel("Gender");
+	JLabel lblConfirmPassword = new JLabel("Confirm password");
+	JLabel lblSignUp = new JLabel("Sign up");
+	JButton btnSignUp = new JButton("Sign up");
+	JLabel lblAlreadyAUser = new JLabel("Already a user? Log in");
+	JRadioButton rdbtnMale = new JRadioButton("Male");
+	JRadioButton rdbtnFemale = new JRadioButton("Female");
+	
+	
 	//Login object
 	FrmLogin loginFrame = new FrmLogin();
 	
@@ -70,7 +85,7 @@ public class FrmSignup extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrmSignup frame = new FrmSignup();
+					FrmSignup frame = new FrmSignup(null);
 					try {
 					    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 					        if ("Nimbus".equals(info.getName())) {
@@ -95,7 +110,7 @@ public class FrmSignup extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrmSignup() {
+	public FrmSignup(String language) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\DIGITRON\\Desktop\\Fakultet LINA\\KNK\\PROJEKTIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII I FUNDIT\\KNK_Projekti\\KNK_Projekti\\src\\images\\15983-200.png"));
 		conn=SQLConn.connectDB();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -152,19 +167,18 @@ public class FrmSignup extends JFrame {
 		txtUserName.setBounds(355, 151, 252, 37);
 		contentPane.add(txtUserName);
 		
-		JLabel lblName = new JLabel("Full name");
+		
 		lblName.setBackground(Color.BLACK);
 		lblName.setForeground(Color.BLACK);
 		lblName.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lblName.setBounds(56, 127, 252, 24);
 		contentPane.add(lblName);
 		
-		JLabel lblLastName = new JLabel("User name");
-		lblLastName.setBackground(Color.BLACK);
-		lblLastName.setForeground(Color.BLACK);
-		lblLastName.setFont(new Font("Calibri", Font.PLAIN, 14));
-		lblLastName.setBounds(355, 127, 252, 24);
-		contentPane.add(lblLastName);
+		lblUsername.setBackground(Color.BLACK);
+		lblUsername.setForeground(Color.BLACK);
+		lblUsername.setFont(new Font("Calibri", Font.PLAIN, 14));
+		lblUsername.setBounds(355, 127, 252, 24);
+		contentPane.add(lblUsername);
 		
 		txtEmail = new JTextField();
 		txtEmail.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -173,7 +187,7 @@ public class FrmSignup extends JFrame {
 		txtEmail.setBounds(56, 223, 252, 37);
 		contentPane.add(txtEmail);
 		
-		JLabel lblEmail = new JLabel("Email");
+	
 		lblEmail.setForeground(Color.BLACK);
 		lblEmail.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lblEmail.setBounds(56, 199, 252, 24);
@@ -186,19 +200,19 @@ public class FrmSignup extends JFrame {
 		dateChooser.setBounds(355, 223, 97, 37);
 		contentPane.add(dateChooser);
 		
-		JLabel lblDateOfBirth = new JLabel("Date of birth");
+		
 		lblDateOfBirth.setForeground(Color.BLACK);
 		lblDateOfBirth.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lblDateOfBirth.setBounds(355, 199, 128, 24);
 		contentPane.add(lblDateOfBirth);
 		
-		JLabel lblGender = new JLabel("Gender");
+		
 		lblGender.setForeground(Color.BLACK);
 		lblGender.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lblGender.setBounds(510, 195, 97, 24);
 		contentPane.add(lblGender);
 		
-		JRadioButton rdbtnMale = new JRadioButton("Male");
+		
 		rdbtnMale.setFont(new Font("Calibri", Font.PLAIN, 12));
 		rdbtnMale.setForeground(new Color(0, 0, 0));
 		buttonGroup.add(rdbtnMale);
@@ -206,7 +220,7 @@ public class FrmSignup extends JFrame {
 		rdbtnMale.setBounds(510, 219, 97, 23);
 		contentPane.add(rdbtnMale);
 		
-		JRadioButton rdbtnFemale = new JRadioButton("Female");
+		
 		rdbtnFemale.setForeground(new Color(0, 0, 0));
 		rdbtnFemale.setFont(new Font("Calibri", Font.PLAIN, 12));
 		buttonGroup.add(rdbtnFemale);
@@ -214,11 +228,11 @@ public class FrmSignup extends JFrame {
 		rdbtnFemale.setBounds(510, 237, 97, 23);
 		contentPane.add(rdbtnFemale);
 		
-		JLabel label_1 = new JLabel("Password");
-		label_1.setForeground(Color.BLACK);
-		label_1.setFont(new Font("Calibri", Font.PLAIN, 14));
-		label_1.setBounds(56, 271, 218, 24);
-		contentPane.add(label_1);
+		
+		lblPassword.setForeground(Color.BLACK);
+		lblPassword.setFont(new Font("Calibri", Font.PLAIN, 14));
+		lblPassword.setBounds(56, 271, 218, 24);
+		contentPane.add(lblPassword);
 		
 		pwdPassword = new JPasswordField();
 		pwdPassword.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -238,7 +252,7 @@ public class FrmSignup extends JFrame {
 		pwdConfPassword.setBounds(355, 294, 252, 37);
 		contentPane.add(pwdConfPassword);
 		
-		JButton btnSignUp = new JButton("Sign up");
+		
 		//Signup with ENTER key:
 		btnSignUp.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent arg0) {
@@ -302,7 +316,7 @@ public class FrmSignup extends JFrame {
 		btnSignUp.setCursor(handCursor);
 		contentPane.add(btnSignUp);
 		
-		JLabel lblAlreadyAUser = new JLabel("Already a user? Log in");
+		
 		lblAlreadyAUser.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -318,6 +332,25 @@ public class FrmSignup extends JFrame {
 		lblAlreadyAUser.setCursor(handCursor);
 		lblAlreadyAUser.setBounds(263, 392, 135, 14);
 		contentPane.add(lblAlreadyAUser);
+		setLanguage(language);
+		
+		
+	}
+	
+	public void setLanguage(String lang) {
+
+		ResourceBundle r = ResourceBundle.getBundle("log");
+		lblName.setText(r.getString("fullname"));
+		lblUsername.setText(r.getString("username"));
+		lblDateOfBirth.setText(r.getString("dateofbirth"));
+		lblPassword.setText(r.getString("password"));
+		lblGender.setText(r.getString("gender"));
+		lblConfirmPassword.setText(r.getString("confpwd"));
+		lblSignUp.setText(r.getString("signup"));
+		btnSignUp.setText(r.getString("signup"));
+		lblAlreadyAUser.setText(r.getString("alrUser"));
+		rdbtnMale.setText(r.getString("male"));
+		rdbtnFemale.setText(r.getString("female"));
 		
 		
 	}
