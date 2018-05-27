@@ -66,7 +66,7 @@ public class FrmLogin extends JFrame {
 	String lang = null ;
 	
 	// main frame object
-	FrmMain mainFrame = new FrmMain();
+	
 	
 	/**
 	 * Launch the application.
@@ -181,6 +181,7 @@ public class FrmLogin extends JFrame {
 							res = pst.executeQuery();
 							if(res.next()) {
 								dispose();
+								FrmMain mainFrame = new FrmMain(lang);
 								mainFrame.setVisible(true);
 								mainFrame.setLocationRelativeTo(null);
 							}

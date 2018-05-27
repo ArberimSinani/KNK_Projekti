@@ -16,6 +16,7 @@ import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ResourceBundle;
 import java.awt.event.InputEvent;
 import javax.swing.JButton;
 import java.awt.Color;
@@ -79,8 +80,6 @@ public class FrmMain extends JFrame {
 		
 		String team ;
 		private int id;
-		
-		private JTable tblUpcoming;
 		private JTextField txtSearch;
 		
 		//Objekti i klases methods :
@@ -100,6 +99,7 @@ public class FrmMain extends JFrame {
 		private JTable tblBorea;
 		private JTable tblGolden;
 		private JTable tblKerasan;
+		private JTable tblUpcoming;
 	/**
 	 * Launch the application.
 	 */
@@ -118,7 +118,7 @@ public class FrmMain extends JFrame {
 					    // If Nimbus is not available, you can set the GUI to another look and feel.
 					}
 					UIManager.put("TabbedPane.selected", new Color(51, 102, 102));
-					FrmMain frame = new FrmMain();
+					FrmMain frame = new FrmMain(null);
 					//frame.setUndecorated(true);
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
@@ -226,8 +226,9 @@ public class FrmMain extends JFrame {
 	
 	/**
 	 * Create the frame.
+	 * @param lang 
 	 */
-	public FrmMain() {
+	public FrmMain(String lang) {
 		setTitle("Basketball");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FrmMain.class.getResource("/images/15983-200.png")));
 		conn=SQLConn.connectDB();
@@ -279,18 +280,17 @@ public class FrmMain extends JFrame {
 		tabbedPane.addTab("Home", null, homePanel, null);
 		tabbedPane.setForegroundAt(0, Color.WHITE);
 		tabbedPane.setBackgroundAt(0, Color.BLACK);
-		homePanel.setBackground(new Color(51, 102, 102));
+		homePanel.setBackground(new Color(255, 255, 255));
 		homePanel.setLayout(null);
 		
 		//=====================================================================================
 				//Scroll pane per upcoming games table-----------------
 				//=====================================================================================
 				JScrollPane scrollPane_1 = new JScrollPane();
-				scrollPane_1.setBounds(128, 335, 816, 175);
+				scrollPane_1.setBounds(72, 259, 696, 175);
 				homePanel.add(scrollPane_1);
 				
 				tblUpcoming = new JTable();
-				
 				scrollPane_1.setViewportView(tblUpcoming);
 				//====================================================================================================================================================		
 				//============================================Search fieldi=======================================================================================================
@@ -317,17 +317,28 @@ public class FrmMain extends JFrame {
 						}
 					}
 				});
-				txtSearch.setBounds(236, 34, 238, 38);
+				txtSearch.setBounds(303, 207, 238, 38);
 				homePanel.add(txtSearch);
 				txtSearch.setColumns(10);
 				//====================================================================================================================================================
 				//label per search field
 				//====================================================================================================================================================
 				JLabel lblSearchForUpcoming = new JLabel("Search for upcoming games:");
-				lblSearchForUpcoming.setBounds(6, 33, 238, 36);
+				lblSearchForUpcoming.setBounds(73, 208, 218, 36);
 				homePanel.add(lblSearchForUpcoming);
-				lblSearchForUpcoming.setForeground(Color.WHITE);
+				lblSearchForUpcoming.setForeground(new Color(0, 0, 0));
 				lblSearchForUpcoming.setFont(new Font("Tahoma", Font.PLAIN, 17));
+				
+				JLabel lblUpcomingGames = new JLabel("UPCOMING GAMES!");
+				lblUpcomingGames.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 30));
+				lblUpcomingGames.setHorizontalAlignment(SwingConstants.CENTER);
+				lblUpcomingGames.setBounds(57, 51, 587, 88);
+				homePanel.add(lblUpcomingGames);
+				
+				JLabel label_78 = new JLabel("");
+				label_78.setIcon(new ImageIcon(FrmMain.class.getResource("/images/dunk2.png")));
+				label_78.setBounds(684, 6, 342, 463);
+				homePanel.add(label_78);
 				
 				JLabel label_39 = new JLabel("");
 				label_39.setIcon(new ImageIcon(FrmMain.class.getResource("/images/background_3home.jpg")));
@@ -345,47 +356,54 @@ public class FrmMain extends JFrame {
 		resultsPanel.setLayout(null);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(0, 0, 536, 522);
+		panel_1.setBounds(0, 0, 470, 522);
 		panel_1.setBackground(Color.BLACK);
 		resultsPanel.add(panel_1);
 		panel_1.setLayout(null);
 		
 		JLabel lblResults = new JLabel("Insert results");
-		lblResults.setBounds(119, 12, 292, 28);
+		lblResults.setBounds(89, 12, 292, 28);
 		lblResults.setHorizontalAlignment(SwingConstants.CENTER);
-		lblResults.setForeground(Color.WHITE);
-		lblResults.setFont(new Font("Calibri", Font.PLAIN, 23));
+		lblResults.setForeground(Color.BLACK);
+		lblResults.setFont(new Font("Calibri", Font.PLAIN, 27));
 		panel_1.add(lblResults);
 		
 		txtHteam = new JTextField();
-		txtHteam.setBounds(57, 92, 183, 33);
+		txtHteam.setBounds(28, 90, 183, 33);
+		txtHteam.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
+		
 		panel_1.add(txtHteam);
 		txtHteam.setColumns(10);
 		
 		txtAteam = new JTextField();
-		txtAteam.setBounds(287, 92, 183, 33);
+		txtAteam.setBounds(258, 90, 183, 33);
+		txtAteam.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
 		txtAteam.setColumns(10);
 		panel_1.add(txtAteam);
 		
 		txtHS = new JTextField();
-		txtHS.setBounds(57, 198, 183, 33);
+		txtHS.setBounds(28, 196, 183, 33);
+		txtHS.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
 		txtHS.setColumns(10);
 		panel_1.add(txtHS);
 		
 		txtAS = new JTextField();
-		txtAS.setBounds(287, 198, 183, 33);
+		txtAS.setBounds(258, 196, 183, 33);
+		txtAS.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
 		txtAS.setColumns(10);
 		panel_1.add(txtAS);
 		
 		txtTime = new JTextField();
-		txtTime.setBounds(57, 298, 183, 33);
+		txtTime.setBounds(28, 296, 183, 33);
+		txtTime.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
 		txtTime.setColumns(10);
 		panel_1.add(txtTime);
 		
 		txtDate = new JTextField();
 		txtDate.setHorizontalAlignment(SwingConstants.LEFT);
 		txtDate.setToolTipText("Date format: yyyy-MM-dd");
-		txtDate.setBounds(287, 299, 183, 33);
+		txtDate.setBounds(258, 297, 183, 33);
+		txtDate.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
 		txtDate.setColumns(10);
 		panel_1.add(txtDate);
 //****************ADD TO TABLE RESULTS*************************************************************************		
@@ -412,7 +430,7 @@ public class FrmMain extends JFrame {
 				
 			}
 		});
-		btnAddResults.setBounds(72, 396, 89, 36);
+		btnAddResults.setBounds(43, 394, 89, 36);
 		btnAddResults.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnAddResults.setBackground(Color.BLACK);
 		btnAddResults.setForeground(Color.LIGHT_GRAY);
@@ -444,7 +462,7 @@ public class FrmMain extends JFrame {
 			
 			}
 		);
-		btnDeleteResults.setBounds(171, 396, 89, 36);
+		btnDeleteResults.setBounds(142, 394, 89, 36);
 		btnDeleteResults.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnDeleteResults.setBackground(Color.BLACK);
 		btnDeleteResults.setForeground(Color.LIGHT_GRAY);
@@ -480,7 +498,7 @@ public class FrmMain extends JFrame {
 				
 			}
 		});
-		btnEditResults.setBounds(270, 396, 89, 36);
+		btnEditResults.setBounds(241, 394, 89, 36);
 		btnEditResults.setFont(new Font("Dialog", Font.PLAIN, 14));
 		btnEditResults.setBackground(Color.BLACK);
 		btnEditResults.setForeground(Color.LIGHT_GRAY);
@@ -498,41 +516,52 @@ public class FrmMain extends JFrame {
 				updateTblResults();
 			}
 		});
-		btnResetResults.setBounds(369, 396, 89, 36);
+		btnResetResults.setBounds(340, 394, 89, 36);
 		btnResetResults.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnResetResults.setBackground(Color.BLACK);
 		btnResetResults.setForeground(Color.LIGHT_GRAY);
 		panel_1.add(btnResetResults);
 		
 		JLabel lblHomeTeam = new JLabel("Home Team");
-		lblHomeTeam.setBounds(57, 67, 183, 14);
-		lblHomeTeam.setForeground(Color.LIGHT_GRAY);
+		lblHomeTeam.setFont(new Font("SansSerif", Font.BOLD, 14));
+		lblHomeTeam.setBounds(28, 76, 183, 14);
+		lblHomeTeam.setForeground(Color.BLACK);
 		panel_1.add(lblHomeTeam);
 		
 		JLabel lblAwayTeam = new JLabel("Away Team");
-		lblAwayTeam.setBounds(288, 67, 182, 14);
-		lblAwayTeam.setForeground(Color.LIGHT_GRAY);
+		lblAwayTeam.setFont(new Font("SansSerif", Font.BOLD, 14));
+		lblAwayTeam.setBounds(259, 76, 182, 14);
+		lblAwayTeam.setForeground(Color.BLACK);
 		panel_1.add(lblAwayTeam);
 		
 		JLabel lblHomeTeamScores = new JLabel("Home Team Scores");
-		lblHomeTeamScores.setBounds(57, 174, 183, 14);
-		lblHomeTeamScores.setForeground(Color.LIGHT_GRAY);
+		lblHomeTeamScores.setFont(new Font("SansSerif", Font.BOLD, 14));
+		lblHomeTeamScores.setBounds(28, 181, 183, 14);
+		lblHomeTeamScores.setForeground(Color.BLACK);
 		panel_1.add(lblHomeTeamScores);
 		
 		JLabel lblAwayTeamScores = new JLabel("Away Team Scores");
-		lblAwayTeamScores.setBounds(287, 171, 178, 15);
-		lblAwayTeamScores.setForeground(Color.LIGHT_GRAY);
+		lblAwayTeamScores.setFont(new Font("SansSerif", Font.BOLD, 14));
+		lblAwayTeamScores.setBounds(258, 181, 178, 15);
+		lblAwayTeamScores.setForeground(Color.BLACK);
 		panel_1.add(lblAwayTeamScores);
 		
 		JLabel lblTime = new JLabel("Time");
-		lblTime.setBounds(57, 273, 183, 14);
-		lblTime.setForeground(Color.LIGHT_GRAY);
+		lblTime.setFont(new Font("SansSerif", Font.BOLD, 14));
+		lblTime.setBounds(28, 282, 183, 14);
+		lblTime.setForeground(Color.BLACK);
 		panel_1.add(lblTime);
 		
 		JLabel lblDate = new JLabel("Date");
-		lblDate.setBounds(289, 273, 181, 14);
-		lblDate.setForeground(Color.LIGHT_GRAY);
+		lblDate.setFont(new Font("SansSerif", Font.BOLD, 14));
+		lblDate.setBounds(260, 282, 181, 14);
+		lblDate.setForeground(Color.BLACK);
 		panel_1.add(lblDate);
+		
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setIcon(new ImageIcon(FrmMain.class.getResource("/images/wpkatror.png")));
+		lblNewLabel_1.setBounds(0, 0, 470, 522);
+		panel_1.add(lblNewLabel_1);
 		
 		JScrollPane scrollPane2 = new JScrollPane();
 		scrollPane2.addMouseListener(new MouseAdapter() {
@@ -543,7 +572,7 @@ public class FrmMain extends JFrame {
 		});
 		scrollPane2.setBorder(null);
 		scrollPane2.setBackground(Color.BLACK);
-		scrollPane2.setBounds(535, 49, 544, 153);
+		scrollPane2.setBounds(509, 105, 544, 153);
 		resultsPanel.add(scrollPane2);
 		
 		tblResults = new JTable();
@@ -581,16 +610,21 @@ public class FrmMain extends JFrame {
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setLayout(null);
-		panel_2.setBackground(Color.BLACK);
-		panel_2.setBounds(535, 0, 544, 49);
+		panel_2.setBackground(new Color(51,102,102));
+		panel_2.setBounds(471, 0, 613, 49);
 		resultsPanel.add(panel_2);
 		
 		JLabel lblResults_1 = new JLabel("Results");
 		lblResults_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblResults_1.setForeground(Color.WHITE);
 		lblResults_1.setFont(new Font("Calibri", Font.PLAIN, 23));
-		lblResults_1.setBounds(139, 12, 223, 28);
+		lblResults_1.setBounds(199, 12, 223, 28);
 		panel_2.add(lblResults_1);
+		
+		JLabel label_75 = new JLabel("");
+		label_75.setIcon(new ImageIcon(FrmMain.class.getResource("/images/background_3.jpg")));
+		label_75.setBounds(471, 0, 623, 522);
+		resultsPanel.add(label_75);
 		
 		JPanel standingsPanel = new JPanel();
 		standingsPanel.setBackground(new Color(51, 102, 102));
@@ -687,10 +721,10 @@ public class FrmMain extends JFrame {
 		popupMenu.add(mntmDelete);
 		
 		JPanel titlePanel = new JPanel();
-		titlePanel.setBounds(331, 0, 753, 49);
+		titlePanel.setBounds(332, 0, 753, 49);
 		standingsPanel.add(titlePanel);
 		titlePanel.setLayout(null);
-		titlePanel.setBackground(new Color(0, 0, 0));
+		titlePanel.setBackground(new Color(51, 102, 102));
 		
 		JLabel lblStandingsTable = new JLabel("Standings ");
 		lblStandingsTable.setFont(new Font("Calibri", Font.PLAIN, 23));
@@ -706,9 +740,10 @@ public class FrmMain extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lblTeam = new JLabel("Team");
+		lblTeam.setFont(new Font("SansSerif", Font.BOLD, 14));
 		lblTeam.setBounds(33, 38, 189, 20);
 		panel.add(lblTeam);
-		lblTeam.setForeground(Color.LIGHT_GRAY);
+		lblTeam.setForeground(Color.BLACK);
 		
 		txtTeam = new JTextField();
 		txtTeam.setBackground(Color.WHITE);
@@ -718,9 +753,10 @@ public class FrmMain extends JFrame {
 		txtTeam.setColumns(10);
 		
 		JLabel lblGamesPlayed = new JLabel("Games played");
+		lblGamesPlayed.setFont(new Font("SansSerif", Font.BOLD, 14));
 		lblGamesPlayed.setBounds(33, 101, 188, 20);
 		panel.add(lblGamesPlayed);
-		lblGamesPlayed.setForeground(Color.LIGHT_GRAY);
+		lblGamesPlayed.setForeground(Color.BLACK);
 		
 		txtGamesplayed = new JTextField();
 		txtGamesplayed.setBackground(Color.WHITE);
@@ -730,9 +766,10 @@ public class FrmMain extends JFrame {
 		txtGamesplayed.setColumns(10);
 		
 		JLabel lblWins = new JLabel("Wins");
+		lblWins.setFont(new Font("SansSerif", Font.BOLD, 14));
 		lblWins.setBounds(35, 166, 188, 20);
 		panel.add(lblWins);
-		lblWins.setForeground(Color.LIGHT_GRAY);
+		lblWins.setForeground(Color.BLACK);
 		
 		txtWins = new JTextField();
 		txtWins.setBackground(Color.WHITE);
@@ -742,9 +779,10 @@ public class FrmMain extends JFrame {
 		txtWins.setColumns(10);
 		
 		JLabel lblLosses = new JLabel("Losses");
+		lblLosses.setFont(new Font("SansSerif", Font.BOLD, 14));
 		lblLosses.setBounds(34, 231, 188, 20);
 		panel.add(lblLosses);
-		lblLosses.setForeground(Color.LIGHT_GRAY);
+		lblLosses.setForeground(Color.BLACK);
 		
 		txtLosses = new JTextField();
 		txtLosses.setBackground(Color.WHITE);
@@ -754,9 +792,10 @@ public class FrmMain extends JFrame {
 		txtLosses.setColumns(10);
 		
 		JLabel lblScored = new JLabel("Scored");
+		lblScored.setFont(new Font("SansSerif", Font.BOLD, 14));
 		lblScored.setBounds(34, 296, 188, 20);
 		panel.add(lblScored);
-		lblScored.setForeground(Color.LIGHT_GRAY);
+		lblScored.setForeground(Color.BLACK);
 		
 		txtScored = new JTextField();
 		txtScored.setBackground(Color.WHITE);
@@ -766,9 +805,10 @@ public class FrmMain extends JFrame {
 		txtScored.setColumns(10);
 		
 		JLabel lblTaken = new JLabel("Taken");
+		lblTaken.setFont(new Font("SansSerif", Font.BOLD, 14));
 		lblTaken.setBounds(36, 358, 188, 20);
 		panel.add(lblTaken);
-		lblTaken.setForeground(Color.LIGHT_GRAY);
+		lblTaken.setForeground(Color.BLACK);
 		
 		txtTaken = new JTextField();
 		txtTaken.setBackground(Color.WHITE);
@@ -778,9 +818,10 @@ public class FrmMain extends JFrame {
 		txtTaken.setColumns(10);
 		
 		JLabel lblPoints = new JLabel("Points");
+		lblPoints.setFont(new Font("SansSerif", Font.BOLD, 14));
 		lblPoints.setBounds(34, 420, 185, 20);
 		panel.add(lblPoints);
-		lblPoints.setForeground(Color.LIGHT_GRAY);
+		lblPoints.setForeground(Color.BLACK);
 		
 		txtPoints = new JTextField();
 		txtPoints.setBackground(Color.WHITE);
@@ -907,8 +948,14 @@ public class FrmMain extends JFrame {
 		btnResetStandings.setFont(new Font("Calibri", Font.PLAIN, 17));
 		btnResetStandings.setBackground(Color.BLACK);
 		
-		JLabel label = new JLabel("1.");
-		label.setBounds(331, 108, 46, 14);
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setIcon(new ImageIcon(FrmMain.class.getResource("/images/wpdrejt.png")));
+		lblNewLabel_2.setBounds(0, 0, 332, 524);
+		panel.add(lblNewLabel_2);
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(FrmMain.class.getResource("/images/background_3.jpg")));
+		label.setBounds(332, 0, 753, 524);
 		standingsPanel.add(label);
 		
 		
@@ -919,473 +966,270 @@ public class FrmMain extends JFrame {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setBounds(261, 0, 823, 512);
 		teamsPanel.add(mainPanel);
-		
-		JPanel panelTrepca = new JPanel();
-		panelTrepca.setBounds(261, 0, 823, 512);
-		teamsPanel.add(panelTrepca);
-		panelTrepca.setLayout(null);
-		
-		JPanel panel_7 = new JPanel();
-		panel_7.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
-		panel_7.setBounds(72, 47, 207, 272);
-		panelTrepca.add(panel_7);
-		panel_7.setLayout(null);
-		
-		JLabel label_4 = new JLabel("");
-		label_4.setBounds(103, 6, 0, 0);
-		panel_7.add(label_4);
-		
-		JLabel label_15 = new JLabel("");
-		label_15.setIcon(new ImageIcon(FrmMain.class.getResource("/images/TREPCAAAA.png")));
-		label_15.setBounds(0, 18, 206, 230);
-		panel_7.add(label_15);
-		
-		JLabel lblTrepca = new JLabel("TREP\u00C7A");
-		lblTrepca.setToolTipText("");
-		lblTrepca.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
-		lblTrepca.setBounds(73, 8, 219, 30);
-		panelTrepca.add(lblTrepca);
-		
-		JPanel panel_8 = new JPanel();
-		panel_8.setLayout(null);
-		panel_8.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
-		panel_8.setBackground(new Color(0, 102, 153));
-		panel_8.setBounds(255, 47, 278, 272);
-		panelTrepca.add(panel_8);
-		
-		JLabel lblTrepa = new JLabel("Trep\u00E7a");
-		lblTrepa.setForeground(Color.WHITE);
-		lblTrepa.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblTrepa.setBounds(32, 46, 142, 21);
-		panel_8.add(lblTrepa);
-		
-		JLabel lblEmailKbtrepcagmailcom = new JLabel("Email: kb.trepca@gmail.com");
-		lblEmailKbtrepcagmailcom.setForeground(Color.WHITE);
-		lblEmailKbtrepcagmailcom.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblEmailKbtrepcagmailcom.setBounds(32, 78, 216, 21);
-		panel_8.add(lblEmailKbtrepcagmailcom);
-		
-		JLabel label_8 = new JLabel("Tel: 049 149 222");
-		label_8.setForeground(Color.WHITE);
-		label_8.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		label_8.setBounds(32, 110, 142, 21);
-		panel_8.add(label_8);
-		
-		JLabel lblPersoniKontaktuesNaim = new JLabel("Personi Kontaktues: Naim Hajrizi");
-		lblPersoniKontaktuesNaim.setForeground(Color.WHITE);
-		lblPersoniKontaktuesNaim.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblPersoniKontaktuesNaim.setBounds(32, 141, 240, 21);
-		panel_8.add(lblPersoniKontaktuesNaim);
-		
-		JLabel label_10 = new JLabel("Ngjyra e pare:");
-		label_10.setForeground(Color.WHITE);
-		label_10.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		label_10.setBounds(32, 178, 91, 21);
-		panel_8.add(label_10);
-		
-		JLabel label_11 = new JLabel("Ngjyra e dyte:");
-		label_11.setForeground(Color.WHITE);
-		label_11.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		label_11.setBounds(32, 210, 91, 21);
-		panel_8.add(label_11);
-		
-		JPanel panel_9 = new JPanel();
-		panel_9.setBackground(new Color(0, 153, 51));
-		panel_9.setBorder(null);
-		panel_9.setBounds(120, 179, 10, 20);
-		panel_8.add(panel_9);
-		
-		JPanel panel_10 = new JPanel();
-		panel_10.setBorder(null);
-		panel_10.setBackground(new Color(0, 153, 51));
-		panel_10.setBounds(120, 211, 10, 20);
-		panel_8.add(panel_10);
-		
-		JPanel panel_11 = new JPanel();
-		panel_11.setBackground(new Color(0, 0, 0));
-		panel_11.setBorder(null);
-		panel_11.setBounds(130, 179, 10, 20);
-		panel_8.add(panel_11);
-		
-		JPanel panel_12 = new JPanel();
-		panel_12.setBorder(null);
-		panel_12.setBounds(130, 211, 10, 20);
-		panel_8.add(panel_12);
-		
-		JLabel label_12 = new JLabel("Pershkrimi");
-		label_12.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
-		label_12.setBounds(564, 47, 219, 30);
-		panelTrepca.add(label_12);
-		
-		JLabel lblTrajneriGazmentAsllani = new JLabel("Trajneri: Gazment Asllani");
-		lblTrajneriGazmentAsllani.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
-		lblTrajneriGazmentAsllani.setBounds(564, 85, 168, 19);
-		panelTrepca.add(lblTrajneriGazmentAsllani);
-		
-		JLabel label_14 = new JLabel("Ndeshjet - 2018");
-		label_14.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
-		label_14.setBounds(71, 331, 137, 19);
-		panelTrepca.add(label_14);
-		
-		JLabel lblTrajneriAsistuesIlir = new JLabel("Trajneri Asistues: Ilir Selmani");
-		lblTrajneriAsistuesIlir.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
-		lblTrajneriAsistuesIlir.setBounds(564, 105, 168, 19);
-		panelTrepca.add(lblTrajneriAsistuesIlir);
-		
-		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(72, 365, 595, 120);
-		panelTrepca.add(scrollPane_2);
-		
-		tblTrepca = new JTable();
-		scrollPane_2.setViewportView(tblTrepca);
-		
-		JLabel label_55 = new JLabel("");
-		label_55.setIcon(new ImageIcon(FrmMain.class.getResource("/images/background_3.jpg")));
-		label_55.setBackground(new Color(102, 153, 153));
-		label_55.setBounds(0, 0, 823, 512);
-		panelTrepca.add(label_55);
-		panelTrepca.setVisible(false);
-		
-		JPanel panelPeja = new JPanel();
-		panelPeja.setBounds(261, 0, 823, 512);
-		teamsPanel.add(panelPeja);
-		panelPeja.setLayout(null);
-		
-		JLabel lblPeja = new JLabel("PEJA");
-		lblPeja.setToolTipText("");
-		lblPeja.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
-		lblPeja.setBounds(73, 8, 219, 30);
-		panelPeja.add(lblPeja);
-		
-		JPanel panel_13 = new JPanel();
-		panel_13.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
-		panel_13.setBounds(72, 47, 207, 272);
-		panelPeja.add(panel_13);
-		panel_13.setLayout(null);
-		
-		JLabel label_6 = new JLabel("");
-		label_6.setBounds(103, 6, 0, 0);
-		panel_13.add(label_6);
-		
-		JLabel label_5 = new JLabel("");
-		label_5.setIcon(new ImageIcon(FrmMain.class.getResource("/images/Peja.png")));
-		label_5.setBounds(6, 20, 205, 235);
-		panel_13.add(label_5);
-		
-		JPanel panel_14 = new JPanel();
-		panel_14.setLayout(null);
-		panel_14.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
-		panel_14.setBackground(new Color(0, 102, 153));
-		panel_14.setBounds(255, 47, 278, 272);
-		panelPeja.add(panel_14);
-		
-		JLabel lblPeja_1 = new JLabel("Peja");
-		lblPeja_1.setForeground(Color.WHITE);
-		lblPeja_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblPeja_1.setBounds(32, 46, 142, 21);
-		panel_14.add(lblPeja_1);
-		
-		JLabel lblEmailGazipejagmailcom = new JLabel("Email: gazi_peja1@gmail.com");
-		lblEmailGazipejagmailcom.setForeground(Color.WHITE);
-		lblEmailGazipejagmailcom.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblEmailGazipejagmailcom.setBounds(32, 78, 216, 21);
-		panel_14.add(lblEmailGazipejagmailcom);
-		
-		JLabel label_16 = new JLabel("Tel: 049 149 222");
-		label_16.setForeground(Color.WHITE);
-		label_16.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		label_16.setBounds(32, 110, 142, 21);
-		panel_14.add(label_16);
-		
-		JLabel lblPersoniKontaktuesGazmend = new JLabel("Personi Kontaktues: Gazmend Popovci");
-		lblPersoniKontaktuesGazmend.setForeground(Color.WHITE);
-		lblPersoniKontaktuesGazmend.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblPersoniKontaktuesGazmend.setBounds(32, 141, 240, 21);
-		panel_14.add(lblPersoniKontaktuesGazmend);
-		
-		JLabel label_18 = new JLabel("Ngjyra e pare:");
-		label_18.setForeground(Color.WHITE);
-		label_18.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		label_18.setBounds(32, 178, 91, 21);
-		panel_14.add(label_18);
-		
-		JLabel label_19 = new JLabel("Ngjyra e dyte:");
-		label_19.setForeground(Color.WHITE);
-		label_19.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		label_19.setBounds(32, 210, 91, 21);
-		panel_14.add(label_19);
-		
-		JPanel panel_15 = new JPanel();
-		panel_15.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_15.setBackground(new Color(255, 204, 0));
-		panel_15.setBounds(120, 179, 20, 20);
-		panel_14.add(panel_15);
-		
-		JPanel panel_16 = new JPanel();
-		panel_16.setBorder(null);
-		panel_16.setBackground(new Color(0, 0, 0));
-		panel_16.setBounds(120, 211, 20, 20);
-		panel_14.add(panel_16);
-		
-		JLabel label_20 = new JLabel("Pershkrimi");
-		label_20.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
-		label_20.setBounds(564, 47, 219, 30);
-		panelPeja.add(label_20);
-		
-		JLabel lblTrajneriBujarLoci = new JLabel("Trajneri: Bujar Loci");
-		lblTrajneriBujarLoci.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
-		lblTrajneriBujarLoci.setBounds(564, 85, 168, 19);
-		panelPeja.add(lblTrajneriBujarLoci);
-		
-		JLabel lblTrajneriAsistuesPetrit = new JLabel("Trajneri Asistues: Petrit Zeqiri");
-		lblTrajneriAsistuesPetrit.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
-		lblTrajneriAsistuesPetrit.setBounds(564, 105, 168, 19);
-		panelPeja.add(lblTrajneriAsistuesPetrit);
-		
-		JLabel label_23 = new JLabel("Ndeshjet - 2018");
-		label_23.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
-		label_23.setBounds(71, 331, 137, 19);
-		panelPeja.add(label_23);
-		
-		JScrollPane scrollPane_3 = new JScrollPane();
-		scrollPane_3.setBounds(72, 365, 595, 120);
-		panelPeja.add(scrollPane_3);
-		
-		tblPeja = new JTable();
-		scrollPane_3.setViewportView(tblPeja);
-		
-		JLabel label_54 = new JLabel("");
-		label_54.setIcon(new ImageIcon(FrmMain.class.getResource("/images/background_3.jpg")));
-		label_54.setBackground(new Color(102, 153, 153));
-		label_54.setBounds(0, 0, 823, 512);
-		panelPeja.add(label_54);
-		panelPeja.setVisible(false);
-		
-		JPanel panelBashkimi = new JPanel();
-		panelBashkimi.setBounds(261, 0, 823, 512);
-		teamsPanel.add(panelBashkimi);
-		panelBashkimi.setLayout(null);
-		
-		JLabel lblBashkimi = new JLabel("BASHKIMI");
-		lblBashkimi.setToolTipText("");
-		lblBashkimi.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
-		lblBashkimi.setBounds(73, 8, 219, 30);
-		panelBashkimi.add(lblBashkimi);
-		
-		JPanel panel_17 = new JPanel();
-		panel_17.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
-		panel_17.setBounds(72, 47, 207, 272);
-		panelBashkimi.add(panel_17);
-		panel_17.setLayout(null);
-		
-		JLabel label_9 = new JLabel("");
-		label_9.setBounds(103, 6, 0, 0);
-		panel_17.add(label_9);
-		
-		JLabel label_7 = new JLabel("");
-		label_7.setIcon(new ImageIcon(FrmMain.class.getResource("/images/bashkimi - Copy.png")));
-		label_7.setBounds(25, 32, 159, 218);
-		panel_17.add(label_7);
-		
-		JPanel panel_18 = new JPanel();
-		panel_18.setLayout(null);
-		panel_18.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
-		panel_18.setBackground(new Color(0, 102, 153));
-		panel_18.setBounds(255, 47, 278, 272);
-		panelBashkimi.add(panel_18);
-		
-		JLabel lblBashkimi_1 = new JLabel("Bashkimi");
-		lblBashkimi_1.setForeground(Color.WHITE);
-		lblBashkimi_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblBashkimi_1.setBounds(32, 46, 142, 21);
-		panel_18.add(lblBashkimi_1);
-		
-		JLabel lblEmailGazigmailcom = new JLabel("Email: arlindi.k@gmail.com");
-		lblEmailGazigmailcom.setForeground(Color.WHITE);
-		lblEmailGazigmailcom.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblEmailGazigmailcom.setBounds(32, 78, 216, 21);
-		panel_18.add(lblEmailGazigmailcom);
-		
-		JLabel label_22 = new JLabel("Tel: 049 149 222");
-		label_22.setForeground(Color.WHITE);
-		label_22.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		label_22.setBounds(32, 110, 142, 21);
-		panel_18.add(label_22);
-		
-		JLabel lblPersoniKontaktuesArlind = new JLabel("Personi Kontaktues: Arlind Kacaniku");
-		lblPersoniKontaktuesArlind.setForeground(Color.WHITE);
-		lblPersoniKontaktuesArlind.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblPersoniKontaktuesArlind.setBounds(32, 141, 240, 21);
-		panel_18.add(lblPersoniKontaktuesArlind);
-		
-		JLabel label_25 = new JLabel("Ngjyra e pare:");
-		label_25.setForeground(Color.WHITE);
-		label_25.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		label_25.setBounds(32, 178, 91, 21);
-		panel_18.add(label_25);
-		
-		JLabel label_26 = new JLabel("Ngjyra e dyte:");
-		label_26.setForeground(Color.WHITE);
-		label_26.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		label_26.setBounds(32, 210, 91, 21);
-		panel_18.add(label_26);
-		
-		JPanel panel_19 = new JPanel();
-		panel_19.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_19.setBackground(new Color(255, 102, 0));
-		panel_19.setBounds(120, 179, 20, 20);
-		panel_18.add(panel_19);
-		
-		JPanel panel_20 = new JPanel();
-		panel_20.setBorder(null);
-		panel_20.setBackground(new Color(255, 255, 255));
-		panel_20.setBounds(120, 211, 20, 20);
-		panel_18.add(panel_20);
-		
-		JLabel label_27 = new JLabel("Pershkrimi");
-		label_27.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
-		label_27.setBounds(564, 47, 219, 30);
-		panelBashkimi.add(label_27);
-		
-		JLabel lblTrajneriTakianosFotis = new JLabel("Trajneri: Takianos Fotis");
-		lblTrajneriTakianosFotis.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
-		lblTrajneriTakianosFotis.setBounds(564, 85, 168, 19);
-		panelBashkimi.add(lblTrajneriTakianosFotis);
-		
-		JLabel lblTrajneriAsistuesIlmen = new JLabel("Trajneri Asistues: Ilmen Bajra");
-		lblTrajneriAsistuesIlmen.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
-		lblTrajneriAsistuesIlmen.setBounds(565, 103, 168, 19);
-		panelBashkimi.add(lblTrajneriAsistuesIlmen);
-		
-		JLabel label_30 = new JLabel("Ndeshjet - 2018");
-		label_30.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
-		label_30.setBounds(71, 331, 137, 19);
-		panelBashkimi.add(label_30);
-		
-		JScrollPane scrollPane_4 = new JScrollPane();
-		scrollPane_4.setBounds(72, 365, 595, 120);
-		panelBashkimi.add(scrollPane_4);
-		
-		tblBashkimi = new JTable();
-		scrollPane_4.setViewportView(tblBashkimi);
-		
-		JLabel label_53 = new JLabel("");
-		label_53.setIcon(new ImageIcon(FrmMain.class.getResource("/images/background_3.jpg")));
-		label_53.setBackground(new Color(102, 153, 153));
-		label_53.setBounds(0, 0, 823, 512);
-		panelBashkimi.add(label_53);
-		panelBashkimi.setVisible(false);
-		
-		
-		JPanel panelRahoveci = new JPanel();
-		panelRahoveci.setBounds(261, 0, 823, 512);
-		teamsPanel.add(panelRahoveci);
-		panelRahoveci.setLayout(null);
-		
-		JLabel lblRahoveci = new JLabel("RAHOVECI");
-		lblRahoveci.setToolTipText("");
-		lblRahoveci.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
-		lblRahoveci.setBounds(73, 8, 219, 30);
-		panelRahoveci.add(lblRahoveci);
-		
-		JPanel panel_21 = new JPanel();
-		panel_21.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
-		panel_21.setBounds(72, 47, 207, 272);
-		panelRahoveci.add(panel_21);
-		panel_21.setLayout(null);
-		
-		JLabel label_17 = new JLabel("");
-		label_17.setBounds(103, 6, 0, 0);
-		panel_21.add(label_17);
-		
-		JLabel label_1 = new JLabel("");
-		label_1.setIcon(new ImageIcon(FrmMain.class.getResource("/images/rahoveci_large.png")));
-		label_1.setBounds(28, 16, 150, 233);
-		panel_21.add(label_1);
-		
-		JPanel panel_22 = new JPanel();
-		panel_22.setLayout(null);
-		panel_22.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
-		panel_22.setBackground(new Color(0, 102, 153));
-		panel_22.setBounds(255, 47, 278, 272);
-		panelRahoveci.add(panel_22);
-		
-		JLabel lblRahoveci_1 = new JLabel("Rahoveci");
-		lblRahoveci_1.setForeground(Color.WHITE);
-		lblRahoveci_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblRahoveci_1.setBounds(32, 46, 142, 21);
-		panel_22.add(lblRahoveci_1);
-		
-		JLabel lblEmailKbrahovecigmailcom = new JLabel("Email: kb.rahoveci@gmail.com");
-		lblEmailKbrahovecigmailcom.setForeground(Color.WHITE);
-		lblEmailKbrahovecigmailcom.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblEmailKbrahovecigmailcom.setBounds(32, 78, 216, 21);
-		panel_22.add(lblEmailKbrahovecigmailcom);
-		
-		JLabel lblTel_1 = new JLabel("Tel: 045 208 091");
-		lblTel_1.setForeground(Color.WHITE);
-		lblTel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblTel_1.setBounds(32, 110, 142, 21);
-		panel_22.add(lblTel_1);
-		
-		JLabel lblPersoniKontaktuesAlban = new JLabel("Personi Kontaktues: Alban Rama");
-		lblPersoniKontaktuesAlban.setForeground(Color.WHITE);
-		lblPersoniKontaktuesAlban.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblPersoniKontaktuesAlban.setBounds(32, 141, 240, 21);
-		panel_22.add(lblPersoniKontaktuesAlban);
-		
-		JLabel label_32 = new JLabel("Ngjyra e pare:");
-		label_32.setForeground(Color.WHITE);
-		label_32.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		label_32.setBounds(32, 178, 91, 21);
-		panel_22.add(label_32);
-		
-		JLabel label_33 = new JLabel("Ngjyra e dyte:");
-		label_33.setForeground(Color.WHITE);
-		label_33.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		label_33.setBounds(32, 210, 91, 21);
-		panel_22.add(label_33);
-		
-		JPanel panel_23 = new JPanel();
-		panel_23.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_23.setBackground(new Color(0, 153, 255));
-		panel_23.setBounds(120, 179, 20, 20);
-		panel_22.add(panel_23);
-		
-		JPanel panel_24 = new JPanel();
-		panel_24.setBorder(null);
-		panel_24.setBackground(new Color(255, 102, 0));
-		panel_24.setBounds(120, 211, 20, 20);
-		panel_22.add(panel_24);
-		
-		JLabel label_34 = new JLabel("Ndeshjet - 2018");
-		label_34.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
-		label_34.setBounds(71, 331, 137, 19);
-		panelRahoveci.add(label_34);
-		
-		JScrollPane scrollPane_5 = new JScrollPane();
-		scrollPane_5.setBounds(72, 365, 595, 120);
-		panelRahoveci.add(scrollPane_5);
-		
-		tblRahoveci = new JTable();
-		scrollPane_5.setViewportView(tblRahoveci);
-		
-		JLabel label_35 = new JLabel("Pershkrimi");
-		label_35.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
-		label_35.setBounds(564, 47, 219, 30);
-		panelRahoveci.add(label_35);
-		
-		JLabel lblTrajneriMarkRodiqi = new JLabel("Trajneri: Mark Rodiqi");
-		lblTrajneriMarkRodiqi.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
-		lblTrajneriMarkRodiqi.setBounds(564, 85, 168, 19);
-		panelRahoveci.add(lblTrajneriMarkRodiqi);
-		
-		JLabel label_52 = new JLabel("");
-		label_52.setIcon(new ImageIcon(FrmMain.class.getResource("/images/background_3.jpg")));
-		label_52.setBackground(new Color(102, 153, 153));
-		label_52.setBounds(0, 0, 823, 512);
-		panelRahoveci.add(label_52);
-		panelRahoveci.setVisible(false);
+		mainPanel.setLayout(null);
+		
+		JLabel lblTeamsOfSuperleague = new JLabel("TEAMS OF SUPERLEAGUE");
+		lblTeamsOfSuperleague.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTeamsOfSuperleague.setForeground(Color.WHITE);
+		lblTeamsOfSuperleague.setFont(new Font("Stencil", Font.BOLD, 44));
+		lblTeamsOfSuperleague.setBounds(42, 79, 595, 109);
+		mainPanel.add(lblTeamsOfSuperleague);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(FrmMain.class.getResource("/images/basketballwp.png")));
+		lblNewLabel.setBounds(0, 0, 823, 512);
+		mainPanel.add(lblNewLabel);
+		
+		JPanel panelBorea = new JPanel();
+		panelBorea.setBounds(261, 0, 823, 512);
+		teamsPanel.add(panelBorea);
+		panelBorea.setLayout(null);
+		
+		JLabel lblBorea = new JLabel("BOREA");
+		lblBorea.setToolTipText("");
+		lblBorea.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
+		lblBorea.setBounds(73, 8, 219, 30);
+		panelBorea.add(lblBorea);
+		
+		JPanel panel_25 = new JPanel();
+		panel_25.setLayout(null);
+		panel_25.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
+		panel_25.setBounds(72, 47, 207, 272);
+		panelBorea.add(panel_25);
+		
+		JLabel label_21 = new JLabel("");
+		label_21.setBounds(103, 6, 0, 0);
+		panel_25.add(label_21);
+		
+		JLabel label_31 = new JLabel("");
+		label_31.setIcon(new ImageIcon(FrmMain.class.getResource("/images/borea_large.png")));
+		label_31.setBounds(28, 31, 146, 214);
+		panel_25.add(label_31);
+		
+		JPanel panel_26 = new JPanel();
+		panel_26.setLayout(null);
+		panel_26.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
+		panel_26.setBackground(new Color(0, 102, 153));
+		panel_26.setBounds(255, 47, 278, 272);
+		panelBorea.add(panel_26);
+		
+		JLabel lblBorea_1 = new JLabel("Borea");
+		lblBorea_1.setForeground(Color.WHITE);
+		lblBorea_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblBorea_1.setBounds(32, 46, 142, 21);
+		panel_26.add(lblBorea_1);
+		
+		JLabel lblEmailKbboreagmailcom = new JLabel("Email: kb.borea@gmail.com");
+		lblEmailKbboreagmailcom.setForeground(Color.WHITE);
+		lblEmailKbboreagmailcom.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblEmailKbboreagmailcom.setBounds(32, 78, 216, 21);
+		panel_26.add(lblEmailKbboreagmailcom);
+		
+		JLabel lblTel_2 = new JLabel("Tel: 049 131 414");
+		lblTel_2.setForeground(Color.WHITE);
+		lblTel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblTel_2.setBounds(32, 110, 142, 21);
+		panel_26.add(lblTel_2);
+		
+		JLabel label_36 = new JLabel("First color:");
+		label_36.setForeground(Color.WHITE);
+		label_36.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_36.setBounds(32, 178, 91, 21);
+		panel_26.add(label_36);
+		
+		JLabel label_37 = new JLabel("Second color:");
+		label_37.setForeground(Color.WHITE);
+		label_37.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_37.setBounds(32, 210, 91, 21);
+		panel_26.add(label_37);
+		
+		JPanel panel_27 = new JPanel();
+		panel_27.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_27.setBackground(new Color(0, 153, 255));
+		panel_27.setBounds(120, 179, 20, 20);
+		panel_26.add(panel_27);
+		
+		JPanel panel_28 = new JPanel();
+		panel_28.setBorder(null);
+		panel_28.setBackground(new Color(153, 0, 0));
+		panel_28.setBounds(120, 211, 20, 20);
+		panel_26.add(panel_28);
+		
+		JLabel label_66 = new JLabel("Contact:");
+		label_66.setForeground(Color.WHITE);
+		label_66.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_66.setBounds(32, 141, 48, 21);
+		panel_26.add(label_66);
+		
+		JLabel lblKastriotBlakaj = new JLabel("Kastriot Blakaj");
+		lblKastriotBlakaj.setForeground(Color.WHITE);
+		lblKastriotBlakaj.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblKastriotBlakaj.setBounds(92, 141, 108, 21);
+		panel_26.add(lblKastriotBlakaj);
+		
+		JLabel label_38 = new JLabel("Description");
+		label_38.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
+		label_38.setBounds(564, 47, 219, 30);
+		panelBorea.add(label_38);
+		
+		JScrollPane scrollPane_6 = new JScrollPane();
+		scrollPane_6.setBounds(72, 365, 595, 120);
+		panelBorea.add(scrollPane_6);
+		
+		tblBorea = new JTable();
+		scrollPane_6.setViewportView(tblBorea);
+		
+		JLabel label_72 = new JLabel("Coach: ");
+		label_72.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		label_72.setBounds(564, 89, 49, 19);
+		panelBorea.add(label_72);
+		
+		JLabel lblKastriotBlakaj_1 = new JLabel("Kastriot Blakaj");
+		lblKastriotBlakaj_1.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		lblKastriotBlakaj_1.setBounds(612, 89, 104, 19);
+		panelBorea.add(lblKastriotBlakaj_1);
+		
+		JLabel label_80 = new JLabel("Matches ");
+		label_80.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
+		label_80.setBounds(73, 331, 71, 19);
+		panelBorea.add(label_80);
+		
+		JLabel label_81 = new JLabel("-2018");
+		label_81.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
+		label_81.setBounds(147, 331, 71, 19);
+		panelBorea.add(label_81);
+		
+		JLabel label_48 = new JLabel("");
+		label_48.setIcon(new ImageIcon(FrmMain.class.getResource("/images/background_3.jpg")));
+		label_48.setBackground(new Color(102, 153, 153));
+		label_48.setBounds(0, 0, 823, 512);
+		panelBorea.add(label_48);
+		panelBorea.setVisible(false);
+		
+		JPanel panelKPrishtina = new JPanel();
+		panelKPrishtina.setBounds(261, 0, 823, 512);
+		teamsPanel.add(panelKPrishtina);
+		panelKPrishtina.setLayout(null);
+		
+		JLabel lblKerasanPrishtina = new JLabel("KERASAN PRISHTINA");
+		lblKerasanPrishtina.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
+		lblKerasanPrishtina.setBounds(71, 11, 304, 30);
+		panelKPrishtina.add(lblKerasanPrishtina);
+		
+		JPanel panel_33 = new JPanel();
+		panel_33.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
+		panel_33.setBounds(72, 47, 207, 272);
+		panelKPrishtina.add(panel_33);
+		panel_33.setLayout(null);
+		
+		JLabel label_13 = new JLabel("");
+		label_13.setBounds(103, 6, 0, 0);
+		panel_33.add(label_13);
+		
+		JLabel label_29 = new JLabel("");
+		label_29.setIcon(new ImageIcon(FrmMain.class.getResource("/images/kerprishtina_large.png")));
+		label_29.setBounds(27, 21, 149, 225);
+		panel_33.add(label_29);
+		
+		JPanel panel_34 = new JPanel();
+		panel_34.setLayout(null);
+		panel_34.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
+		panel_34.setBackground(new Color(0, 102, 153));
+		panel_34.setBounds(255, 47, 278, 272);
+		panelKPrishtina.add(panel_34);
+		
+		JLabel lblKerasanPrishtina_1 = new JLabel("Kerasan Prishtina");
+		lblKerasanPrishtina_1.setForeground(Color.WHITE);
+		lblKerasanPrishtina_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblKerasanPrishtina_1.setBounds(32, 46, 142, 21);
+		panel_34.add(lblKerasanPrishtina_1);
+		
+		JLabel lblEmailKbkerasangmailcom = new JLabel("Email: kb.kerasan@gmail.com");
+		lblEmailKbkerasangmailcom.setForeground(Color.WHITE);
+		lblEmailKbkerasangmailcom.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblEmailKbkerasangmailcom.setBounds(32, 78, 216, 21);
+		panel_34.add(lblEmailKbkerasangmailcom);
+		
+		JLabel lblTel_4 = new JLabel("Tel: 044 141 055");
+		lblTel_4.setForeground(Color.WHITE);
+		lblTel_4.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblTel_4.setBounds(32, 110, 142, 21);
+		panel_34.add(lblTel_4);
+		
+		JLabel label_44 = new JLabel("First color:");
+		label_44.setForeground(Color.WHITE);
+		label_44.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_44.setBounds(32, 178, 91, 21);
+		panel_34.add(label_44);
+		
+		JLabel label_46 = new JLabel("Second color:");
+		label_46.setForeground(Color.WHITE);
+		label_46.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_46.setBounds(32, 210, 91, 21);
+		panel_34.add(label_46);
+		
+		JPanel panel_35 = new JPanel();
+		panel_35.setBackground(new Color(102, 0, 0));
+		panel_35.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_35.setBounds(120, 179, 20, 20);
+		panel_34.add(panel_35);
+		
+		JPanel panel_36 = new JPanel();
+		panel_36.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_36.setBackground(Color.BLUE);
+		panel_36.setBounds(120, 211, 20, 20);
+		panel_34.add(panel_36);
+		
+		JLabel label_49 = new JLabel("Contact:");
+		label_49.setForeground(Color.WHITE);
+		label_49.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_49.setBounds(32, 141, 48, 21);
+		panel_34.add(label_49);
+		
+		JLabel lblDriteroSefaja_1 = new JLabel("Dritero Sefaja");
+		lblDriteroSefaja_1.setForeground(Color.WHITE);
+		lblDriteroSefaja_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblDriteroSefaja_1.setBounds(92, 141, 108, 21);
+		panel_34.add(lblDriteroSefaja_1);
+		
+		JLabel label_47 = new JLabel("Description");
+		label_47.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
+		label_47.setBounds(564, 47, 219, 30);
+		panelKPrishtina.add(label_47);
+		
+		JScrollPane scrollPane_8 = new JScrollPane();
+		scrollPane_8.setBounds(72, 365, 595, 120);
+		panelKPrishtina.add(scrollPane_8);
+		
+		tblKerasan = new JTable();
+		scrollPane_8.setViewportView(tblKerasan);
+		
+		JLabel label_45 = new JLabel("Coach: ");
+		label_45.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		label_45.setBounds(562, 89, 49, 19);
+		panelKPrishtina.add(label_45);
+		
+		JLabel lblDriteroSefaja = new JLabel("Dritero Sefaja");
+		lblDriteroSefaja.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		lblDriteroSefaja.setBounds(610, 89, 104, 19);
+		panelKPrishtina.add(lblDriteroSefaja);
+		
+		JLabel label_76 = new JLabel("Matches ");
+		label_76.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
+		label_76.setBounds(71, 331, 71, 19);
+		panelKPrishtina.add(label_76);
+		
+		JLabel label_77 = new JLabel("-2018");
+		label_77.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
+		label_77.setBounds(145, 331, 71, 19);
+		panelKPrishtina.add(label_77);
+		
+		JLabel label_50 = new JLabel("");
+		label_50.setIcon(new ImageIcon(FrmMain.class.getResource("/images/background_3.jpg")));
+		label_50.setBackground(new Color(102, 153, 153));
+		label_50.setBounds(0, 0, 823, 512);
+		panelKPrishtina.add(label_50);
+		panelKPrishtina.setVisible(false);
 		
 		
 		JPanel panelGEYlli = new JPanel();
@@ -1439,19 +1283,13 @@ public class FrmMain extends JFrame {
 		lblTel_3.setBounds(32, 110, 142, 21);
 		panel_30.add(lblTel_3);
 		
-		JLabel lblPersoniKontaktuesEgzon = new JLabel("Personi Kontaktues: Egzon Fetiu");
-		lblPersoniKontaktuesEgzon.setForeground(Color.WHITE);
-		lblPersoniKontaktuesEgzon.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblPersoniKontaktuesEgzon.setBounds(32, 141, 240, 21);
-		panel_30.add(lblPersoniKontaktuesEgzon);
-		
-		JLabel label_41 = new JLabel("Ngjyra e pare:");
+		JLabel label_41 = new JLabel("First color:");
 		label_41.setForeground(Color.WHITE);
 		label_41.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		label_41.setBounds(32, 178, 91, 21);
 		panel_30.add(label_41);
 		
-		JLabel label_42 = new JLabel("Ngjyra e dyte:");
+		JLabel label_42 = new JLabel("Second color:");
 		label_42.setForeground(Color.WHITE);
 		label_42.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		label_42.setBounds(32, 210, 91, 21);
@@ -1469,20 +1307,22 @@ public class FrmMain extends JFrame {
 		panel_32.setBounds(120, 211, 20, 20);
 		panel_30.add(panel_32);
 		
-		JLabel label_43 = new JLabel("Pershkrimi");
+		JLabel label_52 = new JLabel("Contact:");
+		label_52.setForeground(Color.WHITE);
+		label_52.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_52.setBounds(32, 143, 48, 21);
+		panel_30.add(label_52);
+		
+		JLabel lblEgzonFetiu = new JLabel("Egzon Fetiu");
+		lblEgzonFetiu.setForeground(Color.WHITE);
+		lblEgzonFetiu.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblEgzonFetiu.setBounds(92, 143, 108, 21);
+		panel_30.add(lblEgzonFetiu);
+		
+		JLabel label_43 = new JLabel("Description");
 		label_43.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
 		label_43.setBounds(564, 47, 219, 30);
 		panelGEYlli.add(label_43);
-		
-		JLabel lblTrajneriDenizBrajmovci = new JLabel("Trajneri: Deniz Brajmovci");
-		lblTrajneriDenizBrajmovci.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
-		lblTrajneriDenizBrajmovci.setBounds(564, 85, 168, 19);
-		panelGEYlli.add(lblTrajneriDenizBrajmovci);
-		
-		JLabel label_45 = new JLabel("Ndeshjet - 2018");
-		label_45.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
-		label_45.setBounds(71, 331, 137, 19);
-		panelGEYlli.add(label_45);
 		
 		JScrollPane scrollPane_7 = new JScrollPane();
 		scrollPane_7.setBounds(72, 365, 595, 120);
@@ -1491,10 +1331,35 @@ public class FrmMain extends JFrame {
 		tblGolden = new JTable();
 		scrollPane_7.setViewportView(tblGolden);
 		
-		JLabel lblTrajneriAsistuesHasan = new JLabel("Trajneri Asistues: Hasan Bytyqi");
-		lblTrajneriAsistuesHasan.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
-		lblTrajneriAsistuesHasan.setBounds(564, 119, 168, 19);
-		panelGEYlli.add(lblTrajneriAsistuesHasan);
+		JLabel label_64 = new JLabel("Coach: ");
+		label_64.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		label_64.setBounds(564, 89, 49, 19);
+		panelGEYlli.add(label_64);
+		
+		JLabel lblDenizBrajmovci = new JLabel("Deniz Brajmovci");
+		lblDenizBrajmovci.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		lblDenizBrajmovci.setBounds(612, 89, 104, 19);
+		panelGEYlli.add(lblDenizBrajmovci);
+		
+		JLabel label_69 = new JLabel("Assistant Coach: ");
+		label_69.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		label_69.setBounds(564, 109, 94, 19);
+		panelGEYlli.add(label_69);
+		
+		JLabel lblHasanBytyci = new JLabel("Hasan Bytyci");
+		lblHasanBytyci.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		lblHasanBytyci.setBounds(660, 109, 90, 19);
+		panelGEYlli.add(lblHasanBytyci);
+		
+		JLabel label_73 = new JLabel("Matches ");
+		label_73.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
+		label_73.setBounds(73, 331, 71, 19);
+		panelGEYlli.add(label_73);
+		
+		JLabel label_74 = new JLabel("-2018");
+		label_74.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
+		label_74.setBounds(147, 331, 71, 19);
+		panelGEYlli.add(label_74);
 		
 		JLabel label_51 = new JLabel("");
 		label_51.setIcon(new ImageIcon(FrmMain.class.getResource("/images/background_3.jpg")));
@@ -1503,224 +1368,550 @@ public class FrmMain extends JFrame {
 		panelGEYlli.add(label_51);
 		panelGEYlli.setVisible(false);
 		
-		JPanel panelKPrishtina = new JPanel();
-		panelKPrishtina.setBounds(261, 0, 823, 512);
-		teamsPanel.add(panelKPrishtina);
-		panelKPrishtina.setLayout(null);
 		
-		JLabel lblKerasanPrishtina = new JLabel("KERASAN PRISHTINA");
-		lblKerasanPrishtina.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
-		lblKerasanPrishtina.setBounds(71, 11, 304, 30);
-		panelKPrishtina.add(lblKerasanPrishtina);
+		JPanel panelRahoveci = new JPanel();
+		panelRahoveci.setBounds(261, 0, 823, 512);
+		teamsPanel.add(panelRahoveci);
+		panelRahoveci.setLayout(null);
 		
-		JPanel panel_33 = new JPanel();
-		panel_33.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
-		panel_33.setBounds(72, 47, 207, 272);
-		panelKPrishtina.add(panel_33);
-		panel_33.setLayout(null);
+		JLabel lblRahoveci = new JLabel("RAHOVECI");
+		lblRahoveci.setToolTipText("");
+		lblRahoveci.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
+		lblRahoveci.setBounds(73, 8, 219, 30);
+		panelRahoveci.add(lblRahoveci);
 		
-		JLabel label_13 = new JLabel("");
-		label_13.setBounds(103, 6, 0, 0);
-		panel_33.add(label_13);
+		JPanel panel_21 = new JPanel();
+		panel_21.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
+		panel_21.setBounds(72, 47, 207, 272);
+		panelRahoveci.add(panel_21);
+		panel_21.setLayout(null);
 		
-		JLabel label_29 = new JLabel("");
-		label_29.setIcon(new ImageIcon(FrmMain.class.getResource("/images/kerprishtina_large.png")));
-		label_29.setBounds(27, 21, 149, 225);
-		panel_33.add(label_29);
+		JLabel label_17 = new JLabel("");
+		label_17.setBounds(103, 6, 0, 0);
+		panel_21.add(label_17);
 		
-		JPanel panel_34 = new JPanel();
-		panel_34.setLayout(null);
-		panel_34.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
-		panel_34.setBackground(new Color(0, 102, 153));
-		panel_34.setBounds(255, 47, 278, 272);
-		panelKPrishtina.add(panel_34);
+		JLabel label_1 = new JLabel("");
+		label_1.setIcon(new ImageIcon(FrmMain.class.getResource("/images/rahoveci_large.png")));
+		label_1.setBounds(28, 16, 150, 233);
+		panel_21.add(label_1);
 		
-		JLabel lblKerasanPrishtina_1 = new JLabel("Kerasan Prishtina");
-		lblKerasanPrishtina_1.setForeground(Color.WHITE);
-		lblKerasanPrishtina_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblKerasanPrishtina_1.setBounds(32, 46, 142, 21);
-		panel_34.add(lblKerasanPrishtina_1);
+		JPanel panel_22 = new JPanel();
+		panel_22.setLayout(null);
+		panel_22.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
+		panel_22.setBackground(new Color(0, 102, 153));
+		panel_22.setBounds(255, 47, 278, 272);
+		panelRahoveci.add(panel_22);
 		
-		JLabel lblEmailKbkerasangmailcom = new JLabel("Email: kb.kerasan@gmail.com");
-		lblEmailKbkerasangmailcom.setForeground(Color.WHITE);
-		lblEmailKbkerasangmailcom.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblEmailKbkerasangmailcom.setBounds(32, 78, 216, 21);
-		panel_34.add(lblEmailKbkerasangmailcom);
+		JLabel lblRahoveci_1 = new JLabel("Rahoveci");
+		lblRahoveci_1.setForeground(Color.WHITE);
+		lblRahoveci_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblRahoveci_1.setBounds(32, 46, 142, 21);
+		panel_22.add(lblRahoveci_1);
 		
-		JLabel lblTel_4 = new JLabel("Tel: 044 141 055");
-		lblTel_4.setForeground(Color.WHITE);
-		lblTel_4.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblTel_4.setBounds(32, 110, 142, 21);
-		panel_34.add(lblTel_4);
+		JLabel lblEmailKbrahovecigmailcom = new JLabel("Email: kb.rahoveci@gmail.com");
+		lblEmailKbrahovecigmailcom.setForeground(Color.WHITE);
+		lblEmailKbrahovecigmailcom.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblEmailKbrahovecigmailcom.setBounds(32, 78, 216, 21);
+		panel_22.add(lblEmailKbrahovecigmailcom);
 		
-		JLabel lblPersoniKontaktuesDritero = new JLabel("Personi Kontaktues: Dritero Sefaja");
-		lblPersoniKontaktuesDritero.setForeground(Color.WHITE);
-		lblPersoniKontaktuesDritero.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblPersoniKontaktuesDritero.setBounds(32, 141, 240, 21);
-		panel_34.add(lblPersoniKontaktuesDritero);
+		JLabel lblTel_1 = new JLabel("Tel: 045 208 091");
+		lblTel_1.setForeground(Color.WHITE);
+		lblTel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblTel_1.setBounds(32, 110, 142, 21);
+		panel_22.add(lblTel_1);
 		
-		JLabel label_44 = new JLabel("Ngjyra e pare:");
-		label_44.setForeground(Color.WHITE);
-		label_44.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		label_44.setBounds(32, 178, 91, 21);
-		panel_34.add(label_44);
+		JLabel label_32 = new JLabel("First color:");
+		label_32.setForeground(Color.WHITE);
+		label_32.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_32.setBounds(32, 178, 91, 21);
+		panel_22.add(label_32);
 		
-		JLabel label_46 = new JLabel("Ngjyra e dyte:");
-		label_46.setForeground(Color.WHITE);
-		label_46.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		label_46.setBounds(32, 210, 91, 21);
-		panel_34.add(label_46);
+		JLabel label_33 = new JLabel("Second color:");
+		label_33.setForeground(Color.WHITE);
+		label_33.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_33.setBounds(32, 210, 91, 21);
+		panel_22.add(label_33);
 		
-		JPanel panel_35 = new JPanel();
-		panel_35.setBackground(new Color(102, 0, 0));
-		panel_35.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_35.setBounds(120, 179, 20, 20);
-		panel_34.add(panel_35);
+		JPanel panel_23 = new JPanel();
+		panel_23.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_23.setBackground(new Color(0, 153, 255));
+		panel_23.setBounds(120, 179, 20, 20);
+		panel_22.add(panel_23);
 		
-		JPanel panel_36 = new JPanel();
-		panel_36.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_36.setBackground(Color.BLUE);
-		panel_36.setBounds(120, 211, 20, 20);
-		panel_34.add(panel_36);
+		JPanel panel_24 = new JPanel();
+		panel_24.setBorder(null);
+		panel_24.setBackground(new Color(255, 102, 0));
+		panel_24.setBounds(120, 211, 20, 20);
+		panel_22.add(panel_24);
 		
-		JLabel label_47 = new JLabel("Pershkrimi");
-		label_47.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
-		label_47.setBounds(564, 47, 219, 30);
-		panelKPrishtina.add(label_47);
+		JLabel label_34 = new JLabel("Contact:");
+		label_34.setForeground(Color.WHITE);
+		label_34.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_34.setBounds(32, 143, 48, 21);
+		panel_22.add(label_34);
 		
-		JLabel lblTrajneriDriteroSefaja = new JLabel("Trajneri: Dritero Sefaja");
-		lblTrajneriDriteroSefaja.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
-		lblTrajneriDriteroSefaja.setBounds(564, 89, 168, 19);
-		panelKPrishtina.add(lblTrajneriDriteroSefaja);
+		JLabel lblAlbanRama = new JLabel("Alban Rama");
+		lblAlbanRama.setForeground(Color.WHITE);
+		lblAlbanRama.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblAlbanRama.setBounds(92, 143, 108, 21);
+		panel_22.add(lblAlbanRama);
 		
-		JLabel label_49 = new JLabel("Ndeshjet - 2018");
-		label_49.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
-		label_49.setBounds(71, 331, 137, 19);
-		panelKPrishtina.add(label_49);
+		JScrollPane scrollPane_5 = new JScrollPane();
+		scrollPane_5.setBounds(72, 365, 595, 120);
+		panelRahoveci.add(scrollPane_5);
 		
-		JScrollPane scrollPane_8 = new JScrollPane();
-		scrollPane_8.setBounds(72, 365, 595, 120);
-		panelKPrishtina.add(scrollPane_8);
+		tblRahoveci = new JTable();
+		scrollPane_5.setViewportView(tblRahoveci);
 		
-		tblKerasan = new JTable();
-		scrollPane_8.setViewportView(tblKerasan);
+		JLabel label_35 = new JLabel("Description");
+		label_35.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
+		label_35.setBounds(564, 47, 219, 30);
+		panelRahoveci.add(label_35);
 		
-		JLabel label_50 = new JLabel("");
-		label_50.setIcon(new ImageIcon(FrmMain.class.getResource("/images/background_3.jpg")));
-		label_50.setBackground(new Color(102, 153, 153));
-		label_50.setBounds(0, 0, 823, 512);
-		panelKPrishtina.add(label_50);
-		panelKPrishtina.setVisible(false);
+		JLabel label_30 = new JLabel("Coach: ");
+		label_30.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		label_30.setBounds(564, 89, 49, 19);
+		panelRahoveci.add(label_30);
 		
-		JPanel panelBorea = new JPanel();
-		panelBorea.setBounds(261, 0, 823, 512);
-		teamsPanel.add(panelBorea);
-		panelBorea.setLayout(null);
+		JLabel lblMarkRodiqi = new JLabel("Mark Rodiqi");
+		lblMarkRodiqi.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		lblMarkRodiqi.setBounds(612, 89, 104, 19);
+		panelRahoveci.add(lblMarkRodiqi);
 		
-		JLabel lblBorea = new JLabel("BOREA");
-		lblBorea.setToolTipText("");
-		lblBorea.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
-		lblBorea.setBounds(73, 8, 219, 30);
-		panelBorea.add(lblBorea);
+		JLabel label_70 = new JLabel("Matches ");
+		label_70.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
+		label_70.setBounds(73, 331, 71, 19);
+		panelRahoveci.add(label_70);
 		
-		JPanel panel_25 = new JPanel();
-		panel_25.setLayout(null);
-		panel_25.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
-		panel_25.setBounds(72, 47, 207, 272);
-		panelBorea.add(panel_25);
+		JLabel label_71 = new JLabel("-2018");
+		label_71.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
+		label_71.setBounds(147, 331, 71, 19);
+		panelRahoveci.add(label_71);
 		
-		JLabel label_21 = new JLabel("");
-		label_21.setBounds(103, 6, 0, 0);
-		panel_25.add(label_21);
+		JLabel label_40 = new JLabel("");
+		label_40.setIcon(new ImageIcon(FrmMain.class.getResource("/images/background_3.jpg")));
+		label_40.setBounds(0, 0, 823, 512);
+		panelRahoveci.add(label_40);
+		panelRahoveci.setVisible(false);
 		
-		JLabel label_31 = new JLabel("");
-		label_31.setIcon(new ImageIcon(FrmMain.class.getResource("/images/borea_large.png")));
-		label_31.setBounds(28, 31, 146, 214);
-		panel_25.add(label_31);
+		JPanel panelBashkimi = new JPanel();
+		panelBashkimi.setBounds(261, 0, 823, 512);
+		teamsPanel.add(panelBashkimi);
+		panelBashkimi.setLayout(null);
 		
-		JPanel panel_26 = new JPanel();
-		panel_26.setLayout(null);
-		panel_26.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
-		panel_26.setBackground(new Color(0, 102, 153));
-		panel_26.setBounds(255, 47, 278, 272);
-		panelBorea.add(panel_26);
+		JLabel lblBashkimi = new JLabel("BASHKIMI");
+		lblBashkimi.setToolTipText("");
+		lblBashkimi.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
+		lblBashkimi.setBounds(73, 8, 219, 30);
+		panelBashkimi.add(lblBashkimi);
 		
-		JLabel lblBorea_1 = new JLabel("Borea");
-		lblBorea_1.setForeground(Color.WHITE);
-		lblBorea_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblBorea_1.setBounds(32, 46, 142, 21);
-		panel_26.add(lblBorea_1);
+		JPanel panel_17 = new JPanel();
+		panel_17.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
+		panel_17.setBounds(72, 47, 207, 272);
+		panelBashkimi.add(panel_17);
+		panel_17.setLayout(null);
 		
-		JLabel lblEmailKbboreagmailcom = new JLabel("Email: kb.borea@gmail.com");
-		lblEmailKbboreagmailcom.setForeground(Color.WHITE);
-		lblEmailKbboreagmailcom.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblEmailKbboreagmailcom.setBounds(32, 78, 216, 21);
-		panel_26.add(lblEmailKbboreagmailcom);
+		JLabel label_9 = new JLabel("");
+		label_9.setBounds(103, 6, 0, 0);
+		panel_17.add(label_9);
 		
-		JLabel lblTel_2 = new JLabel("Tel: 049 131 414");
-		lblTel_2.setForeground(Color.WHITE);
-		lblTel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblTel_2.setBounds(32, 110, 142, 21);
-		panel_26.add(lblTel_2);
+		JLabel label_7 = new JLabel("");
+		label_7.setIcon(new ImageIcon(FrmMain.class.getResource("/images/bashkimi - Copy.png")));
+		label_7.setBounds(25, 32, 159, 218);
+		panel_17.add(label_7);
 		
-		JLabel lblPersoniKontaktuesKastriot = new JLabel("Personi Kontaktues: Kastriot Blakaj");
-		lblPersoniKontaktuesKastriot.setForeground(Color.WHITE);
-		lblPersoniKontaktuesKastriot.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblPersoniKontaktuesKastriot.setBounds(32, 141, 240, 21);
-		panel_26.add(lblPersoniKontaktuesKastriot);
+		JPanel panel_18 = new JPanel();
+		panel_18.setLayout(null);
+		panel_18.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
+		panel_18.setBackground(new Color(0, 102, 153));
+		panel_18.setBounds(255, 47, 278, 272);
+		panelBashkimi.add(panel_18);
 		
-		JLabel label_36 = new JLabel("Ngjyra e pare:");
-		label_36.setForeground(Color.WHITE);
-		label_36.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		label_36.setBounds(32, 178, 91, 21);
-		panel_26.add(label_36);
+		JLabel lblBashkimi_1 = new JLabel("Bashkimi");
+		lblBashkimi_1.setForeground(Color.WHITE);
+		lblBashkimi_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblBashkimi_1.setBounds(32, 46, 142, 21);
+		panel_18.add(lblBashkimi_1);
 		
-		JLabel label_37 = new JLabel("Ngjyra e dyte:");
-		label_37.setForeground(Color.WHITE);
-		label_37.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		label_37.setBounds(32, 210, 91, 21);
-		panel_26.add(label_37);
+		JLabel lblEmailGazigmailcom = new JLabel("Email: arlindi.k@gmail.com");
+		lblEmailGazigmailcom.setForeground(Color.WHITE);
+		lblEmailGazigmailcom.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblEmailGazigmailcom.setBounds(32, 78, 216, 21);
+		panel_18.add(lblEmailGazigmailcom);
 		
-		JPanel panel_27 = new JPanel();
-		panel_27.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_27.setBackground(new Color(0, 153, 255));
-		panel_27.setBounds(120, 179, 20, 20);
-		panel_26.add(panel_27);
+		JLabel label_22 = new JLabel("Tel: 049 149 222");
+		label_22.setForeground(Color.WHITE);
+		label_22.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_22.setBounds(32, 110, 142, 21);
+		panel_18.add(label_22);
 		
-		JPanel panel_28 = new JPanel();
-		panel_28.setBorder(null);
-		panel_28.setBackground(new Color(153, 0, 0));
-		panel_28.setBounds(120, 211, 20, 20);
-		panel_26.add(panel_28);
+		JLabel label_25 = new JLabel("First color:");
+		label_25.setForeground(Color.WHITE);
+		label_25.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_25.setBounds(32, 178, 91, 21);
+		panel_18.add(label_25);
 		
-		JLabel label_38 = new JLabel("Pershkrimi");
-		label_38.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
-		label_38.setBounds(564, 47, 219, 30);
-		panelBorea.add(label_38);
+		JLabel label_26 = new JLabel("Second color:");
+		label_26.setForeground(Color.WHITE);
+		label_26.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_26.setBounds(32, 210, 91, 21);
+		panel_18.add(label_26);
 		
-		JLabel lblTrajneriKastriotBlakaj = new JLabel("Trajneri: Kastriot Blakaj");
-		lblTrajneriKastriotBlakaj.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
-		lblTrajneriKastriotBlakaj.setBounds(564, 85, 168, 19);
-		panelBorea.add(lblTrajneriKastriotBlakaj);
+		JPanel panel_19 = new JPanel();
+		panel_19.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_19.setBackground(new Color(255, 102, 0));
+		panel_19.setBounds(120, 179, 20, 20);
+		panel_18.add(panel_19);
 		
-		JLabel label_40 = new JLabel("Ndeshjet - 2018");
-		label_40.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
-		label_40.setBounds(71, 331, 137, 19);
-		panelBorea.add(label_40);
+		JPanel panel_20 = new JPanel();
+		panel_20.setBorder(null);
+		panel_20.setBackground(new Color(255, 255, 255));
+		panel_20.setBounds(120, 211, 20, 20);
+		panel_18.add(panel_20);
 		
-		JScrollPane scrollPane_6 = new JScrollPane();
-		scrollPane_6.setBounds(72, 365, 595, 120);
-		panelBorea.add(scrollPane_6);
+		JLabel label_23 = new JLabel("Contact:");
+		label_23.setForeground(Color.WHITE);
+		label_23.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_23.setBounds(32, 141, 48, 21);
+		panel_18.add(label_23);
 		
-		tblBorea = new JTable();
-		scrollPane_6.setViewportView(tblBorea);
+		JLabel lblArlindKacaniku = new JLabel("Arlind Kacaniku");
+		lblArlindKacaniku.setForeground(Color.WHITE);
+		lblArlindKacaniku.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblArlindKacaniku.setBounds(92, 141, 108, 21);
+		panel_18.add(lblArlindKacaniku);
 		
-		JLabel label_48 = new JLabel("");
-		label_48.setIcon(new ImageIcon(FrmMain.class.getResource("/images/background_3.jpg")));
-		label_48.setBackground(new Color(102, 153, 153));
-		label_48.setBounds(0, 0, 823, 512);
-		panelBorea.add(label_48);
-		panelBorea.setVisible(false);
+		JLabel label_27 = new JLabel("Description");
+		label_27.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
+		label_27.setBounds(564, 47, 219, 30);
+		panelBashkimi.add(label_27);
+		
+		JScrollPane scrollPane_4 = new JScrollPane();
+		scrollPane_4.setBounds(72, 365, 595, 120);
+		panelBashkimi.add(scrollPane_4);
+		
+		tblBashkimi = new JTable();
+		scrollPane_4.setViewportView(tblBashkimi);
+		
+		JLabel label_60 = new JLabel("Coach: ");
+		label_60.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		label_60.setBounds(564, 89, 49, 19);
+		panelBashkimi.add(label_60);
+		
+		JLabel lblTakianosFotis = new JLabel("Takianos Fotis");
+		lblTakianosFotis.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		lblTakianosFotis.setBounds(612, 89, 104, 19);
+		panelBashkimi.add(lblTakianosFotis);
+		
+		JLabel label_65 = new JLabel("Assistant Coach: ");
+		label_65.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		label_65.setBounds(564, 109, 94, 19);
+		panelBashkimi.add(label_65);
+		
+		JLabel lblIlmenBajra = new JLabel("Ilmen Bajra");
+		lblIlmenBajra.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		lblIlmenBajra.setBounds(660, 109, 90, 19);
+		panelBashkimi.add(lblIlmenBajra);
+		
+		JLabel label_67 = new JLabel("Matches ");
+		label_67.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
+		label_67.setBounds(73, 331, 71, 19);
+		panelBashkimi.add(label_67);
+		
+		JLabel label_68 = new JLabel("-2018");
+		label_68.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
+		label_68.setBounds(147, 331, 71, 19);
+		panelBashkimi.add(label_68);
+		
+		JLabel label_53 = new JLabel("");
+		label_53.setIcon(new ImageIcon(FrmMain.class.getResource("/images/background_3.jpg")));
+		label_53.setBackground(new Color(102, 153, 153));
+		label_53.setBounds(0, 0, 823, 512);
+		panelBashkimi.add(label_53);
+		panelBashkimi.setVisible(false);
+		
+		JPanel panelPeja = new JPanel();
+		panelPeja.setBounds(261, 0, 823, 512);
+		teamsPanel.add(panelPeja);
+		panelPeja.setLayout(null);
+		
+		JLabel lblPeja = new JLabel("PEJA");
+		lblPeja.setToolTipText("");
+		lblPeja.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
+		lblPeja.setBounds(73, 8, 219, 30);
+		panelPeja.add(lblPeja);
+		
+		JPanel panel_13 = new JPanel();
+		panel_13.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
+		panel_13.setBounds(72, 47, 207, 272);
+		panelPeja.add(panel_13);
+		panel_13.setLayout(null);
+		
+		JLabel label_6 = new JLabel("");
+		label_6.setBounds(103, 6, 0, 0);
+		panel_13.add(label_6);
+		
+		JLabel label_5 = new JLabel("");
+		label_5.setIcon(new ImageIcon(FrmMain.class.getResource("/images/Peja.png")));
+		label_5.setBounds(6, 20, 205, 235);
+		panel_13.add(label_5);
+		
+		JPanel panel_14 = new JPanel();
+		panel_14.setLayout(null);
+		panel_14.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
+		panel_14.setBackground(new Color(0, 102, 153));
+		panel_14.setBounds(255, 47, 278, 272);
+		panelPeja.add(panel_14);
+		
+		JLabel lblPeja_1 = new JLabel("Peja");
+		lblPeja_1.setForeground(Color.WHITE);
+		lblPeja_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblPeja_1.setBounds(32, 46, 142, 21);
+		panel_14.add(lblPeja_1);
+		
+		JLabel lblEmailGazipejagmailcom = new JLabel("Email: gazi_peja1@gmail.com");
+		lblEmailGazipejagmailcom.setForeground(Color.WHITE);
+		lblEmailGazipejagmailcom.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblEmailGazipejagmailcom.setBounds(32, 78, 216, 21);
+		panel_14.add(lblEmailGazipejagmailcom);
+		
+		JLabel label_16 = new JLabel("Tel: 049 149 222");
+		label_16.setForeground(Color.WHITE);
+		label_16.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_16.setBounds(32, 110, 142, 21);
+		panel_14.add(label_16);
+		
+		JLabel label_18 = new JLabel("First color:");
+		label_18.setForeground(Color.WHITE);
+		label_18.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_18.setBounds(32, 178, 91, 21);
+		panel_14.add(label_18);
+		
+		JLabel label_19 = new JLabel("Second color:");
+		label_19.setForeground(Color.WHITE);
+		label_19.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_19.setBounds(32, 210, 91, 21);
+		panel_14.add(label_19);
+		
+		JPanel panel_15 = new JPanel();
+		panel_15.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_15.setBackground(new Color(255, 204, 0));
+		panel_15.setBounds(120, 179, 20, 20);
+		panel_14.add(panel_15);
+		
+		JPanel panel_16 = new JPanel();
+		panel_16.setBorder(null);
+		panel_16.setBackground(new Color(0, 0, 0));
+		panel_16.setBounds(120, 211, 20, 20);
+		panel_14.add(panel_16);
+		
+		JLabel label_14 = new JLabel("Contact:");
+		label_14.setForeground(Color.WHITE);
+		label_14.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_14.setBounds(32, 141, 48, 21);
+		panel_14.add(label_14);
+		
+		JLabel lblGazmendPopovci = new JLabel("Gazmend Popovci");
+		lblGazmendPopovci.setForeground(Color.WHITE);
+		lblGazmendPopovci.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblGazmendPopovci.setBounds(92, 141, 108, 21);
+		panel_14.add(lblGazmendPopovci);
+		
+		JLabel label_20 = new JLabel("Description");
+		label_20.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
+		label_20.setBounds(564, 47, 219, 30);
+		panelPeja.add(label_20);
+		
+		JScrollPane scrollPane_3 = new JScrollPane();
+		scrollPane_3.setBounds(72, 365, 595, 120);
+		panelPeja.add(scrollPane_3);
+		
+		tblPeja = new JTable();
+		scrollPane_3.setViewportView(tblPeja);
+		
+		JLabel labelCoach = new JLabel("Coach: ");
+		labelCoach.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		labelCoach.setBounds(564, 89, 49, 19);
+		panelPeja.add(labelCoach);
+		
+		JLabel lblPetritZeqiri = new JLabel("Petrit Zeqiri");
+		lblPetritZeqiri.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		lblPetritZeqiri.setBounds(612, 89, 104, 19);
+		panelPeja.add(lblPetritZeqiri);
+		
+		JLabel label_62 = new JLabel("Assistant Coach: ");
+		label_62.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		label_62.setBounds(564, 109, 94, 19);
+		panelPeja.add(label_62);
+		
+		JLabel lblBujarLoci = new JLabel("Bujar Loci");
+		lblBujarLoci.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		lblBujarLoci.setBounds(660, 109, 90, 19);
+		panelPeja.add(lblBujarLoci);
+		
+		JLabel label_61 = new JLabel("Matches ");
+		label_61.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
+		label_61.setBounds(73, 331, 71, 19);
+		panelPeja.add(label_61);
+		
+		JLabel label_63 = new JLabel("-2018");
+		label_63.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
+		label_63.setBounds(147, 331, 71, 19);
+		panelPeja.add(label_63);
+		
+		JLabel label_54 = new JLabel("");
+		label_54.setIcon(new ImageIcon(FrmMain.class.getResource("/images/background_3.jpg")));
+		label_54.setBackground(new Color(102, 153, 153));
+		label_54.setBounds(0, 0, 823, 512);
+		panelPeja.add(label_54);
+		panelPeja.setVisible(false);
+		
+		JPanel panelTrepca = new JPanel();
+		panelTrepca.setBounds(261, 0, 823, 512);
+		teamsPanel.add(panelTrepca);
+		panelTrepca.setLayout(null);
+		
+		JPanel panel_7 = new JPanel();
+		panel_7.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
+		panel_7.setBounds(72, 47, 207, 272);
+		panelTrepca.add(panel_7);
+		panel_7.setLayout(null);
+		
+		JLabel label_4 = new JLabel("");
+		label_4.setBounds(103, 6, 0, 0);
+		panel_7.add(label_4);
+		
+		JLabel label_15 = new JLabel("");
+		label_15.setIcon(new ImageIcon(FrmMain.class.getResource("/images/TREPCAAAA.png")));
+		label_15.setBounds(0, 18, 206, 230);
+		panel_7.add(label_15);
+		
+		JLabel lblTrepca = new JLabel("TREP\u00C7A");
+		lblTrepca.setToolTipText("");
+		lblTrepca.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
+		lblTrepca.setBounds(73, 8, 219, 30);
+		panelTrepca.add(lblTrepca);
+		
+		JPanel panel_8 = new JPanel();
+		panel_8.setLayout(null);
+		panel_8.setBorder(new LineBorder(new Color(0, 102, 153), 1, true));
+		panel_8.setBackground(new Color(0, 102, 153));
+		panel_8.setBounds(255, 47, 278, 272);
+		panelTrepca.add(panel_8);
+		
+		JLabel lblTrepa = new JLabel("Trep\u00E7a");
+		lblTrepa.setForeground(Color.WHITE);
+		lblTrepa.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblTrepa.setBounds(32, 46, 142, 21);
+		panel_8.add(lblTrepa);
+		
+		JLabel lblEmailKbtrepcagmailcom = new JLabel("Email: kb.trepca@gmail.com");
+		lblEmailKbtrepcagmailcom.setForeground(Color.WHITE);
+		lblEmailKbtrepcagmailcom.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblEmailKbtrepcagmailcom.setBounds(32, 78, 216, 21);
+		panel_8.add(lblEmailKbtrepcagmailcom);
+		
+		JLabel label_8 = new JLabel("Tel: 049 149 222");
+		label_8.setForeground(Color.WHITE);
+		label_8.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_8.setBounds(32, 110, 142, 21);
+		panel_8.add(label_8);
+		
+		JLabel lblPersoniKontaktuesNaim = new JLabel("Contact:");
+		lblPersoniKontaktuesNaim.setForeground(Color.WHITE);
+		lblPersoniKontaktuesNaim.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblPersoniKontaktuesNaim.setBounds(32, 141, 48, 21);
+		panel_8.add(lblPersoniKontaktuesNaim);
+		
+		JLabel lblNaimHajrizi = new JLabel("Naim Hajrizi");
+		lblNaimHajrizi.setForeground(Color.WHITE);
+		lblNaimHajrizi.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNaimHajrizi.setBounds(92, 141, 108, 21);
+		panel_8.add(lblNaimHajrizi);
+		
+		JLabel label_10 = new JLabel("First color:");
+		label_10.setForeground(Color.WHITE);
+		label_10.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_10.setBounds(32, 178, 91, 21);
+		panel_8.add(label_10);
+		
+		JLabel label_11 = new JLabel("Second color:");
+		label_11.setForeground(Color.WHITE);
+		label_11.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_11.setBounds(32, 210, 91, 21);
+		panel_8.add(label_11);
+		
+		JPanel panel_9 = new JPanel();
+		panel_9.setBackground(new Color(0, 153, 51));
+		panel_9.setBorder(null);
+		panel_9.setBounds(120, 179, 10, 20);
+		panel_8.add(panel_9);
+		
+		JPanel panel_10 = new JPanel();
+		panel_10.setBorder(null);
+		panel_10.setBackground(new Color(0, 153, 51));
+		panel_10.setBounds(120, 211, 10, 20);
+		panel_8.add(panel_10);
+		
+		JPanel panel_11 = new JPanel();
+		panel_11.setBackground(new Color(0, 0, 0));
+		panel_11.setBorder(null);
+		panel_11.setBounds(130, 179, 10, 20);
+		panel_8.add(panel_11);
+		
+		JPanel panel_12 = new JPanel();
+		panel_12.setBorder(null);
+		panel_12.setBounds(130, 211, 10, 20);
+		panel_8.add(panel_12);
+		
+		JLabel label_12 = new JLabel("Description");
+		label_12.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
+		label_12.setBounds(564, 47, 219, 30);
+		panelTrepca.add(label_12);
+		
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(72, 365, 595, 120);
+		panelTrepca.add(scrollPane_2);
+		
+		tblTrepca = new JTable();
+		scrollPane_2.setViewportView(tblTrepca);
+		
+		JLabel label_58 = new JLabel("Coach: ");
+		label_58.setBounds(564, 85, 49, 19);
+		panelTrepca.add(label_58);
+		label_58.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		
+		JLabel lblGazmentAsllani = new JLabel("Gazment Asllani");
+		lblGazmentAsllani.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		lblGazmentAsllani.setBounds(612, 85, 104, 19);
+		panelTrepca.add(lblGazmentAsllani);
+		
+		JLabel lblAssistantCoach = new JLabel("Assistant Coach: ");
+		lblAssistantCoach.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		lblAssistantCoach.setBounds(564, 105, 94, 19);
+		panelTrepca.add(lblAssistantCoach);
+		
+		JLabel lblIlirSelmani = new JLabel("Ilir Selmani");
+		lblIlirSelmani.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		lblIlirSelmani.setBounds(660, 105, 90, 19);
+		panelTrepca.add(lblIlirSelmani);
+		
+		JLabel label_57 = new JLabel("Matches ");
+		label_57.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
+		label_57.setBounds(72, 331, 71, 19);
+		panelTrepca.add(label_57);
+		
+		JLabel label_59 = new JLabel("-2018");
+		label_59.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
+		label_59.setBounds(146, 331, 71, 19);
+		panelTrepca.add(label_59);
+		
+		JLabel label_55 = new JLabel("");
+		label_55.setIcon(new ImageIcon(FrmMain.class.getResource("/images/background_3.jpg")));
+		label_55.setBackground(new Color(102, 153, 153));
+		label_55.setBounds(0, 0, 823, 512);
+		panelTrepca.add(label_55);
+		panelTrepca.setVisible(false);
 		
 		JPanel panelPrishtina = new JPanel();
 		panelPrishtina.setBackground(new Color(153, 204, 204));
@@ -1762,19 +1953,19 @@ public class FrmMain extends JFrame {
 		lblTel.setBounds(32, 110, 142, 21);
 		panel_4.add(lblTel);
 		
-		JLabel lblPersoniKontaktuesAgon = new JLabel("Personi Kontaktues: Agon Abazi");
-		lblPersoniKontaktuesAgon.setForeground(Color.WHITE);
-		lblPersoniKontaktuesAgon.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblPersoniKontaktuesAgon.setBounds(32, 141, 240, 21);
-		panel_4.add(lblPersoniKontaktuesAgon);
+		JLabel lblPersoniKontaktues = new JLabel("Contact:");
+		lblPersoniKontaktues.setForeground(Color.WHITE);
+		lblPersoniKontaktues.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblPersoniKontaktues.setBounds(32, 141, 65, 21);
+		panel_4.add(lblPersoniKontaktues);
 		
-		JLabel lblNgjyraEPare = new JLabel("Ngjyra e pare:");
+		JLabel lblNgjyraEPare = new JLabel("First color:");
 		lblNgjyraEPare.setForeground(Color.WHITE);
 		lblNgjyraEPare.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNgjyraEPare.setBounds(32, 178, 91, 21);
 		panel_4.add(lblNgjyraEPare);
 		
-		JLabel lblNgjyraEDyte = new JLabel("Ngjyra e dyte:");
+		JLabel lblNgjyraEDyte = new JLabel("Second color:");
 		lblNgjyraEDyte.setForeground(Color.WHITE);
 		lblNgjyraEDyte.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNgjyraEDyte.setBounds(32, 210, 91, 21);
@@ -1791,25 +1982,36 @@ public class FrmMain extends JFrame {
 		panel_6.setBounds(120, 211, 20, 20);
 		panel_4.add(panel_6);
 		
+		JLabel lblAgonAbazi = new JLabel("Agon Abazi");
+		lblAgonAbazi.setForeground(Color.WHITE);
+		lblAgonAbazi.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblAgonAbazi.setBounds(91, 141, 83, 21);
+		panel_4.add(lblAgonAbazi);
+		
 		JLabel lblSigalPrishtina_1 = new JLabel("SIGAL PRISHTINA");
 		lblSigalPrishtina_1.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
 		lblSigalPrishtina_1.setBounds(72, 11, 219, 30);
 		panelPrishtina.add(lblSigalPrishtina_1);
 		
-		JLabel lblP = new JLabel("Pershkrimi");
+		JLabel lblP = new JLabel("Description");
 		lblP.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 24));
 		lblP.setBounds(564, 47, 219, 30);
 		panelPrishtina.add(lblP);
 		
-		JLabel lblTrajneriAndinRashica = new JLabel("Trajneri: Andin Rashica");
-		lblTrajneriAndinRashica.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
-		lblTrajneriAndinRashica.setBounds(564, 89, 168, 19);
-		panelPrishtina.add(lblTrajneriAndinRashica);
+		JLabel lblCoachAndinRashica = new JLabel("Coach: ");
+		lblCoachAndinRashica.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		lblCoachAndinRashica.setBounds(564, 89, 49, 19);
+		panelPrishtina.add(lblCoachAndinRashica);
 		
-		JLabel lblNdeshjet = new JLabel("Ndeshjet - 2018");
-		lblNdeshjet.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
-		lblNdeshjet.setBounds(71, 331, 137, 19);
-		panelPrishtina.add(lblNdeshjet);
+		JLabel lblMatches = new JLabel("Matches ");
+		lblMatches.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
+		lblMatches.setBounds(71, 331, 71, 19);
+		panelPrishtina.add(lblMatches);
+		
+		JLabel lblAndinRashica = new JLabel("Andin Rashica");
+		lblAndinRashica.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 13));
+		lblAndinRashica.setBounds(612, 89, 90, 19);
+		panelPrishtina.add(lblAndinRashica);
 		
 		JScrollPane scrollPane_11 = new JScrollPane();
 		scrollPane_11.setBounds(72, 365, 595, 120);
@@ -1818,11 +2020,18 @@ public class FrmMain extends JFrame {
 		tblPrishtina = new JTable();
 		scrollPane_11.setViewportView(tblPrishtina);
 		
+		JLabel label_56 = new JLabel("-2018");
+		label_56.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 15));
+		label_56.setBounds(145, 331, 71, 19);
+		panelPrishtina.add(label_56);
+		
 		JLabel label_3 = new JLabel("");
 		label_3.setIcon(new ImageIcon(FrmMain.class.getResource("/images/background_3.jpg")));
 		label_3.setBackground(new Color(102, 153, 153));
 		label_3.setBounds(0, 0, 823, 512);
 		panelPrishtina.add(label_3);
+		
+		panelPrishtina.setVisible(false);
 		
 		JPanel panelTeams = new JPanel();
 		panelTeams.setBackground(Color.BLACK);
@@ -1842,6 +2051,7 @@ public class FrmMain extends JFrame {
 				panelRahoveci.setVisible(false);
 				panelGEYlli.setVisible(false);
 				panelKPrishtina.setVisible(false);
+				mainPanel.setVisible(false);
 				updateTblTeams(tblPrishtina,"Prishtina");
 			}
 		});
@@ -1864,6 +2074,7 @@ public class FrmMain extends JFrame {
 				panelRahoveci.setVisible(false);
 				panelGEYlli.setVisible(false);
 				panelKPrishtina.setVisible(false);
+				mainPanel.setVisible(false);
 				updateTblTeams(tblTrepca,"Trepca");
 				
 			}
@@ -1887,6 +2098,7 @@ public class FrmMain extends JFrame {
 				panelRahoveci.setVisible(false);
 				panelGEYlli.setVisible(false);
 				panelKPrishtina.setVisible(false);
+				mainPanel.setVisible(false);
 				updateTblTeams(tblPeja,"Peja");
 			}
 		});
@@ -1908,6 +2120,7 @@ public class FrmMain extends JFrame {
 				panelRahoveci.setVisible(false);
 				panelGEYlli.setVisible(false);
 				panelKPrishtina.setVisible(false);
+				mainPanel.setVisible(false);
 				updateTblTeams(tblBashkimi,"Bashkimi");
 			}
 		});
@@ -1929,6 +2142,7 @@ public class FrmMain extends JFrame {
 				panelRahoveci.setVisible(true);
 				panelGEYlli.setVisible(false);
 				panelKPrishtina.setVisible(false);
+				mainPanel.setVisible(false);
 				updateTblTeams(tblRahoveci,"Rahoveci");
 			}
 		});
@@ -1950,6 +2164,7 @@ public class FrmMain extends JFrame {
 				panelRahoveci.setVisible(false);
 				panelGEYlli.setVisible(true);
 				panelKPrishtina.setVisible(false);
+				mainPanel.setVisible(false);
 				updateTblTeams(tblGolden,"Golden Eagle Ylli");
 			}
 		});
@@ -1971,6 +2186,7 @@ public class FrmMain extends JFrame {
 				panelRahoveci.setVisible(false);
 				panelGEYlli.setVisible(false);
 				panelKPrishtina.setVisible(true);
+				mainPanel.setVisible(false);
 				updateTblTeams(tblKerasan,"Kerasan Prishtina");
 			}
 		});
@@ -1992,6 +2208,7 @@ public class FrmMain extends JFrame {
 				panelRahoveci.setVisible(false);
 				panelGEYlli.setVisible(false);
 				panelKPrishtina.setVisible(false);
+				mainPanel.setVisible(false);
 				updateTblTeams(tblBorea,"Borea");
 			}
 		});
@@ -2000,12 +2217,37 @@ public class FrmMain extends JFrame {
 		btnTeamBorea.setBounds(0, 220, 261, 44);
 		panelTeams.add(btnTeamBorea);
 		
-		panelPrishtina.setVisible(false);
+		JButton btnKthev = new JButton("");
+		btnKthev.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panelPrishtina.setVisible(false);
+				panelTrepca.setVisible(false);
+				panelPeja.setVisible(false);
+				panelBashkimi.setVisible(false);
+				panelBorea.setVisible(false);
+				panelRahoveci.setVisible(false);
+				panelGEYlli.setVisible(false);
+				panelKPrishtina.setVisible(false);
+				mainPanel.setVisible(true);
+			}
+		});
+		btnKthev.setIcon(new ImageIcon(FrmMain.class.getResource("/images/arrow-left-hi.png")));
+		btnKthev.setHorizontalAlignment(SwingConstants.LEFT);
+		btnKthev.setForeground(Color.WHITE);
+		btnKthev.setBackground(Color.BLACK);
+		btnKthev.setBounds(0, 356, 60, 44);
+		panelTeams.add(btnKthev);
 		tabbedPane.setForegroundAt(3, Color.WHITE);
 		tabbedPane.setBackgroundAt(3, Color.BLACK);
 		
 		updateTable();
 		updateTblResults();
+		updateTblUpcoming();
+	}
+	public void setLanguage(String lang) {
+
+		ResourceBundle r = ResourceBundle.getBundle("log");
+		
 		
 	}
 	private static void addPopup(Component component, final JPopupMenu popup) {
