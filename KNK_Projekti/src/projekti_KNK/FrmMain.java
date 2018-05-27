@@ -1821,7 +1821,8 @@ public class FrmMain extends JFrame {
 		panelTeams.add(btnTeamTrepca);
 		
 		JButton btnTeamPeja = new JButton("Peja");
-		btnTeamPeja.setIcon(new ImageIcon(FrmMain.class.getResource("/images/Peja - Copy - Copy.png")));
+		btnTeamPeja.setSelectedIcon(new ImageIcon(FrmMain.class.getResource("/images/peja_vogel.png")));
+		btnTeamPeja.setIcon(new ImageIcon(FrmMain.class.getResource("/images/peja_vogel.png")));
 		btnTeamPeja.setHorizontalAlignment(SwingConstants.LEFT);
 		btnTeamPeja.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
