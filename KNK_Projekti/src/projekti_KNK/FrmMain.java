@@ -263,6 +263,9 @@ public class FrmMain extends JFrame {
 		
 		JMenuItem mntmAbout = new JMenuItem("About");
 		mnHelp.add(mntmAbout);
+		
+		JMenu mnUser = new JMenu("User");
+		menuBar.add(mnUser);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -912,6 +915,10 @@ public class FrmMain extends JFrame {
 		JPanel teamsPanel = new JPanel();
 		tabbedPane.addTab("Teams", null, teamsPanel, null);
 		teamsPanel.setLayout(null);
+		
+		JPanel mainPanel = new JPanel();
+		mainPanel.setBounds(261, 0, 823, 512);
+		teamsPanel.add(mainPanel);
 		
 		JPanel panelTrepca = new JPanel();
 		panelTrepca.setBounds(261, 0, 823, 512);
