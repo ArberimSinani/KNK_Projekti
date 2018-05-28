@@ -24,6 +24,7 @@ import java.sql.PreparedStatement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -68,13 +69,13 @@ public class FrmSignup extends JFrame {
 	JLabel lblPassword = new JLabel("Password");
 	JLabel lblGender = new JLabel("Gender");
 	JLabel lblConfirmPassword = new JLabel("Confirm password");
-	JLabel lblSignUp = new JLabel("Sign up");
 	JButton btnSignUp = new JButton("Sign up");
 	JLabel lblAlreadyAUser = new JLabel("Already a user? Log in");
 	JRadioButton rdbtnMale = new JRadioButton("Male");
 	JRadioButton rdbtnFemale = new JRadioButton("Female");
+	JLabel lblSignUp = new JLabel("Sign up");
 	
-	
+	String language;
 	//Login object
 	FrmLogin loginFrame = new FrmLogin();
 	
@@ -110,7 +111,7 @@ public class FrmSignup extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrmSignup(String language) {
+	public FrmSignup(String lang) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\DIGITRON\\Desktop\\Fakultet LINA\\KNK\\PROJEKTIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII I FUNDIT\\KNK_Projekti\\KNK_Projekti\\src\\images\\15983-200.png"));
 		conn=SQLConn.connectDB();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -120,6 +121,13 @@ public class FrmSignup extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		language = lang;
+		
+		
+		lblDateOfBirth.setForeground(Color.BLACK);
+		lblDateOfBirth.setFont(new Font("Calibri", Font.PLAIN, 14));
+		lblDateOfBirth.setBounds(355, 199, 128, 24);
+		contentPane.add(lblDateOfBirth);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 686, 105);
@@ -132,7 +140,7 @@ public class FrmSignup extends JFrame {
 		label.setBounds(10, 11, 88, 88);
 		panel.add(label);
 		
-		JLabel lblSignUp = new JLabel("Sign up");
+		
 		lblSignUp.setForeground(Color.WHITE);
 		lblSignUp.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSignUp.setFont(new Font("Calibri", Font.PLAIN, 38));
@@ -154,7 +162,7 @@ public class FrmSignup extends JFrame {
 		panel.add(lblExit);
 		
 		txtFullName = new JTextField();
-		txtFullName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		txtFullName.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		txtFullName.setBackground(Color.LIGHT_GRAY);
 		txtFullName.setColumns(10);
 		txtFullName.setBounds(56, 151, 252, 37);
@@ -162,7 +170,7 @@ public class FrmSignup extends JFrame {
 		
 		txtUserName = new JTextField();
 		txtUserName.setBackground(Color.LIGHT_GRAY);
-		txtUserName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		txtUserName.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		txtUserName.setColumns(10);
 		txtUserName.setBounds(355, 151, 252, 37);
 		contentPane.add(txtUserName);
@@ -181,7 +189,7 @@ public class FrmSignup extends JFrame {
 		contentPane.add(lblUsername);
 		
 		txtEmail = new JTextField();
-		txtEmail.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		txtEmail.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		txtEmail.setBackground(Color.LIGHT_GRAY);
 		txtEmail.setColumns(10);
 		txtEmail.setBounds(56, 223, 252, 37);
@@ -194,17 +202,11 @@ public class FrmSignup extends JFrame {
 		contentPane.add(lblEmail);
 		
 		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		dateChooser.setBorder(null);
 		dateChooser.setForeground(new Color(0, 0, 0));
 		dateChooser.setBackground(new Color(51, 102, 102));
-		dateChooser.setBounds(355, 223, 97, 37);
+		dateChooser.setBounds(355, 223, 143, 37);
 		contentPane.add(dateChooser);
-		
-		
-		lblDateOfBirth.setForeground(Color.BLACK);
-		lblDateOfBirth.setFont(new Font("Calibri", Font.PLAIN, 14));
-		lblDateOfBirth.setBounds(355, 199, 128, 24);
-		contentPane.add(lblDateOfBirth);
 		
 		
 		lblGender.setForeground(Color.BLACK);
@@ -235,19 +237,25 @@ public class FrmSignup extends JFrame {
 		contentPane.add(lblPassword);
 		
 		pwdPassword = new JPasswordField();
-		pwdPassword.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		pwdPassword.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		pwdPassword.setBackground(Color.LIGHT_GRAY);
 		pwdPassword.setBounds(56, 294, 252, 37);
 		contentPane.add(pwdPassword);
 		
-		JLabel lblConfirmPassword = new JLabel("Confirm password");
+
 		lblConfirmPassword.setForeground(Color.BLACK);
 		lblConfirmPassword.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lblConfirmPassword.setBounds(355, 271, 218, 24);
 		contentPane.add(lblConfirmPassword);
 		
 		pwdConfPassword = new JPasswordField();
-		pwdConfPassword.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		pwdConfPassword.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				btnSignUp.getRootPane().setDefaultButton(btnSignUp);
+			}
+		});
+		pwdConfPassword.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		pwdConfPassword.setBackground(Color.LIGHT_GRAY);
 		pwdConfPassword.setBounds(355, 294, 252, 37);
 		contentPane.add(pwdConfPassword);
@@ -338,7 +346,13 @@ public class FrmSignup extends JFrame {
 	}
 	
 	public void setLanguage(String lang) {
-
+		if(lang == "EN") {
+			Locale.setDefault(new Locale("en"));
+		}
+		else if(lang == "AL") {
+			Locale.setDefault(new Locale("al"));
+		}
+		if(lang != null) {
 		ResourceBundle r = ResourceBundle.getBundle("log");
 		lblName.setText(r.getString("fullname"));
 		lblUsername.setText(r.getString("username"));
@@ -351,7 +365,7 @@ public class FrmSignup extends JFrame {
 		lblAlreadyAUser.setText(r.getString("alrUser"));
 		rdbtnMale.setText(r.getString("male"));
 		rdbtnFemale.setText(r.getString("female"));
-		
+		}
 		
 	}
 	//Password validation method

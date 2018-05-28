@@ -17,6 +17,8 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import java.awt.Font;
+import java.awt.Insets;
+
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.JPasswordField;
@@ -59,6 +61,7 @@ public class FrmLogin extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtUsername;
 	private JPasswordField pwdPassword;
+	JButton btnLogin = new JButton("Log in");
 	
 	
 	JComboBox cmbLang = new JComboBox();
@@ -126,13 +129,15 @@ public class FrmLogin extends JFrame {
 		contentPane.add(lblLogin);
 		
 		txtUsername = new JTextField();
-		txtUsername.setBorder(BorderFactory.createLineBorder(Color.BLACK)); //border e textfield
+		
+		txtUsername.setMargin(new Insets(3,3,3,3));
 		txtUsername.setBackground(Color.LIGHT_GRAY);
-		txtUsername.setToolTipText("");
+		
 		txtUsername.setFont(new Font("Calibri", Font.PLAIN, 14));
 		txtUsername.setBounds(386, 147, 237, 35);
 		contentPane.add(txtUsername);
 		txtUsername.setColumns(10);
+		
 		
 		JLabel lblUsername = new JLabel("Username");
 		lblUsername.setFont(new Font("Calibri", Font.PLAIN, 14));
@@ -147,18 +152,24 @@ public class FrmLogin extends JFrame {
 		contentPane.add(lblPassword);
 		
 		pwdPassword = new JPasswordField();
+		pwdPassword.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				btnLogin.getRootPane().setDefaultButton(btnLogin);	
+			}
+		});
 		pwdPassword.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent arg0) {
 				pwdPassword.selectAll();
 			}
 		});
-		pwdPassword.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		pwdPassword.setMargin(new Insets(3,3,3,3));
 		pwdPassword.setBackground(Color.LIGHT_GRAY);
 		pwdPassword.setBounds(386, 233, 237, 35);
 		contentPane.add(pwdPassword);
 		
-		JButton btnLogin = new JButton("Log in");
+	
 		
 	//Login with Enter key
 		btnLogin.addKeyListener(new KeyAdapter() {
@@ -303,6 +314,7 @@ public class FrmLogin extends JFrame {
 		else if(lang == "AL") {
 			Locale.setDefault(new Locale("al"));
 		}
+		
 	}
 	
 }
