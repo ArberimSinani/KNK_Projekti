@@ -7,20 +7,15 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import java.awt.Cursor;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
-
 import java.awt.Font;
 import java.awt.Insets;
-
 import javax.swing.JTextField;
-import javax.swing.KeyStroke;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
@@ -31,7 +26,6 @@ import java.sql.ResultSet;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -64,6 +58,7 @@ public class FrmLogin extends JFrame {
 	JButton btnLogin = new JButton("Log in");
 	
 	
+	@SuppressWarnings("rawtypes")
 	JComboBox cmbLang = new JComboBox();
 	
 	String lang = null ;
@@ -114,6 +109,7 @@ public class FrmLogin extends JFrame {
 	 * Create the frame.
 	 * @param language 
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public FrmLogin(String language) {
 		this.setUndecorated(true); //Remove title bar
 		lang = language;
@@ -139,7 +135,7 @@ public class FrmLogin extends JFrame {
 		txtUsername = new JTextField();
 		
 		txtUsername.setMargin(new Insets(3,3,3,3));
-		txtUsername.setBackground(Color.WHITE);
+		txtUsername.setBackground(Color.LIGHT_GRAY);
 		
 		txtUsername.setFont(new Font("Calibri", Font.PLAIN, 14));
 		txtUsername.setBounds(386, 147, 237, 35);
@@ -173,7 +169,7 @@ public class FrmLogin extends JFrame {
 			}
 		});
 		pwdPassword.setMargin(new Insets(3,3,3,3));
-		pwdPassword.setBackground(Color.WHITE);
+		pwdPassword.setBackground(Color.LIGHT_GRAY);
 		pwdPassword.setBounds(386, 233, 237, 35);
 		contentPane.add(pwdPassword);
 		

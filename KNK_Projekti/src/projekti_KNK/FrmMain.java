@@ -1,12 +1,8 @@
 package projekti_KNK;
-
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -21,29 +17,19 @@ import java.util.ResourceBundle;
 import java.awt.event.InputEvent;
 import javax.swing.JButton;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Insets;
-
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-
 import net.proteanit.sql.DbUtils;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
-
-import javax.swing.Action;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
-import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.JTextField;
@@ -52,10 +38,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPopupMenu;
 import java.awt.Component;
 import javax.swing.border.LineBorder;
-import javax.swing.JLayeredPane;
-import javax.swing.JDesktopPane;
-import javax.swing.JInternalFrame;
-import javax.swing.JSplitPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -83,7 +65,6 @@ public class FrmMain extends JFrame {
 		private JTextField txtPoints;
 		
 		String team ;
-		private int id;
 		private JTextField txtSearch;
 		
 		//Objekti i klases methods :
@@ -447,14 +428,14 @@ public class FrmMain extends JFrame {
 						}
 					}
 				});
-				txtSearch.setBounds(303, 207, 238, 38);
+				txtSearch.setBounds(327, 207, 238, 38);
 				homePanel.add(txtSearch);
 				txtSearch.setColumns(10);
 				//====================================================================================================================================================
 				//label per search field
 				//====================================================================================================================================================
 				
-				lblSearchForUpcoming.setBounds(73, 208, 218, 36);
+				lblSearchForUpcoming.setBounds(73, 208, 253, 36);
 				homePanel.add(lblSearchForUpcoming);
 				lblSearchForUpcoming.setForeground(new Color(0, 0, 0));
 				lblSearchForUpcoming.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -587,19 +568,39 @@ public class FrmMain extends JFrame {
 				try {
 					
 					
-					String sql = "Insert into tblResults (ht_name, at_name, ht_score, at_score,game_time, game_date) values ('"+txtHteam.getText()+"','"
-								+txtAteam.getText()+"',"+txtHS.getText()+","+txtAS.getText()+",'"+txtTime.getText()+"','"+txtDate.getText()+"');";
-				
-					pst= conn.prepareStatement(sql);
+					//String sql = "Insert into tblResults (ht_name, at_name, ht_score, at_score,game_time, game_date) values ('"+txtHteam.getText()+"','"
+					//			+txtAteam.getText()+"',"+txtHS.getText()+","+txtAS.getText()+",'"+txtTime.getText()+"','"+txtDate.getText()+"');";
+					
+					String sql;
+					
+					if(txtHS.getText().isEmpty() && txtAS.getText().isEmpty()) {
+						sql = "Insert into tblResults (ht_name, at_name, game_time, game_date) values ('"+txtHteam.getText()+"','"+txtAteam.getText()+"','"
+								+txtTime.getText()+"','"+txtDate.getText()+"');";
+					}
+					else {
+						sql = "Insert into tblResults values (default,'"+txtHteam.getText()+"','"+txtAteam.getText()+"'"
+							+ ","+txtHS.getText()+","+txtAS.getText()+",'"+txtTime.getText()+"','"+txtDate.getText()+"');";
+					}
+					pst=conn.prepareStatement(sql);
 					pst.execute();
 					pst.close();
 					updateTblResults();
+					
+
 					if(Integer.parseInt(txtHS.getText()) > Integer.parseInt(txtAS.getText())) {
 						try {
 							
-							String sql2="UPDATE tblstandings SET points = points + 1 WHERE Team = '"+txtHteam.getText()+"'";
-							pst=conn.prepareStatement(sql2);
+							String sqlWin="UPDATE tblstandings SET games = games + 1, points = points + 2,wins = wins + 1, scored = scored + "+txtHS.getText()+","
+									+ " taken = taken + "+txtAS.getText()+" WHERE Team = '"+txtHteam.getText()+"';";
+							pst=conn.prepareStatement(sqlWin);
 							pst.execute();
+							
+							String sqlLose="UPDATE tblstandings SET games = games + 1, losses = losses + 1, scored = scored + "+txtAS.getText()+","
+									+ " taken = taken + "+txtHS.getText()+" WHERE Team = '"+txtAteam.getText()+"';";
+							pst=conn.prepareStatement(sqlLose);
+							pst.execute();
+							
+							
 							updateTable();
 							pst.close();
 							
@@ -612,9 +613,17 @@ public class FrmMain extends JFrame {
 					else if(Integer.parseInt(txtHS.getText()) < Integer.parseInt(txtAS.getText())) {
 						try {
 							
-							String sql2="UPDATE tblstandings SET points = points + 1 WHERE Team = '"+txtAteam.getText()+"'";
-							pst=conn.prepareStatement(sql2);
+							String sqlWin="UPDATE tblstandings SET games = games + 1, points = points + 2, wins = wins + 1, scored = scored + "+txtAS.getText()+","
+									+ " taken = taken + "+txtHS.getText()+" WHERE Team = '"+txtAteam.getText()+"';";
+							pst=conn.prepareStatement(sqlWin);
 							pst.execute();
+							
+							String sqlLose="UPDATE tblstandings SET games = games + 1, losses = losses + 1, scored = scored + "+txtHS.getText()+","
+									+ " taken = taken + "+txtAS.getText()+" WHERE Team = '"+txtHteam.getText()+"';";
+							pst=conn.prepareStatement(sqlLose);
+							pst.execute();
+							
+							
 							updateTable();
 							pst.close();
 							
@@ -653,6 +662,57 @@ public class FrmMain extends JFrame {
 					pst=conn.prepareStatement(sql);
 					pst.execute();
 					pst.close();
+					
+					
+					
+					if(Integer.parseInt(txtHS.getText()) > Integer.parseInt(txtAS.getText())) {
+						try {
+							
+							String sqlWin="UPDATE tblstandings SET games = games - 1, points = points - 2,wins = wins - 1, scored = scored - "+txtHS.getText()+","
+									+ " taken = taken - "+txtAS.getText()+" WHERE Team = '"+txtHteam.getText()+"';";
+							pst=conn.prepareStatement(sqlWin);
+							pst.execute();
+							
+							String sqlLose="UPDATE tblstandings SET games = games - 1, losses = losses - 1, scored = scored - "+txtAS.getText()+","
+									+ " taken = taken - "+txtHS.getText()+" WHERE Team = '"+txtAteam.getText()+"';";
+							pst=conn.prepareStatement(sqlLose);
+							pst.execute();
+							
+							
+							updateTable();
+							pst.close();
+							
+							
+						}
+						catch(Exception e) {
+							
+						}
+					}
+					else if(Integer.parseInt(txtHS.getText()) < Integer.parseInt(txtAS.getText())) {
+						try {
+							
+							String sqlWin="UPDATE tblstandings SET games = games - 1, points = points - 2,wins = wins - 1, scored = scored - "+txtAS.getText()+","
+									+ " taken = taken - "+txtHS.getText()+" WHERE Team = '"+txtAteam.getText()+"';";
+							pst=conn.prepareStatement(sqlWin);
+							pst.execute();
+							
+							String sqlLose="UPDATE tblstandings SET games = games - 1, losses = losses - 1, scored = scored - "+txtHS.getText()+","
+									+ " taken = taken - "+txtAS.getText()+" WHERE Team = '"+txtHteam.getText()+"';";
+							pst=conn.prepareStatement(sqlLose);
+							pst.execute();
+							
+							
+							updateTable();
+							pst.close();
+							
+							
+						}
+						catch(Exception e) {
+							
+						}
+					}
+					
+					
 					
 					txtHteam.setText("");
 					txtAteam.setText("");
