@@ -77,7 +77,7 @@ public class FrmSignup extends JFrame {
 	
 	String language;
 	//Login object
-	FrmLogin loginFrame = new FrmLogin();
+	
 	
 	/**
 	 * Launch the application.
@@ -97,7 +97,6 @@ public class FrmSignup extends JFrame {
 					} catch (Exception e) {
 					    // If Nimbus is not available, you can set the GUI to another look and feel.
 					}
-					frame.setUndecorated(true);
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
 					frame.setResizable(false);
@@ -112,6 +111,8 @@ public class FrmSignup extends JFrame {
 	 * Create the frame.
 	 */
 	public FrmSignup(String lang) {
+		this.setUndecorated(true); // Remove titlebar
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\DIGITRON\\Desktop\\Fakultet LINA\\KNK\\PROJEKTIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII I FUNDIT\\KNK_Projekti\\KNK_Projekti\\src\\images\\15983-200.png"));
 		conn=SQLConn.connectDB();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -163,13 +164,13 @@ public class FrmSignup extends JFrame {
 		
 		txtFullName = new JTextField();
 		txtFullName.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		txtFullName.setBackground(Color.LIGHT_GRAY);
+		txtFullName.setBackground(Color.WHITE);
 		txtFullName.setColumns(10);
 		txtFullName.setBounds(56, 151, 252, 37);
 		contentPane.add(txtFullName);
 		
 		txtUserName = new JTextField();
-		txtUserName.setBackground(Color.LIGHT_GRAY);
+		txtUserName.setBackground(Color.WHITE);
 		txtUserName.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		txtUserName.setColumns(10);
 		txtUserName.setBounds(355, 151, 252, 37);
@@ -190,7 +191,7 @@ public class FrmSignup extends JFrame {
 		
 		txtEmail = new JTextField();
 		txtEmail.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		txtEmail.setBackground(Color.LIGHT_GRAY);
+		txtEmail.setBackground(Color.WHITE);
 		txtEmail.setColumns(10);
 		txtEmail.setBounds(56, 223, 252, 37);
 		contentPane.add(txtEmail);
@@ -238,7 +239,7 @@ public class FrmSignup extends JFrame {
 		
 		pwdPassword = new JPasswordField();
 		pwdPassword.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		pwdPassword.setBackground(Color.LIGHT_GRAY);
+		pwdPassword.setBackground(Color.WHITE);
 		pwdPassword.setBounds(56, 294, 252, 37);
 		contentPane.add(pwdPassword);
 		
@@ -256,7 +257,7 @@ public class FrmSignup extends JFrame {
 			}
 		});
 		pwdConfPassword.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		pwdConfPassword.setBackground(Color.LIGHT_GRAY);
+		pwdConfPassword.setBackground(Color.WHITE);
 		pwdConfPassword.setBounds(355, 294, 252, 37);
 		contentPane.add(pwdConfPassword);
 		
@@ -291,7 +292,7 @@ public class FrmSignup extends JFrame {
 								pst=conn.prepareStatement(sql);
 								pst.execute();
 								pst.close();
-								
+								FrmLogin loginFrame = new FrmLogin(language);
 								dispose();
 								loginFrame.setVisible(true);
 								loginFrame.setLocationRelativeTo(null);
@@ -328,6 +329,7 @@ public class FrmSignup extends JFrame {
 		lblAlreadyAUser.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				FrmLogin loginFrame = new FrmLogin(language);
 				dispose();
 				loginFrame.setUndecorated(true);
 				loginFrame.setVisible(true);

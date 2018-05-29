@@ -39,6 +39,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
@@ -56,6 +57,8 @@ import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JSplitPane;
 import java.awt.event.KeyAdapter;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class FrmMain extends JFrame {
 
@@ -335,13 +338,14 @@ public class FrmMain extends JFrame {
 				dispose();
 			}
 		});
-		mntmExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK | InputEvent.ALT_MASK));
+		mntmExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK | InputEvent.ALT_MASK));
 		mnFile.add(mntmExit);
 		
 		JMenu mnLang = new JMenu("Lang");
 		menuBar.add(mnLang);
 		
 		JMenuItem mntmEng = new JMenuItem("Eng");
+		mntmEng.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK | InputEvent.ALT_MASK));
 		mntmEng.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				language = "EN";
@@ -352,6 +356,7 @@ public class FrmMain extends JFrame {
 		mnLang.add(mntmEng);
 		
 		JMenuItem mntmAlb = new JMenuItem("Alb");
+		mntmAlb.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK | InputEvent.ALT_MASK));
 		mnLang.add(mntmAlb);
 		
 		mntmAlb.addActionListener(new ActionListener() {
@@ -366,12 +371,22 @@ public class FrmMain extends JFrame {
 		menuBar.add(mnHelp);
 		
 		JMenuItem mntmAbout = new JMenuItem("About");
+		mntmAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, InputEvent.CTRL_MASK | InputEvent.ALT_MASK));
 		mnHelp.add(mntmAbout);
 		
 		JMenu mnUser = new JMenu("User");
 		menuBar.add(mnUser);
 		
 		JMenuItem mntmLogOut = new JMenuItem("Log out");
+		mntmLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				FrmLogin frmLogin = new FrmLogin(language);
+				frmLogin.setVisible(true);
+				frmLogin.setLocationRelativeTo(null);
+			}
+		});
+		mntmLogOut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK | InputEvent.ALT_MASK));
 		mnUser.add(mntmLogOut);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -917,7 +932,7 @@ public class FrmMain extends JFrame {
 		titlePanel.setBounds(332, 0, 753, 49);
 		standingsPanel.add(titlePanel);
 		titlePanel.setLayout(null);
-		titlePanel.setBackground(new Color(51, 102, 102));
+		titlePanel.setBackground(new Color(102, 0, 0));
 		
 		
 		lblStandingsTable.setFont(new Font("Calibri", Font.PLAIN, 23));
@@ -1000,6 +1015,12 @@ public class FrmMain extends JFrame {
 		lblLosses.setForeground(Color.BLACK);
 		
 		txtLosses = new JTextField();
+		txtLosses.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				txtScored.requestFocus(true);
+			}
+		});
 		txtLosses.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -1024,6 +1045,12 @@ public class FrmMain extends JFrame {
 		lblScored.setForeground(Color.BLACK);
 		
 		txtScored = new JTextField();
+		txtScored.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				txtTaken.requestFocus(true);
+			}
+		});
 		txtScored.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -1048,6 +1075,12 @@ public class FrmMain extends JFrame {
 		lblTaken.setForeground(Color.BLACK);
 		
 		txtTaken = new JTextField();
+		txtTaken.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				txtPoints.requestFocus(true);
+			}
+		});
 		txtTaken.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {

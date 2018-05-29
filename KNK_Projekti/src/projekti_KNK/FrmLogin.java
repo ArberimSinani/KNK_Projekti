@@ -68,6 +68,12 @@ public class FrmLogin extends JFrame {
 	
 	String lang = null ;
 	
+	JLabel lblLogin = new JLabel("Log in");
+	JLabel lblSignup = new JLabel("Sign up");
+	JLabel lblUsername = new JLabel("Username");
+	JLabel lblPassword = new JLabel("Password");
+	JCheckBox chckbxShowPassword = new JCheckBox("Show password");
+	
 	// main frame object
 	
 	
@@ -90,8 +96,7 @@ public class FrmLogin extends JFrame {
 					} catch (Exception e) {
 					    // If Nimbus is not available, you can set the GUI to another look and feel.
 					}
-					FrmLogin frame = new FrmLogin();
-					frame.setUndecorated(true);//Removes title bar
+					FrmLogin frame = new FrmLogin(null);
 					frame.setVisible(true);
 					//Set the frame in the middle of the window
 					frame.setLocationRelativeTo(null);
@@ -107,8 +112,11 @@ public class FrmLogin extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param language 
 	 */
-	public FrmLogin() {
+	public FrmLogin(String language) {
+		this.setUndecorated(true); //Remove title bar
+		lang = language;
 		setTitle("Basketball ");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\DIGITRON\\Desktop\\Fakultet LINA\\KNK\\PROJEKTIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII I FUNDIT\\KNK_Projekti\\KNK_Projekti\\src\\images\\15983-200.png"));
 		conn=SQLConn.connectDB();
@@ -121,7 +129,7 @@ public class FrmLogin extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblLogin = new JLabel("Log in");
+		
 		lblLogin.setFont(new Font("Calibri", Font.BOLD, 29));
 		lblLogin.setForeground(new Color(0, 0, 0));
 		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
@@ -131,7 +139,7 @@ public class FrmLogin extends JFrame {
 		txtUsername = new JTextField();
 		
 		txtUsername.setMargin(new Insets(3,3,3,3));
-		txtUsername.setBackground(Color.LIGHT_GRAY);
+		txtUsername.setBackground(Color.WHITE);
 		
 		txtUsername.setFont(new Font("Calibri", Font.PLAIN, 14));
 		txtUsername.setBounds(386, 147, 237, 35);
@@ -139,13 +147,13 @@ public class FrmLogin extends JFrame {
 		txtUsername.setColumns(10);
 		
 		
-		JLabel lblUsername = new JLabel("Username");
+		
 		lblUsername.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lblUsername.setForeground(Color.BLACK);
 		lblUsername.setBounds(386, 122, 237, 24);
 		contentPane.add(lblUsername);
 		
-		JLabel lblPassword = new JLabel("Password");
+		
 		lblPassword.setForeground(Color.BLACK);
 		lblPassword.setFont(new Font("Calibri", Font.PLAIN, 14));
 		lblPassword.setBounds(386, 208, 237, 24);
@@ -165,7 +173,7 @@ public class FrmLogin extends JFrame {
 			}
 		});
 		pwdPassword.setMargin(new Insets(3,3,3,3));
-		pwdPassword.setBackground(Color.LIGHT_GRAY);
+		pwdPassword.setBackground(Color.WHITE);
 		pwdPassword.setBounds(386, 233, 237, 35);
 		contentPane.add(pwdPassword);
 		
@@ -221,15 +229,14 @@ public class FrmLogin extends JFrame {
 		
 		contentPane.add(btnLogin);
 		
-		JLabel lblSignup = new JLabel("Sign up");
+		
 		lblSignup.setForeground(Color.BLACK);
 		lblSignup.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				lang = cmbLang.getSelectedItem().toString();
 				dispose();
-				FrmSignup signupFrame =  new FrmSignup(lang); 
-				signupFrame.setUndecorated(true);
+				FrmSignup signupFrame =  new FrmSignup(lang);
 				signupFrame.setVisible(true);
 				signupFrame.setLocationRelativeTo(null);
 			}
@@ -263,7 +270,7 @@ public class FrmLogin extends JFrame {
 		label.setIcon(new ImageIcon(FrmLogin.class.getResource("/images/basketball-user.png")));
 		label.setBounds(59, 61, 243, 260);
 		panel.add(label);
-		JCheckBox chckbxShowPassword = new JCheckBox("Show password");
+		
 		
 		
 		chckbxShowPassword.setFont(new Font("Calibri", Font.PLAIN, 12));
@@ -290,20 +297,15 @@ public class FrmLogin extends JFrame {
 			public void itemStateChanged(ItemEvent arg0) {
 				
 				lang = cmbLang.getSelectedItem().toString();
-				changeLang(lang);
-				ResourceBundle r = ResourceBundle.getBundle("log");
-				lblLogin.setText(r.getString("login"));
-				btnLogin.setText(r.getString("login"));
-				lblUsername.setText(r.getString("username"));
-				lblPassword.setText(r.getString("password"));
-				lblSignup.setText(r.getString("signup"));
-				chckbxShowPassword.setText(r.getString("showpwd"));
+				changeLang(lang);	
 			}
 			
 		});
 		cmbLang.setForeground(Color.WHITE);
 		cmbLang.setBackground(new Color(51, 102, 102));
 		cmbLang.setModel(new DefaultComboBoxModel(new String[] {"Lang", "EN", "AL"}));
+		
+		changeLang(language);
 		
 	}
 	public void changeLang(String lang) {
@@ -313,6 +315,15 @@ public class FrmLogin extends JFrame {
 		}
 		else if(lang == "AL") {
 			Locale.setDefault(new Locale("al"));
+		}
+		if(lang != null) {
+		ResourceBundle r = ResourceBundle.getBundle("log");
+		lblLogin.setText(r.getString("login"));
+		btnLogin.setText(r.getString("login"));
+		lblUsername.setText(r.getString("username"));
+		lblPassword.setText(r.getString("password"));
+		lblSignup.setText(r.getString("signup"));
+		chckbxShowPassword.setText(r.getString("showpwd"));
 		}
 		
 	}
