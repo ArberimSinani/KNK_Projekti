@@ -185,12 +185,12 @@ public class FrmLogin extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 						@SuppressWarnings("deprecation")
-						String sql="select * from tblusers where username = '"+txtUsername.getText()+"' and userPassword = '"+pwdPassword.getText()+"';";
+						String sql="select * from tblusers where username = '"+txtUsername.getText()+"' and userPassword = md5('"+pwdPassword.getText()+"');";
 						pst=conn.prepareStatement(sql);
 						res = pst.executeQuery();
 						if(res.next()) {
 							@SuppressWarnings("deprecation")
-							String sql1="select * from tblusers where username = '"+txtUsername.getText()+"' and userPassword = '"+pwdPassword.getText()+"' and userAdmin = 1;";
+							String sql1="select * from tblusers where username = '"+txtUsername.getText()+"' and userPassword = md5('"+pwdPassword.getText()+"') and userAdmin = 1;";
 							pst=conn.prepareStatement(sql1);
 							pst.execute();
 							res = pst.executeQuery();

@@ -889,6 +889,36 @@ public class FrmMain extends JFrame {
 		resultsPanel.add(scrollPane2);
 		
 		tblResults = new JTable();
+		tblResults.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				DefaultTableModel model=(DefaultTableModel)tblResults.getModel();
+				team = (String)model.getValueAt(tblResults.getSelectedRow(),0);
+				gDate = (Date)model.getValueAt(tblResults.getSelectedRow(),5);
+				try 
+				{
+					String sql="select * from tblresults where ht_name='"+team+"' and game_date = '"+gDate.toString()+"';";
+					pst=conn.prepareStatement(sql);
+					res=pst.executeQuery();
+					while(res.next()) 
+					{
+						txtHteam.setText(res.getString("ht_name"));
+						txtAteam.setText(res.getString("at_name"));
+						txtHS.setText(String.valueOf(res.getInt("ht_score")));
+						txtAS.setText(String.valueOf(res.getInt("at_score")));
+						txtTime.setText(res.getString("game_time"));
+						txtDate.setText(res.getString("game_date"));
+				
+					}
+					pst.close();
+					
+				}
+				catch (Exception e) 
+				{
+					JOptionPane.showMessageDialog(null, "Gabim gjate mbushjes se textbox me te dhena"+e.getMessage());
+				}
+			}
+		});
 
 		//#################################################################################################################################################
 		//###############  Mbushja e textFields duke klikuar ne te dhenat e tabeles tblResults  ###########################################################
@@ -1088,7 +1118,7 @@ public class FrmMain extends JFrame {
 		titlePanel.setBounds(332, 0, 753, 49);
 		standingsPanel.add(titlePanel);
 		titlePanel.setLayout(null);
-		titlePanel.setBackground(new Color(102, 0, 0));
+		titlePanel.setBackground(new Color(51,102,102));
 		
 		
 		lblStandingsTable.setFont(new Font("Calibri", Font.PLAIN, 23));
@@ -1309,7 +1339,7 @@ public class FrmMain extends JFrame {
 		btnAddStandings.setBackground(Color.BLACK);
 		
 		//#################################################################################################################################################
-		//###############  Butoni edit per tblStandings  ###################################################################################################
+		//###############  Butoni edit per tblStandings  ##################################################################################################
 		//#################################################################################################################################################
 		
 		btnEditStandings.setBounds(231, 314, 92, 33);
@@ -1340,7 +1370,7 @@ public class FrmMain extends JFrame {
 		btnEditStandings.setBackground(Color.BLACK);
 		
 		//#################################################################################################################################################
-		//###############  Butoni Delete per tblStandings  ###################################################################################################
+		//###############  Butoni Delete per tblStandings  ################################################################################################
 		//#################################################################################################################################################
 		
 		btnDeleteStandings.setBounds(231, 376, 92, 33);

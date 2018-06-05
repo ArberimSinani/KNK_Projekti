@@ -288,7 +288,7 @@ public class FrmSignup extends JFrame {
 						if(passwordVal(pwdPassword.getText())) {
 							if(emailVal(txtEmail.getText())) {
 								String sql="insert into tblusers (fullname,username,useremail,userbdate,usergender,userpassword) values "
-										+ "('"+txtFullName.getText()+"','"+txtUserName.getText()+"','"+txtEmail.getText()+"','"+userdate+"','"+gender+"','"+pwdPassword.getText()+"');";
+										+ "('"+txtFullName.getText()+"','"+txtUserName.getText()+"','"+txtEmail.getText()+"','"+userdate+"','"+gender+"',md5('"+pwdPassword.getText()+"'));";
 								pst=conn.prepareStatement(sql);
 								pst.execute();
 								pst.close();
