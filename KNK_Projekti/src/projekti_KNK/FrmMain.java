@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Locale;
@@ -53,7 +54,9 @@ public class FrmMain extends JFrame {
 		Connection conn=null;
 		ResultSet res=null;
 		PreparedStatement pst=null;
-//*********************************************************		
+//*********************************************************	
+		FrmHelpAl helpFrameAl = new FrmHelpAl();
+		FrmHelpEn helpFrameEn = new FrmHelpEn();
 		
 		private JTable tblStandings;
 		private JTextField txtTeam;
@@ -65,6 +68,7 @@ public class FrmMain extends JFrame {
 		private JTextField txtPoints;
 		
 		String team ;
+		Date gDate;
 		private JTextField txtSearch;
 		
 		//Objekti i klases methods :
@@ -225,7 +229,9 @@ public class FrmMain extends JFrame {
 				JOptionPane.showMessageDialog(null, "Something went wrong while updating table."+e.getMessage());
 			}
 		}
-	
+		//#####################################################################
+		//###############   Funksioni per update te tabelave te ekipeve  ################################
+		//#####################################################################
 	public void updateTblTeams(JTable table, String teamName)
 	{
 		try 
@@ -242,6 +248,9 @@ public class FrmMain extends JFrame {
 			JOptionPane.showMessageDialog(null, "Something went wrong while updating table."+e.getMessage());
 		}
 	}
+	//#####################################################################
+	//###############   Funksioni per update te tblResults  ################################
+	//#####################################################################
 	public void updateTblResults()
 	{
 		try 
@@ -263,8 +272,7 @@ public class FrmMain extends JFrame {
 	}
 
 	
-	//Metoda qe e ben update tabelen me te dhena nga databaza
-	public void updateTable()
+	public void updateTblStandings()
 	{
 		try 
 		{
@@ -298,10 +306,13 @@ public class FrmMain extends JFrame {
 	 * Create the frame.
 	 * @param lang 
 	 */
-	public FrmMain(String lang) {
+	public FrmMain(String lang) {// Konstruktori me parameter i cili merr parametrin nga FrmLogin
 		setTitle("Basketball");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(FrmMain.class.getResource("/images/15983-200.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FrmMain.class.getResource("/images/icon.png")));
+		
 		conn=SQLConn.connectDB();
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1100, 600);
 		
@@ -324,7 +335,10 @@ public class FrmMain extends JFrame {
 		
 		JMenu mnLang = new JMenu("Lang");
 		menuBar.add(mnLang);
-		
+
+		//#################################################################################################################################################
+		//###############  Ndryshimi i gjuhes nga JMenu ##########################################################################################
+		//#################################################################################################################################################
 		JMenuItem mntmEng = new JMenuItem("Eng");
 		mntmEng.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK | InputEvent.ALT_MASK));
 		mntmEng.addActionListener(new ActionListener() {
@@ -352,6 +366,18 @@ public class FrmMain extends JFrame {
 		menuBar.add(mnHelp);
 		
 		JMenuItem mntmAbout = new JMenuItem("About");
+		mntmAbout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(language == "AL") {
+					helpFrameAl.setVisible(true);
+					helpFrameAl.setLocationRelativeTo(null);	
+				}
+				else {
+					helpFrameEn.setVisible(true);
+					helpFrameEn.setLocationRelativeTo(null);
+				}
+			}
+		});
 		mntmAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, InputEvent.CTRL_MASK | InputEvent.ALT_MASK));
 		mnHelp.add(mntmAbout);
 		
@@ -385,18 +411,17 @@ public class FrmMain extends JFrame {
 		homePanel.setBackground(new Color(255, 255, 255));
 		homePanel.setLayout(null);
 		
-		//=====================================================================================
-				//Scroll pane per upcoming games table-----------------
-				//=====================================================================================
+		
 				JScrollPane scrollPane_1 = new JScrollPane();
 				scrollPane_1.setBounds(72, 259, 696, 175);
 				homePanel.add(scrollPane_1);
 				
 				tblUpcoming = new JTable();
 				scrollPane_1.setViewportView(tblUpcoming);
-				//====================================================================================================================================================		
-				//============================================Search fieldi=======================================================================================================
-				//====================================================================================================================================================
+
+				//#################################################################################################################################################
+				//###############  Search field ####################### ##########################################################################################
+				//#################################################################################################################################################
 				txtSearch = new JTextField();
 				txtSearch.addKeyListener(new KeyAdapter() {
 					@Override
@@ -456,8 +481,13 @@ public class FrmMain extends JFrame {
 				label_39.setBounds(0, 0, 1084, 510);
 				homePanel.add(label_39);
 				//===========================================================================================================================================
+				
+
+		//#################################################################################################################################################
+		//###############  Thirrja per metoden qe mundeson nderrimin e tabave me TAB dhe shift+TAB  #######################################################
+		//#################################################################################################################################################
 		
-		objMethods.setupTabTraversalKeys(tabbedPane);//Thirrja per metoden qe mundeson nderrimin e tabave me TAB dhe shift+TAB
+		objMethods.setupTabTraversalKeys(tabbedPane);
 		
 		JPanel resultsPanel = new JPanel();
 		resultsPanel.setBackground(new Color(51, 102, 102));
@@ -492,6 +522,10 @@ public class FrmMain extends JFrame {
 		txtAteam.setColumns(10);
 		panel_1.add(txtAteam);
 		
+
+		//#################################################################################################################################################
+		//###############  TEKST KONTROLLAT   #############################################################################################################
+		//#################################################################################################################################################
 		txtHS = new JTextField();
 		txtHS.addKeyListener(new KeyAdapter() {
 			@Override
@@ -554,6 +588,10 @@ public class FrmMain extends JFrame {
 					e.consume();
 				}
 			}
+			@Override
+			public void keyPressed(KeyEvent e) {
+				btnAddResults.getRootPane().setDefaultButton(btnAddResults);
+			}
 		});
 		txtDate.setHorizontalAlignment(SwingConstants.LEFT);
 		txtDate.setToolTipText("Date format: yyyy-MM-dd");
@@ -561,7 +599,16 @@ public class FrmMain extends JFrame {
 		txtDate.setMargin(new Insets(3,3,3,3)); 
 		txtDate.setColumns(10);
 		panel_1.add(txtDate);
-//****************ADD TO TABLE RESULTS*************************************************************************		
+		btnAddResults.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				btnAddResults.getRootPane().setDefaultButton(btnAddResults);
+			}
+		});
+
+		//#################################################################################################################################################
+		//###############  Add to tblResults  #############################################################################################################
+		//#################################################################################################################################################		
 		
 		btnAddResults.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -601,7 +648,7 @@ public class FrmMain extends JFrame {
 							pst.execute();
 							
 							
-							updateTable();
+							updateTblStandings();
 							pst.close();
 							
 							
@@ -624,7 +671,7 @@ public class FrmMain extends JFrame {
 							pst.execute();
 							
 							
-							updateTable();
+							updateTblStandings();
 							pst.close();
 							
 							
@@ -653,7 +700,11 @@ public class FrmMain extends JFrame {
 		btnAddResults.setBackground(Color.BLACK);
 		btnAddResults.setForeground(Color.LIGHT_GRAY);
 		panel_1.add(btnAddResults);
-//************DELETE FROM TABLE RESULTS**************************
+		
+
+		//#################################################################################################################################################
+		//###############  Delete to tblResults  #############################################################################################################
+		//#################################################################################################################################################	
 		
 		btnDeleteResults.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -679,7 +730,7 @@ public class FrmMain extends JFrame {
 							pst.execute();
 							
 							
-							updateTable();
+							updateTblStandings();
 							pst.close();
 							
 							
@@ -702,7 +753,7 @@ public class FrmMain extends JFrame {
 							pst.execute();
 							
 							
-							updateTable();
+							updateTblStandings();
 							pst.close();
 							
 							
@@ -736,9 +787,10 @@ public class FrmMain extends JFrame {
 		btnDeleteResults.setBackground(Color.BLACK);
 		btnDeleteResults.setForeground(Color.LIGHT_GRAY);
 		panel_1.add(btnDeleteResults);
-		
-//*******************EDIT TABLE RESULTS*******************************************
-		
+
+		//#################################################################################################################################################
+		//###############  Edit to tblResults  #############################################################################################################
+		//#################################################################################################################################################	
 		
 		btnEditResults.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -845,15 +897,19 @@ public class FrmMain extends JFrame {
 		resultsPanel.add(scrollPane2);
 		
 		tblResults = new JTable();
+
+		//#################################################################################################################################################
+		//###############  Mbushja e textFields duke klikuar ne te dhenat e tabeles tblResults  ###########################################################
+		//#################################################################################################################################################	
 		tblResults.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				DefaultTableModel model=(DefaultTableModel)tblResults.getModel();
-				team=(String)model.getValueAt(tblResults.getSelectedRow(),0);
-				
+				team = (String)model.getValueAt(tblResults.getSelectedRow(),0);
+				gDate = (Date)model.getValueAt(tblResults.getSelectedRow(),5);
 				try 
 				{
-					String sql="select * from tblresults where ht_name='"+team+"'";
+					String sql="select * from tblresults where ht_name='"+team+"' and game_date = '"+gDate.toString()+"';";
 					pst=conn.prepareStatement(sql);
 					res=pst.executeQuery();
 					while(res.next()) 
@@ -889,6 +945,11 @@ public class FrmMain extends JFrame {
 		lblResults_1.setBounds(199, 12, 223, 28);
 		panel_2.add(lblResults_1);
 		
+		JLabel label_10 = new JLabel("");
+		label_10.setIcon(new ImageIcon(FrmMain.class.getResource("/images/abs.png")));
+		label_10.setBounds(779, 288, 255, 216);
+		resultsPanel.add(label_10);
+		
 		JLabel label_75 = new JLabel("");
 		label_75.setIcon(new ImageIcon(FrmMain.class.getResource("/images/background_3.jpg")));
 		label_75.setBounds(471, 0, 623, 522);
@@ -909,6 +970,46 @@ public class FrmMain extends JFrame {
 		standingsPanel.add(scrollPane);
 		
 		tblStandings = new JTable();
+
+		//#################################################################################################################################################
+		//###############  Mbushja e textFields duke kaluar ne te dhenat e tabeles tblStandings me tastiere ###############################################
+		//#################################################################################################################################################
+		tblStandings.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				tblStandings.getRootPane();
+				DefaultTableModel model=(DefaultTableModel)tblStandings.getModel();
+				team=(String)model.getValueAt(tblStandings.getSelectedRow(),0);
+				
+				try 
+				{
+					String sql="select * from tblstandings where team='"+team+"'";
+					pst=conn.prepareStatement(sql);
+					res=pst.executeQuery();
+					while(res.next()) 
+					{
+						txtTeam.setText(res.getString("team"));
+						txtGamesplayed.setText(res.getString("games"));
+						txtWins.setText(res.getString("wins"));
+						txtLosses.setText(res.getString("losses"));
+						txtScored.setText(res.getString("scored"));
+						txtTaken.setText(res.getString("taken"));
+						txtPoints.setText(res.getString("points"));
+					}
+					pst.close();
+					
+				}
+				catch (Exception ex) 
+				{
+					JOptionPane.showMessageDialog(null, "Error! "+ex.getMessage());
+				}
+			}
+			
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+			}
+		});
 		tblStandings.setLocation(369, 0);
 		
 		
@@ -917,7 +1018,7 @@ public class FrmMain extends JFrame {
 		tblStandings.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				updateTable();
+				updateTblStandings();
 			}
 			
 			//Kur klikon ne rresht, te mbushen textFieldat
@@ -960,7 +1061,10 @@ public class FrmMain extends JFrame {
 		JPopupMenu popupMenu = new JPopupMenu();
 		addPopup(tblStandings, popupMenu);
 		
-		//POPUP DELETE ==========================================================================================
+
+		//#################################################################################################################################################
+		//###############  POPUP Delete ###################################################################################################################
+		//#################################################################################################################################################
 		
 		mntmDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -969,7 +1073,7 @@ public class FrmMain extends JFrame {
 					pst=conn.prepareStatement(sql);
 					pst.execute();
 					pst.close();
-					updateTable();
+					updateTblStandings();
 					
 					txtTeam.setText("");
 					txtGamesplayed.setText("");
@@ -1075,12 +1179,6 @@ public class FrmMain extends JFrame {
 		lblLosses.setForeground(Color.BLACK);
 		
 		txtLosses = new JTextField();
-		txtLosses.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent arg0) {
-				txtScored.requestFocus(true);
-			}
-		});
 		txtLosses.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -1105,12 +1203,6 @@ public class FrmMain extends JFrame {
 		lblScored.setForeground(Color.BLACK);
 		
 		txtScored = new JTextField();
-		txtScored.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent arg0) {
-				txtTaken.requestFocus(true);
-			}
-		});
 		txtScored.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -1135,12 +1227,6 @@ public class FrmMain extends JFrame {
 		lblTaken.setForeground(Color.BLACK);
 		
 		txtTaken = new JTextField();
-		txtTaken.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				txtPoints.requestFocus(true);
-			}
-		});
 		txtTaken.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -1175,15 +1261,27 @@ public class FrmMain extends JFrame {
 					e.consume();
 				}
 			}
+			@Override
+			public void keyPressed(KeyEvent e) {
+				btnAddStandings.getRootPane().setDefaultButton(btnAddStandings);
+			}
 		});
 		txtPoints.setBackground(Color.WHITE);
 		txtPoints.setBounds(34, 439, 188, 33);
 		panel.add(txtPoints);
 		txtPoints.setMargin(new Insets(3,3,3,3));
 		txtPoints.setColumns(10);
+		btnAddStandings.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				btnAddStandings.getRootPane().setDefaultButton(btnAddStandings);
+			}
+		});
 		
-		//Butoni ADD ============================================================================================================
-		
+
+		//#################################################################################################################################################
+		//###############  Butoni add per tblStandings  ###################################################################################################
+		//#################################################################################################################################################
 		btnAddStandings.setBounds(230, 252, 95, 33);
 		panel.add(btnAddStandings);
 		btnAddStandings.addActionListener(new ActionListener() {
@@ -1196,7 +1294,7 @@ public class FrmMain extends JFrame {
 				pst=conn.prepareStatement(sql);
 				pst.execute();
 				pst.close();
-				updateTable();
+				updateTblStandings();
 				
 				txtTeam.setText("");
 				txtGamesplayed.setText("");
@@ -1218,7 +1316,9 @@ public class FrmMain extends JFrame {
 		btnAddStandings.setFont(new Font("Calibri", Font.PLAIN, 17));
 		btnAddStandings.setBackground(Color.BLACK);
 		
-		//Butoni Edit ===================================================================================
+		//#################################################################################################################################################
+		//###############  Butoni edit per tblStandings  ###################################################################################################
+		//#################################################################################################################################################
 		
 		btnEditStandings.setBounds(231, 314, 92, 33);
 		panel.add(btnEditStandings);
@@ -1232,7 +1332,7 @@ public class FrmMain extends JFrame {
 					pst=conn.prepareStatement(sql);
 					pst.execute();
 					pst.close();
-					updateTable();
+					updateTblStandings();
 					
 					
 				}
@@ -1247,7 +1347,9 @@ public class FrmMain extends JFrame {
 		btnEditStandings.setFont(new Font("Calibri", Font.PLAIN, 17));
 		btnEditStandings.setBackground(Color.BLACK);
 		
-		//BUTONI DELETE ======================================================================================================
+		//#################################################################################################################################################
+		//###############  Butoni Delete per tblStandings  ###################################################################################################
+		//#################################################################################################################################################
 		
 		btnDeleteStandings.setBounds(231, 376, 92, 33);
 		panel.add(btnDeleteStandings);
@@ -1259,7 +1361,7 @@ public class FrmMain extends JFrame {
 					pst=conn.prepareStatement(sql);
 					pst.execute();
 					pst.close();
-					updateTable();
+					updateTblStandings();
 					
 					txtTeam.setText("");
 					txtGamesplayed.setText("");
@@ -1280,8 +1382,9 @@ public class FrmMain extends JFrame {
 		btnDeleteStandings.setForeground(Color.WHITE);
 		btnDeleteStandings.setFont(new Font("Calibri", Font.PLAIN, 17));
 		btnDeleteStandings.setBackground(Color.BLACK);
-		
-		//Butoni RESET ===================================================================================
+		//#################################################################################################################################################
+		//###############  Butoni Reset per tblStandings  ###################################################################################################
+		//#################################################################################################################################################
 		JButton btnResetStandings = new JButton("Reset");
 		btnResetStandings.setBounds(230, 439, 95, 33);
 		panel.add(btnResetStandings);
@@ -1304,6 +1407,11 @@ public class FrmMain extends JFrame {
 		lblNewLabel_2.setIcon(new ImageIcon(FrmMain.class.getResource("/images/wpdrejt.png")));
 		lblNewLabel_2.setBounds(0, 0, 332, 524);
 		panel.add(lblNewLabel_2);
+		
+		JLabel label_11 = new JLabel("");
+		label_11.setIcon(new ImageIcon(FrmMain.class.getResource("/images/abs.png")));
+		label_11.setBounds(779, 288, 255, 216);
+		standingsPanel.add(label_11);
 		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(FrmMain.class.getResource("/images/background_3.jpg")));
@@ -2389,8 +2497,26 @@ public class FrmMain extends JFrame {
 		panelTeams.setBounds(0, 0, 263, 512);
 		teamsPanel.add(panelTeams);
 		panelTeams.setLayout(null);
+		//#################################################################################################################################################
+		//###############  Eventet qe shfaqin panelet e ekipeve  ##########################################################################################
+		//#################################################################################################################################################
 		
 		JButton btnTeamPrishtina = new JButton("Sigal Prishtina");
+		btnTeamPrishtina.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				panelPrishtina.setVisible(true);
+				panelTrepca.setVisible(false);
+				panelPeja.setVisible(false);
+				panelBashkimi.setVisible(false);
+				panelBorea.setVisible(false);
+				panelRahoveci.setVisible(false);
+				panelGEYlli.setVisible(false);
+				panelKPrishtina.setVisible(false);
+				mainPanel.setVisible(false);
+				updateTblTeams(tblPrishtina,"Prishtina");
+			}
+		});
 		btnTeamPrishtina.setHorizontalAlignment(SwingConstants.LEFT);
 		btnTeamPrishtina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -2413,6 +2539,21 @@ public class FrmMain extends JFrame {
 		panelTeams.add(btnTeamPrishtina);
 		
 		JButton btnTeamTrepca = new JButton("Trepca");
+		btnTeamTrepca.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				panelPrishtina.setVisible(false);
+				panelTrepca.setVisible(true);
+				panelPeja.setVisible(false);
+				panelBashkimi.setVisible(false);
+				panelBorea.setVisible(false);
+				panelRahoveci.setVisible(false);
+				panelGEYlli.setVisible(false);
+				panelKPrishtina.setVisible(false);
+				mainPanel.setVisible(false);
+				updateTblTeams(tblTrepca,"Trepca");
+			}
+		});
 		btnTeamTrepca.setHorizontalAlignment(SwingConstants.LEFT);
 		btnTeamTrepca.setIcon(new ImageIcon(FrmMain.class.getResource("/images/Trepca.png")));
 		btnTeamTrepca.addActionListener(new ActionListener() {
@@ -2436,6 +2577,21 @@ public class FrmMain extends JFrame {
 		panelTeams.add(btnTeamTrepca);
 		
 		JButton btnTeamPeja = new JButton("Peja");
+		btnTeamPeja.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				panelPrishtina.setVisible(false);
+				panelTrepca.setVisible(false);
+				panelPeja.setVisible(true);
+				panelBashkimi.setVisible(false);
+				panelBorea.setVisible(false);
+				panelRahoveci.setVisible(false);
+				panelGEYlli.setVisible(false);
+				panelKPrishtina.setVisible(false);
+				mainPanel.setVisible(false);
+				updateTblTeams(tblPeja,"Peja");
+			}
+		});
 		btnTeamPeja.setSelectedIcon(new ImageIcon(FrmMain.class.getResource("/images/peja_vogel.png")));
 		btnTeamPeja.setIcon(new ImageIcon(FrmMain.class.getResource("/images/peja_vogel.png")));
 		btnTeamPeja.setHorizontalAlignment(SwingConstants.LEFT);
@@ -2459,6 +2615,21 @@ public class FrmMain extends JFrame {
 		panelTeams.add(btnTeamPeja);
 		
 		JButton btnTeamBashkimi = new JButton("Bashkimi");
+		btnTeamBashkimi.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				panelPrishtina.setVisible(false);
+				panelTrepca.setVisible(false);
+				panelPeja.setVisible(false);
+				panelBashkimi.setVisible(true);
+				panelBorea.setVisible(false);
+				panelRahoveci.setVisible(false);
+				panelGEYlli.setVisible(false);
+				panelKPrishtina.setVisible(false);
+				mainPanel.setVisible(false);
+				updateTblTeams(tblBashkimi,"Bashkimi");
+			}
+		});
 		btnTeamBashkimi.setHorizontalAlignment(SwingConstants.LEFT);
 		btnTeamBashkimi.setIcon(new ImageIcon(FrmMain.class.getResource("/images/bashkimi.png")));
 		btnTeamBashkimi.addActionListener(new ActionListener() {
@@ -2481,6 +2652,21 @@ public class FrmMain extends JFrame {
 		panelTeams.add(btnTeamBashkimi);
 		
 		JButton btnTeamRahoveci = new JButton("Rahoveci");
+		btnTeamRahoveci.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				panelPrishtina.setVisible(false);
+				panelTrepca.setVisible(false);
+				panelPeja.setVisible(false);
+				panelBashkimi.setVisible(false);
+				panelBorea.setVisible(false);
+				panelRahoveci.setVisible(true);
+				panelGEYlli.setVisible(false);
+				panelKPrishtina.setVisible(false);
+				mainPanel.setVisible(false);
+				updateTblTeams(tblRahoveci,"Rahoveci");
+			}
+		});
 		btnTeamRahoveci.setIcon(new ImageIcon(FrmMain.class.getResource("/images/rahoveci_small.png")));
 		btnTeamRahoveci.setHorizontalAlignment(SwingConstants.LEFT);
 		btnTeamRahoveci.addActionListener(new ActionListener() {
@@ -2503,6 +2689,21 @@ public class FrmMain extends JFrame {
 		panelTeams.add(btnTeamRahoveci);
 		
 		JButton btnTeamGEYlli = new JButton("Golden Eagle Ylli");
+		btnTeamGEYlli.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				panelPrishtina.setVisible(false);
+				panelTrepca.setVisible(false);
+				panelPeja.setVisible(false);
+				panelBashkimi.setVisible(false);
+				panelBorea.setVisible(false);
+				panelRahoveci.setVisible(false);
+				panelGEYlli.setVisible(true);
+				panelKPrishtina.setVisible(false);
+				mainPanel.setVisible(false);
+				updateTblTeams(tblGolden,"Golden Eagle Ylli");
+			}
+		});
 		btnTeamGEYlli.setIcon(new ImageIcon(FrmMain.class.getResource("/images/gey_small.png")));
 		btnTeamGEYlli.setHorizontalAlignment(SwingConstants.LEFT);
 		btnTeamGEYlli.addActionListener(new ActionListener() {
@@ -2525,6 +2726,21 @@ public class FrmMain extends JFrame {
 		panelTeams.add(btnTeamGEYlli);
 		
 		JButton btnTeamKPrishtina = new JButton("Kerasan Prishtina");
+		btnTeamKPrishtina.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				panelPrishtina.setVisible(false);
+				panelTrepca.setVisible(false);
+				panelPeja.setVisible(false);
+				panelBashkimi.setVisible(false);
+				panelBorea.setVisible(false);
+				panelRahoveci.setVisible(false);
+				panelGEYlli.setVisible(false);
+				panelKPrishtina.setVisible(true);
+				mainPanel.setVisible(false);
+				updateTblTeams(tblKerasan,"Kerasan Prishtina");
+			}
+		});
 		btnTeamKPrishtina.setIcon(new ImageIcon(FrmMain.class.getResource("/images/kerprishtina_small.png")));
 		btnTeamKPrishtina.setHorizontalAlignment(SwingConstants.LEFT);
 		btnTeamKPrishtina.addActionListener(new ActionListener() {
@@ -2547,6 +2763,22 @@ public class FrmMain extends JFrame {
 		panelTeams.add(btnTeamKPrishtina);
 		
 		JButton btnTeamBorea = new JButton("Borea");
+		btnTeamBorea.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				panelPrishtina.setVisible(false);
+				panelTrepca.setVisible(false);
+				panelPeja.setVisible(false);
+				panelBashkimi.setVisible(false);
+				panelBorea.setVisible(true);
+				panelRahoveci.setVisible(false);
+				panelGEYlli.setVisible(false);
+				panelKPrishtina.setVisible(false);
+				mainPanel.setVisible(false);
+				updateTblTeams(tblBorea,"Borea");
+				
+			}
+		});
 		btnTeamBorea.setIcon(new ImageIcon(FrmMain.class.getResource("/images/borea_small.png")));
 		btnTeamBorea.setHorizontalAlignment(SwingConstants.LEFT);
 		btnTeamBorea.addActionListener(new ActionListener() {
@@ -2569,6 +2801,20 @@ public class FrmMain extends JFrame {
 		panelTeams.add(btnTeamBorea);
 		
 		JButton btnKthev = new JButton("");
+		btnKthev.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				panelPrishtina.setVisible(false);
+				panelTrepca.setVisible(false);
+				panelPeja.setVisible(false);
+				panelBashkimi.setVisible(false);
+				panelBorea.setVisible(false);
+				panelRahoveci.setVisible(false);
+				panelGEYlli.setVisible(false);
+				panelKPrishtina.setVisible(false);
+				mainPanel.setVisible(true);
+			}
+		});
 		btnKthev.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				panelPrishtina.setVisible(false);
@@ -2591,15 +2837,15 @@ public class FrmMain extends JFrame {
 		tabbedPane.setForegroundAt(3, Color.WHITE);
 		tabbedPane.setBackgroundAt(3, Color.BLACK);
 		
-		updateTable();
+		updateTblStandings();
 		updateTblResults();
 		updateTblUpcoming();
 		setLanguage(language);
 		
 	}
-	//###############################################################################
-	//#########  METODA QE BEN PERKTHIMIN NE BAZE TW PARAMETRIT LANG QE MERR ########
-	//###############################################################################t
+	//#####################################################################################################################################################################
+	//#########  METODA QE BEN PERKTHIMIN NE BAZE TW PARAMETRIT LANG QE MERR ##############################################################################################
+	//#####################################################################################################################################################################
 	public void setLanguage(String lang) {
 		if(lang != null) {
 			if(lang == "EN") {
@@ -2696,6 +2942,10 @@ public class FrmMain extends JFrame {
 		}
 		
 	}
+
+	//#####################################################################################################################################################################
+	//#########  METODA per popup #########################################################################################################################################
+	//#####################################################################################################################################################################
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
