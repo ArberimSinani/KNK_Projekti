@@ -420,18 +420,15 @@ public class FrmMain extends JFrame {
 				scrollPane_1.setViewportView(tblUpcoming);
 
 				//#################################################################################################################################################
-				//###############  Search field ####################### ##########################################################################################
+				//###############  Search field ##################################################################################################################
 				//#################################################################################################################################################
 				txtSearch = new JTextField();
 				txtSearch.addKeyListener(new KeyAdapter() {
 					@Override
 					public void keyReleased(KeyEvent arg0) {
 						try {
-							
-							//String sql = "SELECT  * FROM tblresults where ht_name like '"+txtSearch.getText()+"%' or at_name like '"+txtSearch.getText()+"%'; ";
-							
 							String sql = "SELECT ht_name as HT,at_name as AT,game_time as Time,game_date as Date from tblresults where ht_score is null and (ht_name like '"+txtSearch.getText()+"%' or at_name like "
-									+ "'"+txtSearch.getText()+"%');";
+									+ "'"+txtSearch.getText()+"%') order by game_date desc;";
 							pst=conn.prepareStatement(sql);
 							res=pst.executeQuery();
 							tblUpcoming.setModel(DbUtils.resultSetToTableModel(res));
@@ -483,11 +480,6 @@ public class FrmMain extends JFrame {
 				//===========================================================================================================================================
 				
 
-		//#################################################################################################################################################
-		//###############  Thirrja per metoden qe mundeson nderrimin e tabave me TAB dhe shift+TAB  #######################################################
-		//#################################################################################################################################################
-		
-		objMethods.setupTabTraversalKeys(tabbedPane);
 		
 		JPanel resultsPanel = new JPanel();
 		resultsPanel.setBackground(new Color(51, 102, 102));
@@ -2841,6 +2833,11 @@ public class FrmMain extends JFrame {
 		updateTblResults();
 		updateTblUpcoming();
 		setLanguage(language);
+		//#################################################################################################################################################
+		//###############  Thirrja per metoden qe mundeson nderrimin e tabave me TAB dhe shift+TAB  #######################################################
+		//#################################################################################################################################################
+		objMethods.setupTabTraversalKeys(tabbedPane);
+				
 		
 	}
 	//#####################################################################################################################################################################
